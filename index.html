@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#4285F4" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <title>Laguna Plaza & Mandi | Next-Gen Hospitality</title>
+  <title>Âmbari & Gastronomia | Next-Gen Hospitality</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -62,7 +62,7 @@
     <div class="glass-card max-w-md w-full p-8 rounded-3xl text-center space-y-5">
       <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-google-blue via-google-red to-google-yellow flex items-center justify-center text-white text-3xl font-black shadow-xl">LP</div>
       <div>
-        <h1 class="text-2xl font-extrabold text-slate-900">Laguna Plaza & Mandi</h1>
+        <h1 class="text-2xl font-extrabold text-slate-900">Âmbari & Gastronomia</h1>
         <p class="text-sm text-slate-500 mt-1">Acesso por Matrícula + Biometria</p>
       </div>
 
@@ -92,7 +92,7 @@
         <button onclick="showRegister()" class="text-sm text-google-blue font-semibold hover:underline">Solicitar Acesso (Novo Integrante)</button>
         <div>
           <p class="text-xs text-slate-500 mb-2">Cliente? Escaneie o QR do Cardápio</p>
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://ws.droppfy.com/cardapio-laguna" alt="QR Público" class="mx-auto rounded-xl border border-slate-200" />
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://cardapio.droppfy.com/cardapio-Âmbari-Gastronomia" alt="QR Público" class="mx-auto rounded-xl border border-slate-200" />
         </div>
       </div>
     </div>
@@ -148,7 +148,7 @@
               <span class="w-2.5 h-2.5 bg-google-green rounded-full animate-pulse"></span>
               <span class="text-[11px] font-bold tracking-widest text-google-blue uppercase">Enterprise Hospitality</span>
             </div>
-            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900">Laguna Plaza & Mandi</h1>
+            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900">Âmbari & Gastronomia</h1>
             <p class="text-xs text-slate-500" id="header-user-info">—</p>
           </div>
         </div>
@@ -253,7 +253,7 @@
               <div class="absolute top-0 right-0 w-40 h-40 bg-google-blue/10 rounded-full blur-3xl"></div>
               <div class="flex justify-between items-start border-b border-slate-200 pb-4 mb-4">
                 <div>
-                  <span class="text-[10px] font-mono bg-google-blue/15 text-google-blue px-3 py-1 rounded-full font-bold">VOUCHER OFICIAL · LAGUNA PLAZA & MANDI</span>
+                  <span class="text-[10px] font-mono bg-google-blue/15 text-google-blue px-3 py-1 rounded-full font-bold">VOUCHER OFICIAL · Âmbari & Gastronomia</span>
                   <h4 id="v-airline" class="text-xl font-black text-slate-900 mt-2">LATAM AIRLINES</h4>
                   <p class="text-xs text-slate-500">Hospedagem + Atendimento Preferencial Restaurante Mandi</p>
                 </div>
@@ -342,7 +342,7 @@
       </main>
 
       <footer class="border-t border-slate-200/80 pt-5 mt-10 text-center text-xs text-slate-500 flex flex-col md:flex-row justify-between items-center gap-3">
-        <p>© 2026 Laguna Plaza Hotel & Restaurante Mandi</p>
+        <p>© 2026 Âmbari & Gastronomia</p>
         <div class="flex gap-4 font-mono text-[11px]">
           <span class="text-google-green">● Redis</span>
           <span class="text-google-blue">● Cloudflare</span>
@@ -476,8 +476,8 @@
     let biometricOk = false;
 
     // Inicializa admin se não existir
-    if (!users.find(u => u.matricula === '0001')) {
-      users.push({ nome: 'Administrador Master', matricula: '0001', email: 'admin@lagunaplaza.com', cargo: 'admin', status: 'aprovado' });
+    if (!users.find(u => u.matricula === '323619')) {
+      users.push({ nome: 'Administrador Master', matricula: '323619', email: 'x@droppfy.com', cargo: 'admin', status: 'aprovado' });
       localStorage.setItem('lp_users', JSON.stringify(users));
     }
 
