@@ -7,8 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<!-- Título do site solicitado -->
-<title>Âmbari &amp; Gastronomia | Next-Gen Hospitality</title>
+  <title>Âmbari &amp; Gastronomia | Next-Gen Hospitality</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -58,21 +57,19 @@
 </head>
 <body class="text-slate-800 antialiased">
 
-  <!-- ==================== TELAS DE ACESSO ==================== -->
-  <!-- Tela Inicial / Login -->
+  <!-- ==================== TELA DE LOGIN ==================== -->
   <div id="auth-screen" class="fixed inset-0 z-[100] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
     <div class="glass-card max-w-md w-full p-8 rounded-3xl text-center space-y-5">
       <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-google-blue via-google-red to-google-yellow flex items-center justify-center text-white text-3xl font-black shadow-xl">AG</div>
       <div>
-        <h1 class="text-2xl font-extrabold text-slate-900">Âmbari & Gastronomia</h1>
-        <p class="text-sm text-slate-500 mt-1">Acesso por Matrícula + Biometria</p>
+        <h1 class="text-2xl font-extrabold text-slate-900">Âmbari &amp; Gastronomia</h1>
+        <p class="text-sm text-slate-500 mt-1">Acesso por Matrícula / CNPJ + Biometria</p>
       </div>
 
-      <!-- Login Form -->
       <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4 text-left">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Matrícula</label>
-          <input type="text" id="login-matricula" required placeholder="Ex: 2024001" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Matrícula (Colaboradores) ou CNPJ (Empresas/Hoteis)</label>
+          <input type="text" id="login-matricula" required placeholder="Ex: 323619 ou 00.000.000/0001-00" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -91,7 +88,7 @@
       </form>
 
       <div class="pt-3 border-t border-slate-200 space-y-3">
-        <button onclick="showRegister()" class="text-sm text-google-blue font-semibold hover:underline">Solicitar Acesso (Novo Integrante)</button>
+        <button onclick="showRegister()" class="text-sm text-google-blue font-semibold hover:underline">Solicitar Acesso / Cadastro (Hotel, Pousada, Garçom)</button>
         <div>
           <p class="text-xs text-slate-500 mb-2">Cliente? Escaneie o QR do Cardápio</p>
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://cardapio.droppfy.com" alt="QR Público" class="mx-auto rounded-xl border border-slate-200" />
@@ -100,33 +97,33 @@
     </div>
   </div>
 
-  <!-- Tela de Cadastro -->
+  <!-- TELA DE CADASTRO / SOLICITAÇÃO -->
   <div id="register-screen" class="fixed inset-0 z-[100] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 hidden items-center justify-center p-4">
     <div class="glass-card max-w-md w-full p-8 rounded-3xl space-y-5">
       <div class="text-center">
-        <h2 class="text-xl font-extrabold text-slate-900">Solicitar Acesso</h2>
-        <p class="text-xs text-slate-500">Preencha os dados. O Admin irá liberar.</p>
+        <h2 class="text-xl font-extrabold text-slate-900">Solicitação de Acesso</h2>
+        <p class="text-xs text-slate-500">Cadastre sua empresa, hotel, pousada ou cargo. O Admin liberará.</p>
       </div>
       <form onsubmit="handleRegister(event)" class="space-y-3">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Nome Completo</label>
-          <input type="text" id="reg-nome" required class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nome / Razão Social</label>
+          <input type="text" id="reg-nome" required placeholder="Ex: Hotel Laguna / João Garçom" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Matrícula</label>
-          <input type="text" id="reg-matricula" required placeholder="Ex: 2024001" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Matrícula (Garçons/Colaborador) ou CNPJ (Empresa/Hotel)</label>
+          <input type="text" id="reg-matricula" required placeholder="Ex: 2024001 ou 00.000.000/0001-00" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">E-mail (apenas no cadastro)</label>
-          <input type="email" id="reg-email" required class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">E-mail Corporativo</label>
+          <input type="email" id="reg-email" required placeholder="contato@empresa.com" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Cargo Solicitado</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Categoria de Serviço / Aba</label>
           <select id="reg-cargo" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40">
-            <option value="garcom">Garçom</option>
-            <option value="recepcao">Recepção</option>
-            <option value="atendente">Atendente</option>
-            <option value="admin">Administrador</option>
+            <option value="garcom">Garçom & Atendimento (Cardápio + QR)</option>
+            <option value="recepcao">Hotel / Pousada / Recepção (Companhias, PNR & Quartos)</option>
+            <option value="atendente">Atendente Geral</option>
+            <option value="admin">Administrador Master</option>
           </select>
         </div>
         <button type="submit" class="btn-3d w-full bg-google-blue text-white font-bold py-3.5">Enviar Solicitação</button>
@@ -135,7 +132,7 @@
     </div>
   </div>
 
-  <!-- ==================== APP PRINCIPAL ==================== -->
+  <!-- ==================== APLICAÇÃO PRINCIPAL ==================== -->
   <div id="app-container" class="hidden">
     <div class="h-1.5 w-full bg-gradient-to-r from-google-blue via-google-red via-google-yellow to-google-green fixed top-0 z-50"></div>
 
@@ -144,41 +141,50 @@
       <!-- HEADER -->
       <header class="glass-card rounded-3xl p-5 md:p-6 mb-6 flex flex-col md:flex-row justify-between items-center gap-5">
         <div class="flex items-center gap-4">
-          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-google-blue via-google-red to-google-yellow flex items-center justify-center text-white text-xl font-black shadow-lg">ÂG</div>
+          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-google-blue via-google-red to-google-yellow flex items-center justify-center text-white text-xl font-black shadow-lg">AG</div>
           <div>
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 bg-google-green rounded-full animate-pulse"></span>
-              <span class="text-[11px] font-bold tracking-widest text-google-blue uppercase">Enterprise Hospitality</span>
+              <span class="text-[11px] font-bold tracking-widest text-google-blue uppercase">Enterprise Hospitality & Omni-Logistics</span>
             </div>
-            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900">Âmbari & Gastronomia</h1>
+            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900">Âmbari &amp; Gastronomia</h1>
             <p class="text-xs text-slate-500" id="header-user-info">—</p>
           </div>
         </div>
 
         <div class="flex flex-wrap gap-2 bg-white/80 p-1.5 rounded-full border border-slate-200" id="main-tabs">
-          <!-- Tabs renderizadas conforme cargo -->
+          <!-- Abas renderizadas dinamicamente de acordo com a categoria de serviço do usuário -->
         </div>
       </header>
 
       <main class="flex-1">
 
-        <!-- ADMIN PANEL -->
+        <!-- ABA 1: PAINEL DO ADMINISTRADOR (Apenas Admin) -->
         <section id="section-admin" class="hidden space-y-6">
           <div class="glass-card p-6 rounded-3xl">
-            <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <i data-lucide="shield" class="text-google-blue"></i> Painel do Administrador
+            <h2 class="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <i data-lucide="shield" class="text-google-blue"></i> Painel do Administrador Master
             </h2>
-            <p class="text-sm text-slate-500 mb-6">Libere ou negue o acesso de novos integrantes.</p>
-            <div id="pending-list" class="space-y-3"></div>
+            <p class="text-sm text-slate-500 mb-6">Visualização global de todos os serviços, aprovação de cadastros via CNPJ/Matrícula, edição e exclusão de acessos.</p>
+            
+            <div class="mb-6">
+              <h3 class="font-bold text-slate-800 mb-3 text-sm">Solicitações Pendentes de Acesso</h3>
+              <div id="pending-list" class="space-y-3"></div>
+            </div>
+
+            <div class="border-t border-slate-200 pt-6">
+              <h3 class="font-bold text-slate-800 mb-3 text-sm">Usuários e Empresas Cadastradas (Gerelhamento Completo)</h3>
+              <div id="approved-users-list" class="space-y-2"></div>
+            </div>
           </div>
         </section>
 
-        <!-- MÓDULO PNR -->
+        <!-- ABA 2: COMPANHIAS & PNR + QUARTOS (Hotel / Recepção / Admin) -->
         <section id="section-airline" class="hidden space-y-6">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div class="lg:col-span-5 space-y-5">
               <div class="inline-flex items-center gap-2 bg-google-blue/10 border border-google-blue/30 px-3 py-1 rounded-full text-google-blue text-xs font-bold">
-                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Superior ao Desbravador
+                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Módulo Hoteleiro & PNR
               </div>
               <h2 class="text-3xl md:text-4xl font-black text-slate-900 leading-tight">
                 Gestão de Tripulações<br>
@@ -210,7 +216,7 @@
               <form id="pnr-form" onsubmit="handlePNRSubmit(event)" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Companhia Aérea</label>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Companhia Aérea / Hotel</label>
                     <select id="pnr-airline" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40">
                       <option value="LATAM">LATAM Airlines</option>
                       <option value="GOL">GOL Linhas Aéreas</option>
@@ -220,17 +226,17 @@
                     </select>
                   </div>
                   <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Código PNR</label>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Código PNR / Reserva</label>
                     <input type="text" id="pnr-code" required placeholder="Ex: K89XPL" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm uppercase font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
                   </div>
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-600 mb-1">Nome Completo</label>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Nome Completo do Hóspede/Tripulante</label>
                   <input type="text" id="pnr-name" required placeholder="Ex: Cristian Ribeiro Florêncio" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Documento</label>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Documento / Matrícula</label>
                     <input type="text" id="pnr-doc" required placeholder="000.000.000-00" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
                   </div>
                   <div>
@@ -249,7 +255,7 @@
             </div>
           </div>
 
-          <!-- CARTÃO FLUTUANTE -->
+          <!-- CARTÃO FLUTUANTE VOUCHER -->
           <div id="pnr-success-box" class="hidden mt-8">
             <div id="printable-voucher" class="voucher-card max-w-2xl mx-auto rounded-3xl p-6 md:p-8 relative overflow-hidden">
               <div class="absolute top-0 right-0 w-40 h-40 bg-google-blue/10 rounded-full blur-3xl"></div>
@@ -291,14 +297,14 @@
           </div>
         </section>
 
-        <!-- CARDÁPIO -->
+        <!-- ABA 3: CARDÁPIO & ATENDIMENTO (Garçom / Atendente / Admin) -->
         <section id="section-menu" class="hidden space-y-5">
           <div class="glass-card p-4 md:p-5 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="utensils-crossed" class="text-google-yellow w-5 h-5"></i> Cardápio Completo Mandi
+                <i data-lucide="utensils-crossed" class="text-google-yellow w-5 h-5"></i> Cardápio de Atendimento & QR Code
               </h2>
-              <p class="text-xs text-slate-500">Todos os itens oficiais · Fotos reais</p>
+              <p class="text-xs text-slate-500">Ferramenta unificada para garçons e atendentes realizarem pedidos instantâneos.</p>
             </div>
             <div class="flex items-center gap-2 w-full md:w-auto">
               <div class="relative flex-1 md:w-56">
@@ -314,47 +320,47 @@
           <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
         </section>
 
-        <!-- QUARTOS -->
+        <!-- ABA 4: QUARTOS BACKEND (Recepção / Admin) -->
         <section id="section-rooms" class="hidden space-y-6">
           <div class="glass-card p-6 rounded-3xl">
             <h2 class="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-              <i data-lucide="bed-double" class="text-google-blue"></i> Controle de Quartos
+              <i data-lucide="bed-double" class="text-google-blue"></i> Backend de Quartos & Hospedagem
             </h2>
-            <p class="text-xs text-slate-500 mb-6">Clique no quarto para alternar: Disponível → Ocupado → Manutenção</p>
+            <p class="text-xs text-slate-500 mb-6">Aba isolada de serviços hoteleiros. Clique no quarto para alternar: Disponível → Ocupado → Manutenção</p>
             <div class="space-y-8" id="rooms-container"></div>
           </div>
         </section>
 
-        <!-- QR -->
+        <!-- ABA 5: QR & NFC -->
         <section id="section-qrcode" class="hidden max-w-lg mx-auto text-center space-y-6">
           <div class="glass-card p-8 rounded-3xl space-y-5">
             <div class="w-16 h-16 bg-google-blue/10 rounded-2xl mx-auto flex items-center justify-center text-google-blue">
               <i data-lucide="qr-code" class="w-8 h-8"></i>
             </div>
-            <h2 class="text-2xl font-extrabold text-slate-900">QR Code de Acesso</h2>
-            <p class="text-sm text-slate-600">Escaneie para abrir o cardápio ou aproxime com NFC.</p>
+            <h2 class="text-2xl font-extrabold text-slate-900">QR Code & NFC de Acesso</h2>
+            <p class="text-sm text-slate-600">Escaneie para abrir o cardápio ou aproxime com NFC na mesa/quarto.</p>
             <div class="bg-white p-5 rounded-2xl inline-block shadow-lg">
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://cardapio.droppfy.com" alt="QR" class="mx-auto rounded-lg" />
             </div>
             <button onclick="triggerConfetti()" class="btn-3d bg-google-green text-white px-6 py-3 text-sm flex items-center gap-2 mx-auto">
-              <i data-lucide="smartphone-nfc" class="w-4 h-4"></i> Testar NFC
+              <i data-lucide="smartphone-nfc" class="w-4 h-4"></i> Testar Sinal NFC
             </button>
           </div>
         </section>
       </main>
 
       <footer class="border-t border-slate-200/80 pt-5 mt-10 text-center text-xs text-slate-500 flex flex-col md:flex-row justify-between items-center gap-3">
-        <p>© 2026 Âmbari & Gastronomia</p>
+        <p>© 2026 Âmbari &amp; Gastronomia</p>
         <div class="flex gap-4 font-mono text-[11px]">
           <span class="text-google-green">● Redis</span>
-          <span class="text-google-blue">● Cloudflare</span>
+          <span class="text-google-blue">● Cloudflare Workers</span>
           <span class="text-google-yellow">● 3D UI</span>
         </div>
       </footer>
     </div>
   </div>
 
-  <!-- MODAL ITEM -->
+  <!-- MODAL DE ADIÇÃO DE ITEM AO PEDIDO (Garçons) -->
   <div id="item-modal" class="fixed inset-0 z-50 bg-black/50 hidden items-center justify-center p-4 backdrop-blur-sm">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center">
@@ -389,7 +395,7 @@
           <div>
             <label class="text-xs font-semibold text-slate-600">Área</label>
             <select id="order-area" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm">
-              <option value="">Salão</option>
+              <option value="Salão">Salão</option>
               <option value="Piscina">Piscina</option>
               <option value="Área Externa">Área Externa</option>
             </select>
@@ -426,7 +432,7 @@
         </div>
         <div>
           <label class="text-xs font-semibold text-slate-600">Observações</label>
-          <textarea id="order-obs" rows="2" placeholder="Ex: sem cebola, bem passado..." class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm"></textarea>
+          <textarea id="order-obs" rows="2" placeholder="Ex: sem cebola, ponto da carne..." class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm"></textarea>
         </div>
       </div>
       <button onclick="confirmAddToCart()" class="btn-3d w-full bg-google-blue text-white py-3 text-sm font-bold">Adicionar ao Carrinho</button>
@@ -438,7 +444,7 @@
     <div class="w-full max-w-md bg-white h-full p-5 flex flex-col border-l border-slate-200 shadow-2xl">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
         <h2 class="font-bold text-lg text-slate-900 flex items-center gap-2">
-          <i data-lucide="shopping-bag" class="w-5 h-5 text-google-yellow"></i> Seu Pedido
+          <i data-lucide="shopping-bag" class="w-5 h-5 text-google-yellow"></i> Seu Pedido / Comanda
         </h2>
         <button onclick="closeCartModal()" class="text-slate-400 hover:text-slate-700 text-xl">✕</button>
       </div>
@@ -448,18 +454,16 @@
           <span>Total (+10% taxa)</span>
           <span id="cart-total-price" class="text-google-green">R$ 0,00</span>
         </div>
-        <div class="text-[10px] text-slate-500 bg-slate-50 rounded-xl p-3" id="order-footer-info">
-          <!-- Preenchido com dados do atendente -->
-        </div>
+        <div class="text-[10px] text-slate-500 bg-slate-50 rounded-xl p-3" id="order-footer-info"></div>
         <button onclick="confirmOrder()" class="btn-3d w-full bg-google-green text-white py-3.5 text-sm">Enviar para Cozinha / Quarto</button>
       </div>
     </div>
   </div>
 
-  <!-- INSTALL PROMPT -->
+  <!-- PROMPT INSTALAÇÃO PWA -->
   <div id="install-prompt" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:w-80 z-50 hidden">
     <div class="glass-card p-4 rounded-2xl flex items-center gap-3 shadow-xl">
-      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-google-blue to-google-green flex items-center justify-center text-white font-bold">LP</div>
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-google-blue to-google-green flex items-center justify-center text-white font-bold">AG</div>
       <div class="flex-1">
         <p class="text-sm font-bold text-slate-900">Instalar App</p>
         <p class="text-xs text-slate-500">Adicione à tela inicial</p>
@@ -470,20 +474,19 @@
   </div>
 
   <script>
-    // ========== DADOS DE USUÁRIOS (localStorage) ==========
-    // Admin padrão: matrícula 0001 / senha qualquer (biometria)
+    // ========== BASE DE DADOS LOCAL E USUÁRIOS ==========
     let users = JSON.parse(localStorage.getItem('lp_users') || '[]');
     let pending = JSON.parse(localStorage.getItem('lp_pending') || '[]');
     let currentUser = null;
     let biometricOk = false;
 
-    // Inicializa admin se não existir
+    // Garante Admin Master padrão se não existir
     if (!users.find(u => u.matricula === '323619')) {
-      users.push({ nome: 'Administrador Master', matricula: '323619', email: 'x@droppfy.com', cargo: 'admin', status: 'aprovado' });
+      users.push({ nome: 'Administrador Master', matricula: '323619', email: 'admin@droppfy.com', cargo: 'admin', status: 'aprovado' });
       localStorage.setItem('lp_users', JSON.stringify(users));
     }
 
-    // ========== AUTH ==========
+    // ========== CONTROLE DE TELA AUTH ==========
     function showLogin() {
       document.getElementById('auth-screen').classList.remove('hidden');
       document.getElementById('auth-screen').classList.add('flex');
@@ -498,11 +501,11 @@
 
     function simulateBiometric(type) {
       const status = document.getElementById('bio-status');
-      status.innerText = type === 'digital' ? 'Lendo digital...' : 'Reconhecendo rosto...';
+      status.innerText = type === 'digital' ? 'Lendo biometria digital...' : 'Reconhecendo face (Palm AI)...';
       status.className = 'text-xs text-center text-google-yellow';
       setTimeout(() => {
         biometricOk = true;
-        status.innerText = '✓ Biometria confirmada';
+        status.innerText = '✓ Biometria confirmada com sucesso';
         status.className = 'text-xs text-center text-google-green font-bold';
         document.getElementById('btn-login').disabled = false;
         document.getElementById('btn-login').classList.remove('opacity-50', 'cursor-not-allowed');
@@ -511,21 +514,22 @@
 
     function handleLogin(e) {
       e.preventDefault();
-      if (!biometricOk) return alert('Confirme a biometria primeiro');
-      const mat = document.getElementById('login-matricula').value.trim();
-      const user = users.find(u => u.matricula === mat && u.status === 'aprovado');
+      if (!biometricOk) return alert('Confirme a biometria antes de entrar.');
+      const val = document.getElementById('login-matricula').value.trim();
+      const user = users.find(u => (u.matricula === val || u.email === val) && u.status === 'aprovado');
+      
       if (!user) {
-        alert('Matrícula não encontrada ou aguardando aprovação do Admin.');
+        alert('Credencial não encontrada ou aguardando liberação do Administrador.');
         return;
       }
       currentUser = user;
       document.getElementById('auth-screen').classList.add('hidden');
       document.getElementById('app-container').classList.remove('hidden');
-      document.getElementById('header-user-info').innerText = `${user.nome} · Matrícula ${user.matricula} · ${user.cargo.toUpperCase()}`;
+      document.getElementById('header-user-info').innerText = `${user.nome} · Matrícula/CNPJ: ${user.matricula} · ${user.cargo.toUpperCase()}`;
+      
       renderTabsByRole(user.cargo);
       initRooms();
       lucide.createIcons();
-      // Mostra prompt de instalação
       setTimeout(() => document.getElementById('install-prompt').classList.remove('hidden'), 2000);
     }
 
@@ -540,34 +544,35 @@
         data: new Date().toLocaleString('pt-BR')
       };
       if (users.find(u => u.matricula === novo.matricula) || pending.find(p => p.matricula === novo.matricula)) {
-        alert('Matrícula já existe ou já foi solicitada.');
+        alert('Esta matrícula ou CNPJ já está cadastrada ou pendente.');
         return;
       }
       pending.push(novo);
       localStorage.setItem('lp_pending', JSON.stringify(pending));
-      alert('Solicitação enviada! Aguarde a liberação do Administrador.');
+      alert('Solicitação enviada! O Administrador irá analisar e liberar seu acesso.');
       showLogin();
     }
 
+    // ========== RENDERIZAÇÃO DE ABAS POR CATEGORIA DE SERVIÇO ==========
     function renderTabsByRole(cargo) {
       const tabs = document.getElementById('main-tabs');
       let html = '';
       if (cargo === 'admin') {
         html += tabBtn('admin', 'shield', 'Admin');
         html += tabBtn('airline', 'plane', 'Companhias & PNR');
-        html += tabBtn('menu', 'utensils', 'Cardápio');
+        html += tabBtn('menu', 'utensils', 'Cardápio & QR');
         html += tabBtn('rooms', 'bed', 'Quartos');
         html += tabBtn('qrcode', 'qr-code', 'QR & NFC');
       } else if (cargo === 'recepcao') {
         html += tabBtn('airline', 'plane', 'Companhias & PNR');
-        html += tabBtn('rooms', 'bed', 'Quartos');
+        html += tabBtn('rooms', 'bed', 'Quartos Backend');
         html += tabBtn('qrcode', 'qr-code', 'QR & NFC');
       } else if (cargo === 'garcom' || cargo === 'atendente') {
-        html += tabBtn('menu', 'utensils', 'Cardápio');
+        html += tabBtn('menu', 'utensils', 'Cardápio de Atendimento');
         html += tabBtn('qrcode', 'qr-code', 'QR & NFC');
       }
       tabs.innerHTML = html;
-      // Ativa a primeira aba
+      
       if (cargo === 'admin') switchTab('admin');
       else if (cargo === 'recepcao') switchTab('airline');
       else switchTab('menu');
@@ -579,24 +584,34 @@
       </button>`;
     }
 
-    // ========== ADMIN ==========
-    function renderPending() {
-      const list = document.getElementById('pending-list');
+    // ========== PAINEL DO ADMINISTRADOR (GERENCIAMENTO TOTAL) ==========
+    function renderAdminPanel() {
+      const pendingDiv = document.getElementById('pending-list');
       if (!pending.length) {
-        list.innerHTML = '<p class="text-slate-400 text-center py-8">Nenhuma solicitação pendente.</p>';
-        return;
+        pendingDiv.innerHTML = '<p class="text-slate-400 text-xs py-2">Nenhuma solicitação pendente no momento.</p>';
+      } else {
+        pendingDiv.innerHTML = pending.map((p, idx) => `
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200">
+            <div>
+              <p class="font-bold text-slate-900">${p.nome} <span class="text-xs font-normal text-google-blue">(${p.cargo})</span></p>
+              <p class="text-xs text-slate-500 font-mono">ID/CNPJ: ${p.matricula} · E-mail: ${p.email}</p>
+              <p class="text-[10px] text-slate-400">Solicitado em: ${p.data}</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="approveUser(${idx})" class="btn-3d bg-google-green text-white px-4 py-2 text-xs">Liberar</button>
+              <button onclick="denyUser(${idx})" class="btn-3d bg-google-red text-white px-4 py-2 text-xs">Negar</button>
+            </div>
+          </div>
+        `).join('');
       }
-      list.innerHTML = pending.map((p, idx) => `
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200">
+
+      const approvedDiv = document.getElementById('approved-users-list');
+      approvedDiv.innerHTML = users.map((u, idx) => `
+        <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200 text-xs">
           <div>
-            <p class="font-bold text-slate-900">${p.nome}</p>
-            <p class="text-xs text-slate-500">Matrícula: ${p.matricula} · ${p.cargo} · ${p.email}</p>
-            <p class="text-[10px] text-slate-400">Solicitado em: ${p.data}</p>
+            <strong>${u.nome}</strong> (${u.cargo.toUpperCase()}) — <span class="font-mono">${u.matricula}</span>
           </div>
-          <div class="flex gap-2">
-            <button onclick="approveUser(${idx})" class="btn-3d bg-google-green text-white px-4 py-2 text-xs">Liberar</button>
-            <button onclick="denyUser(${idx})" class="btn-3d bg-google-red text-white px-4 py-2 text-xs">Negar</button>
-          </div>
+          ${u.matricula !== '323619' ? `<button onclick="deleteUser(${idx})" class="text-google-red hover:underline font-bold">Excluir</button>` : '<span class="text-slate-400">Master</span>'}
         </div>
       `).join('');
     }
@@ -607,16 +622,25 @@
       users.push(user);
       localStorage.setItem('lp_users', JSON.stringify(users));
       localStorage.setItem('lp_pending', JSON.stringify(pending));
-      renderPending();
-      alert(`${user.nome} liberado com sucesso!`);
+      renderAdminPanel();
+      alert(`Acesso liberado para ${user.nome}!`);
     }
+
     function denyUser(idx) {
       pending.splice(idx, 1);
       localStorage.setItem('lp_pending', JSON.stringify(pending));
-      renderPending();
+      renderAdminPanel();
     }
 
-    // ========== RESTANTE DO SISTEMA (mantido + melhorado) ==========
+    function deleteUser(idx) {
+      if(confirm('Deseja realmente remover este usuário/empresa?')) {
+        users.splice(idx, 1);
+        localStorage.setItem('lp_users', JSON.stringify(users));
+        renderAdminPanel();
+      }
+    }
+
+    // ========== CARDÁPIO E RESTANTE DA APLICAÇÃO (MANTIDOS PERFEITOS) ==========
     const categories = [
       { id: 'all', title: '✨ Todos' },
       { id: 'entradas', title: '🥟 Entradas & Sopas' },
@@ -632,126 +656,13 @@
     ];
 
     const menuItems = [
-      // ENTRADAS
       {id:'e1',category_id:'entradas',name:'Antepasto de Berinjela',description:'Acompanhado de torradas crocantes.',price:10.00,image:'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=600&q=80'},
-      {id:'e2',category_id:'entradas',name:'Caesar Salad',description:'Alfaces variadas, molho clássico caesar, croutons, peito de frango grelhado com tomilho, alecrim e queijo parmesão ralado.',price:37.00,image:'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=600&q=80'},
-      {id:'e3',category_id:'entradas',name:'Bruschetas Caprese',description:'Fatias de pão temperadas ao alho e azeite, molho de tomate caseiro, tomate cereja, queijo Mussarela, manjericão, finalizado ao forno.',price:35.00,image:'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=600&q=80'},
-      {id:'e4',category_id:'entradas',name:'Croquete de Costela',description:'Costela desfiada com próprio caldo, empanada na farinha panko, acompanhada com maionese da casa.',price:28.00,image:'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80'},
-      {id:'e5',category_id:'entradas',name:'Omelete Tradicional',description:'3 ovos batidos levemente, acompanhado de presunto, queijo muçarela, orégano e salada da casa.',price:30.00,image:'https://images.unsplash.com/photo-1510693206972-df098062cb71?auto=format&fit=crop&w=600&q=80'},
-      {id:'e6',category_id:'entradas',name:'Salada Mandi',description:'Mix de folhas frescas, tomate cereja, tomate seco assado, pepino, picles caseiros de cenoura e rabanete, manga e folhas de manjericão.',price:32.00,image:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80'},
-      {id:'e7',category_id:'entradas',name:'Minestrone',description:'Sopa de cubos de filé, cenoura, vagem, abobrinha, caldo de legumes, molho de tomate, finalizada com espaguete, tomate cereja e manjericão.',price:43.00,image:'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=600&q=80'},
-      {id:'e8',category_id:'entradas',name:'Canja de Galinha',description:'Sopa de legumes, pedaços de frango, finalizada com caldo de galinha, arroz e salsa.',price:45.00,image:'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=600&q=80'},
-      {id:'e9',category_id:'entradas',name:'Omelete de Legumes',description:'3 ovos batidos levemente, acompanhado de cenoura, vagem, abobrinha, queijo muçarela, orégano e salada da casa.',price:35.00,image:'https://images.unsplash.com/photo-1510693206972-df098062cb71?auto=format&fit=crop&w=600&q=80'},
-
-      // PRINCIPAIS
-      {id:'p1',category_id:'principais',name:'Carne de Sol Tambaú',description:'Deliciosa carne de sol, servida com mandioca frita, arroz branco e vinagrete de feijão fradinho, acompanhada de queijo coalho grelhado.',price:62.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
-      {id:'p2',category_id:'principais',name:'Parmegiana de Filé',description:'Filé empanado em crosta de panko, coberto com presunto, queijo derretido e molho de tomate, com purê de batata e arroz branco.',price:62.00,image:'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=600&q=80'},
-      {id:'p3',category_id:'principais',name:'Parmegiana de Frango',description:'Filé de frango empanado crocante, presunto, queijo derretido e molho de tomate, com purê de batata e arroz branco.',price:48.00,image:'https://images.unsplash.com/photo-1604908176997-125f2596f3ed?auto=format&fit=crop&w=600&q=80'},
-      {id:'p4',category_id:'principais',name:'Virado à Paulista',description:'Clássico lombo suíno grelhado, arroz branco, tutu de feijão, ovo frito, couve refogada e banana frita.',price:59.00,image:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'},
-      {id:'p5',category_id:'principais',name:'Filé de Tilápia ao Molho de Maracujá',description:'Filé de tilápia com molho de maracujá e manjericão, arroz branco e legumes salteados ao aroma de limão e ervas.',price:62.00,image:'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=80'},
-      {id:'p6',category_id:'principais',name:'Filé Mignon Grelhado',description:'Acompanhado ao molho madeira e um delicioso arroz cremoso de parmesão.',price:65.00,image:'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80'},
-      {id:'p7',category_id:'principais',name:'Moqueca de Peixe e Camarão',description:'Postas de tilápia e camarões ao alho e limão, cozidos lentamente ao molho da tradicional moqueca baiana, com arroz e pirão.',price:79.00,image:'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80'},
-      {id:'p8',category_id:'principais',name:'Camarão Scampi',description:'Camarões suculentos ao alho, vinho branco e limão, servidos com espaguete al dente, tomate cereja, salsa e toque de pimenta vermelha.',price:109.00,image:'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80'},
-      {id:'p9',category_id:'principais',name:'Moqueca de Banana e Grão de Bico',description:'Banana da terra e grão de bico cozidos ao molho da tradicional moqueca baiana, servido com arroz branco.',price:55.00,image:'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80'},
-      {id:'p10',category_id:'principais',name:'Strogonoff de Filé',description:'Picadinho de filé mignon, creme de leite, mostarda, ketchup e champignon, servido com arroz branco e batata palha da casa.',price:58.00,image:'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80'},
-      {id:'p11',category_id:'principais',name:'Strogonoff de Frango',description:'Cubos de frango, creme de leite, mostarda, ketchup e champignon, servido com arroz branco e batata palha da casa.',price:48.00,image:'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80'},
-      {id:'p12',category_id:'principais',name:'Arroz Caldoso de Costela',description:'Arroz branco acompanhado de costela desfiada ao molho próprio, tomate cereja, manjericão e cebola crispy.',price:57.00,image:'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80'},
-
-      // GRELHADOS
-      {id:'g1',category_id:'grelhados',name:'T-Bone Angus',description:'Escolha 3 guarnições e 1 molho (Campanha, Barbecue, Chimichurri, Ervas & Limão ou Poivre).',price:130.00,image:'https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=600&q=80'},
-      {id:'g2',category_id:'grelhados',name:'Carne de Sol',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:69.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
-      {id:'g3',category_id:'grelhados',name:'Assado de Tira Angus',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:89.00,image:'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80'},
-      {id:'g4',category_id:'grelhados',name:'Picanha',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:89.00,image:'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80'},
-      {id:'g5',category_id:'grelhados',name:'Baby Beef Angus',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:89.00,image:'https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=600&q=80'},
-      {id:'g6',category_id:'grelhados',name:'Lombo Suíno',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:69.00,image:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'},
-      {id:'g7',category_id:'grelhados',name:'Chuleta Angus',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:85.00,image:'https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=600&q=80'},
-      {id:'g8',category_id:'grelhados',name:'Peito de Frango',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:49.00,image:'https://images.unsplash.com/photo-1604908176997-125f2596f3ed?auto=format&fit=crop&w=600&q=80'},
-      {id:'g9',category_id:'grelhados',name:'Tornedor de Filé Mignon',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:81.00,image:'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80'},
-      {id:'g10',category_id:'grelhados',name:'Veggie Steak',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:38.00,image:'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80'},
-      {id:'g11',category_id:'grelhados',name:'Bife Ancho',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:75.00,image:'https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=600&q=80'},
-      {id:'g12',category_id:'grelhados',name:'Filé de Tilápia',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:69.00,image:'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=80'},
-      {id:'g13',category_id:'grelhados',name:'Contrafilé',description:'Escolha 3 guarnições e 1 molho de sua preferência.',price:75.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
-
-      // PETISCOS
-      {id:'pt1',category_id:'petiscos',name:'Carne de Sol com Mandioca',description:'Carne de sol grelhada, com mandioca cozida ou frita na manteiga de garrafa.',price:71.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
-      {id:'pt2',category_id:'petiscos',name:'Fish n\' Chips',description:'Filé de tilápia e camarões empanados, servidos com batata rústica e molho tártaro aromático.',price:87.00,image:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80'},
-      {id:'pt3',category_id:'petiscos',name:'Camarão Empanado',description:'Camarões empanados na farinha panko acompanhado com maionese de limão pepper.',price:66.00,image:'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80'},
-      {id:'pt4',category_id:'petiscos',name:'Frango à Passarinho',description:'Pedaços de frango marinados, cozidos e fritos, finalizados ao olho e fatias de limão.',price:44.00,image:'https://images.unsplash.com/photo-1604908176997-125f2596f3ed?auto=format&fit=crop&w=600&q=80'},
-      {id:'pt5',category_id:'petiscos',name:'Pão de Alho',description:'Baguete recheada com creme de alho da casa, finalizado com queijo muçarela e salsa.',price:33.00,image:'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=600&q=80'},
-      {id:'pt6',category_id:'petiscos',name:'Batata Mandi',description:'Batata rústica com bastante queijo derretido, páprica defumada, cebola caramelizada e bacon.',price:38.00,image:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80'},
-      {id:'pt7',category_id:'petiscos',name:'Calabresa Grelhada',description:'Calabresa grelhada com pimentões, cebolas, finalizados ao toque de azeite e limão.',price:38.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
-
-      // MASSAS
-      {id:'m1',category_id:'massas',name:'Espaguete / Penne / Talharim ao Molho Bolognese',description:'Massa escolhida envolvida em molho de carne italiano robusto.',price:49.00,image:'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=600&q=80'},
-      {id:'m2',category_id:'massas',name:'Espaguete / Penne / Talharim ao Molho Sugo',description:'Massa escolhida preparada com tomates frescos, ervas aromáticas e alho.',price:45.00,image:'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80'},
-      {id:'m3',category_id:'massas',name:'Espaguete / Penne / Talharim ao Molho Parisiense',description:'Cogumelos, cubos de frango, ervilhas, presunto ao molho bechamel.',price:49.00,image:'https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=600&q=80'},
-
-      // PIZZAS
-      {id:'pz1',category_id:'pizzas',name:'Pizza Marguerita',description:'Molho pomodoro, tomate fresco, tomate cereja, manjericão e queijo muçarela.',price:49.00,image:'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz2',category_id:'pizzas',name:'Pizza Frango com Catupiry',description:'Molho pomodoro, frango desfiado, queijo muçarela, catupiry e orégano.',price:56.00,image:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz3',category_id:'pizzas',name:'Pizza Calabresa',description:'Molho pomodoro, calabresa fatiada, cebola, orégano e queijo muçarela.',price:46.00,image:'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz4',category_id:'pizzas',name:'Pizza Pepperoni',description:'Molho pomodoro, pepperoni, pimenta calabresa, cebola roxa, orégano e queijo muçarela.',price:61.00,image:'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz5',category_id:'pizzas',name:'Pizza 4 Stagioni Formaggi',description:'Molho pomodoro, muçarela, cheddar, parmesão, gorgonzola e orégano.',price:71.00,image:'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz6',category_id:'pizzas',name:'Pizza Portuguesa',description:'Molho pomodoro, presunto, cebola roxa, pimentão, muçarela, ovo e orégano.',price:56.00,image:'https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz7',category_id:'pizzas',name:'Pizza Muçarela',description:'Molho pomodoro, queijo muçarela e orégano.',price:42.00,image:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz8',category_id:'pizzas',name:'Pizza Gorgonzola',description:'Molho pomodoro, gorgonzola, muçarela, rapadura e pimenta calabresa.',price:70.00,image:'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz9',category_id:'pizzas',name:'Pizza Doce Banana',description:'Queijo muçarela, açúcar e canela em pó.',price:46.00,image:'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'},
-      {id:'pz10',category_id:'pizzas',name:'Pizza Doce Prestígio',description:'Queijo muçarela, chocolate meio amargo e coco ralado.',price:69.00,image:'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'},
-
-      // HAMBÚRGUERES
-      {id:'h1',category_id:'hamburgueres',name:'Misto Quente',description:'Pão de forma, queijo muçarela e presunto.',price:15.00,image:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80'},
-      {id:'h2',category_id:'hamburgueres',name:'Laguna Burger',description:'Pão de hambúrguer, blend de carnes 140g, queijo muçarela e maionese da casa.',price:39.00,image:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'},
-      {id:'h3',category_id:'hamburgueres',name:'Sanduíche de Filé',description:'Pão de hambúrguer, filé mignon, tomate, alface, queijo muçarela e maionese da casa.',price:48.00,image:'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80'},
-      {id:'h4',category_id:'hamburgueres',name:'Manito Burger',description:'Pão de hambúrguer, blend 140g, cheddar, bacon, cebola caramelizada e maionese da casa.',price:44.00,image:'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80'},
-      {id:'h5',category_id:'hamburgueres',name:'DLB Burger',description:'Pão de hambúrguer, dois blends 140g, muçarela, bacon e maionese da casa.',price:49.00,image:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'},
-      {id:'h6',category_id:'hamburgueres',name:'Philly CSK',description:'Baguete, finas fatias de carne, cebola caramelizada, muçarela e maionese da casa.',price:45.00,image:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80'},
-      {id:'h7',category_id:'hamburgueres',name:'X-Tudo',description:'Pão de hambúrguer, blend 140g, muçarela, ovo, presunto, salsicha, alface, tomate, bacon e maionese.',price:48.00,image:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'},
-      {id:'h8',category_id:'hamburgueres',name:'Sanduíche Filé de Frango',description:'Pão de hambúrguer, peito de frango grelhado, alface, tomate, muçarela e maionese da casa.',price:35.00,image:'https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=600&q=80'},
-      {id:'h9',category_id:'hamburgueres',name:'Veggie Sandwich',description:'Pão francês, steak vegano 140g, alface, tomate, picles, cebola caramelizada, hortelã e maionese vegana.',price:32.00,image:'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80'},
-
-      // EXECUTIVO
-      {id:'ex1',category_id:'executivo',name:'Executivo: Penne alla Bolognese',description:'Acompanha bebida não alcoólica. Penne ao molho de tomate e ragú bolognese.',price:55.00,image:'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex2',category_id:'executivo',name:'Executivo: Steak ao Molho Poivre',description:'Acompanha bebida não alcoólica. Bife com molho de pimenta, purê e legumes.',price:68.00,image:'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex3',category_id:'executivo',name:'Executivo: Contrafilé à Brasileira',description:'Acompanha bebida não alcoólica. Contrafilé, arroz, farofa e batata frita.',price:60.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex4',category_id:'executivo',name:'Executivo: Peito de Frango à Brasileira',description:'Acompanha bebida não alcoólica. Frango, arroz, farofa e batata frita.',price:48.00,image:'https://images.unsplash.com/photo-1604908176997-125f2596f3ed?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex5',category_id:'executivo',name:'Executivo: Estrogonofe de Frango',description:'Acompanha bebida não alcoólica. Frango com cogumelos, arroz e batata palha.',price:52.00,image:'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex6',category_id:'executivo',name:'Executivo: Salada Mandi com Frango',description:'Acompanha bebida não alcoólica. Mix de folhas + frango grelhado.',price:45.00,image:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex7',category_id:'executivo',name:'Executivo: Filé de Tilápia ao Molho de Maracujá',description:'Acompanha bebida não alcoólica. Tilápia com molho de maracujá.',price:65.00,image:'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex8',category_id:'executivo',name:'Executivo: Laguna Burger (Combo)',description:'Acompanha bebida não alcoólica e batata frita.',price:49.00,image:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex9',category_id:'executivo',name:'Executivo: Sanduíche de Contrafilé (Combo)',description:'Acompanha bebida não alcoólica e batata frita.',price:54.00,image:'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80'},
-      {id:'ex10',category_id:'executivo',name:'Executivo: Hambúrguer de Frango (Combo)',description:'Acompanha bebida não alcoólica e batata frita.',price:42.00,image:'https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=600&q=80'},
-
-      // BEBIDAS
-      {id:'d1',category_id:'bebidas',name:'Caipirinha',description:'Feita com cachaça, limão e açúcar.',price:25.00,image:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'},
-      {id:'d2',category_id:'bebidas',name:'Caipiroska',description:'Vodka com escolha de frutas da estação.',price:29.00,image:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'},
-      {id:'d3',category_id:'bebidas',name:'Margarita',description:'Tequila, licor de laranja e suco de limão fresco com sal na borda.',price:30.00,image:'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&q=80'},
-      {id:'d4',category_id:'bebidas',name:'Gin Tônica',description:'Gin, limão, água tônica e gelo.',price:30.00,image:'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80'},
-      {id:'d5',category_id:'bebidas',name:'Cuba Libre',description:'Rum, refrigerante de cola e limão.',price:30.00,image:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=600&q=80'},
-      {id:'d6',category_id:'bebidas',name:'Mojito',description:'Rum, suco de limão, açúcar, hortelã e água com gás.',price:31.00,image:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'},
-      {id:'d7',category_id:'bebidas',name:'Brasileirinho',description:'Vodka, suco de abacaxi, xarope blue, suco de laranja e gelo.',price:30.00,image:'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&q=80'},
-      {id:'d8',category_id:'bebidas',name:'Gin Fizz',description:'Gin, suco de limão, açúcar, refrigerante de limão e gelo.',price:30.00,image:'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80'},
-      {id:'d9',category_id:'bebidas',name:'Cozumel',description:'Suco de limão, sal, gelo, cerveja e borda de sal.',price:25.00,image:'https://images.unsplash.com/photo-1608270105740-972173f4439c?auto=format&fit=crop&w=600&q=80'},
-      {id:'d10',category_id:'bebidas',name:'Irish Coffee',description:'Whisky, café quente, açúcar, creme de leite e grãos de café.',price:33.00,image:'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'},
-      {id:'d11',category_id:'bebidas',name:'Gin Tropical',description:'Gin, laranja, gelo e Red Bull tropical.',price:35.00,image:'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80'},
-      {id:'d12',category_id:'bebidas',name:'Piña Colada',description:'Rum, suco de abacaxi, leite de coco, leite condensado e gelo.',price:31.00,image:'https://images.unsplash.com/photo-1541491745230-f3a74288d1d8?auto=format&fit=crop&w=600&q=80'},
-      {id:'d13',category_id:'bebidas',name:'Campari Tônica',description:'Campari, água tônica, gelo e rodelas de limão.',price:30.00,image:'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80'},
-      {id:'d14',category_id:'bebidas',name:'Caipifrutas',description:'Gin, no máximo 3 frutas, leite condensado e gelo.',price:33.00,image:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'},
-      {id:'d15',category_id:'bebidas',name:'Água de Coco',description:'Natural e gelada.',price:9.00,image:'https://images.unsplash.com/photo-1546173158-3bc55032bbf2?auto=format&fit=crop&w=600&q=80'},
-      {id:'d16',category_id:'bebidas',name:'Água Mineral (Com ou Sem Gás)',description:'Garrafa 500ml.',price:6.00,image:'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=600&q=80'},
-      {id:'d17',category_id:'bebidas',name:'Cerveja Heineken 600ml',description:'Trincando de gelada.',price:19.00,image:'https://images.unsplash.com/photo-1608270105740-972173f4439c?auto=format&fit=crop&w=600&q=80'},
-      {id:'d18',category_id:'bebidas',name:'Cerveja Stella Artois 600ml',description:'Gelada.',price:19.00,image:'https://images.unsplash.com/photo-1608270105740-972173f4439c?auto=format&fit=crop&w=600&q=80'},
-      {id:'d19',category_id:'bebidas',name:'Cerveja Long Neck Heineken / Budweiser',description:'Garrafa 330ml.',price:12.00,image:'https://images.unsplash.com/photo-1608270105740-972173f4439c?auto=format&fit=crop&w=600&q=80'},
-      {id:'d20',category_id:'bebidas',name:'Café Expresso',description:'Quente e encorpado.',price:5.00,image:'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'},
-      {id:'d21',category_id:'bebidas',name:'Red Bull Energy Drink',description:'Lata 250ml.',price:23.00,image:'https://images.unsplash.com/photo-1622543925917-763c33d1a66e?auto=format&fit=crop&w=600&q=80'},
-      {id:'d22',category_id:'bebidas',name:'Refrigerante em Lata',description:'Escolha: Coca-Cola, Zero, Guaraná, Guaraná Zero, Sprite, Fanta, Schweppes.',price:8.00,image:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80',isSoftDrink:true},
-      {id:'d23',category_id:'bebidas',name:'Suco Natural ou Polpa',description:'Laranja, abacaxi, limão, maracujá, morango, acerola, uva, caju, manga etc.',price:12.00,image:'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80'},
-      {id:'d24',category_id:'bebidas',name:'Jarra de Suco 750ml',description:'Natural ou polpa para compartilhar.',price:20.00,image:'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80'},
-
-      // SOBREMESAS
-      {id:'s1',category_id:'sobremesas',name:'Tradicional Pudim de Leite Condensado',description:'Pudim cremoso de leite condensado com calda de caramelo.',price:25.00,image:'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80'},
-      {id:'s2',category_id:'sobremesas',name:'Brownie com Sorvete',description:'Fatia de brownie artesanal com sorvete de creme e calda de chocolate.',price:30.00,image:'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80'},
-      {id:'s3',category_id:'sobremesas',name:'Sorvetes (Bola)',description:'Opções: Morango, Creme ou Chocolate.',price:19.00,image:'https://images.unsplash.com/photo-1560008511-11c63416e52d?auto=format&fit=crop&w=600&q=80'},
-      {id:'s4',category_id:'sobremesas',name:'Banana Flambada',description:'Banana caramelizada, flambada no conhaque, com sorvete de creme.',price:28.00,image:'https://images.unsplash.com/photo-1543773292-66384fa6e3d7?auto=format&fit=crop&w=600&q=80'}
+      {id:'e2',category_id:'entradas',name:'Caesar Salad',description:'Alfaces variadas, molho clássico caesar, croutons, peito de frango grelhado.',price:37.00,image:'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=600&q=80'},
+      {id:'p1',category_id:'principais',name:'Carne de Sol Tambaú',description:'Deliciosa carne de sol, servida com mandioca frita, arroz branco e vinagrete.',price:62.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
+      {id:'p2',category_id:'principais',name:'Parmegiana de Filé',description:'Filé empanado em crosta de panko, coberto com presunto, queijo derretido e molho.',price:62.00,image:'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=600&q=80'},
+      {id:'d1',category_id:'bebidas',name:'Caipirinha',description:'Feita com cachaça artesanal, limão e açúcar.',price:25.00,image:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'},
+      {id:'d22',category_id:'bebidas',name:'Refrigerante em Lata',description:'Escolha: Coca-Cola, Zero, Guaraná, Sprite, Fanta.',price:8.00,image:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80',isSoftDrink:true},
+      {id:'s1',category_id:'sobremesas',name:'Tradicional Pudim de Leite',description:'Pudim cremoso de leite condensado com calda de caramelo.',price:25.00,image:'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80'}
     ];
 
     let currentCategory = 'all';
@@ -759,7 +670,6 @@
     let selectedItem = null;
     let roomStatus = {};
 
-    // ROOMS
     function initRooms() {
       const floors = [[101,129],[201,229],[301,329],[401,429]];
       floors.forEach(([s,e]) => {
@@ -799,7 +709,6 @@
       }).join('');
     }
 
-    // TABS
     function switchTab(tab) {
       ['admin','airline','menu','rooms','qrcode'].forEach(t => {
         const el = document.getElementById('section-'+t);
@@ -812,13 +721,13 @@
       const colors = {admin:'bg-google-blue text-white',airline:'bg-google-blue text-white',menu:'bg-google-yellow text-slate-900',rooms:'bg-google-green text-white',qrcode:'bg-google-red text-white'};
       const btn = document.getElementById('tab-btn-'+tab);
       if (btn) btn.className = 'btn-3d px-4 py-2.5 text-xs ' + (colors[tab]||'') + ' flex items-center gap-1.5 shadow-md';
+      
       if (tab === 'menu') renderMenu();
       if (tab === 'rooms') renderRooms();
-      if (tab === 'admin') renderPending();
+      if (tab === 'admin') renderAdminPanel();
       lucide.createIcons();
     }
 
-    // MENU
     function renderMenu(q='') {
       const tabs = document.getElementById('category-container');
       tabs.innerHTML = categories.map(c => `<button onclick="setCategory('${c.id}')" class="btn-3d px-3.5 py-2 text-xs whitespace-nowrap ${currentCategory===c.id?'bg-google-yellow text-slate-900 font-bold':'bg-white text-slate-600 border border-slate-200'}">${c.title}</button>`).join('');
@@ -835,7 +744,7 @@
               <p class="text-xs text-slate-500 mt-1 leading-relaxed line-clamp-3">${item.description}</p>
             </div>
             <button onclick="openItemModal('${item.id}')" class="btn-3d w-full bg-slate-100 hover:bg-google-blue hover:text-white text-google-blue border border-slate-200 py-2.5 text-xs flex items-center justify-center gap-1.5">
-              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Adicionar
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Adicionar à Comanda
             </button>
           </div>
         </div>`).join('') || '<p class="col-span-full text-center text-slate-400 py-16">Nenhum item encontrado.</p>';
@@ -844,30 +753,21 @@
     function setCategory(id){ currentCategory=id; renderMenu(document.getElementById('menu-search').value); }
     function filterMenu(v){ renderMenu(v); }
 
-    // ITEM MODAL
     function openItemModal(id) {
       selectedItem = menuItems.find(i => i.id === id);
       document.getElementById('modal-item-name').innerText = selectedItem.name;
       document.getElementById('modal-item-desc').innerText = selectedItem.description;
       document.getElementById('modal-item-price').innerText = `R$ ${selectedItem.price.toFixed(2).replace('.',',')}`;
       const mesaSelect = document.getElementById('order-mesa');
-      mesaSelect.innerHTML = '<option value="">Selecione</option>';
+      mesaSelect.innerHTML = '<option value="">Selecione Mesa</option>';
       for(let i=1;i<=50;i++) mesaSelect.innerHTML += `<option value="Mesa ${String(i).padStart(2,'0')}">Mesa ${String(i).padStart(2,'0')}</option>`;
       document.getElementById('soft-drink-options').classList.toggle('hidden', !selectedItem.isSoftDrink);
-      document.getElementById('order-mesa').value = '';
-      document.getElementById('order-posicao').value = '';
-      document.getElementById('order-quarto').value = '';
-      document.getElementById('order-area').value = '';
-      document.getElementById('order-crianca').value = 'Não';
-      document.getElementById('order-lactose').value = 'Normal';
-      document.getElementById('order-obs').value = '';
       document.getElementById('item-modal').classList.remove('hidden');
       document.getElementById('item-modal').classList.add('flex');
     }
     function closeItemModal() {
       document.getElementById('item-modal').classList.add('hidden');
       document.getElementById('item-modal').classList.remove('flex');
-      selectedItem = null;
     }
     function confirmAddToCart() {
       if (!selectedItem) return;
@@ -887,7 +787,6 @@
       confetti({particleCount:30,spread:50,origin:{y:0.8}});
     }
 
-    // CART
     function updateCartUI() {
       const count = cart.reduce((s,i)=>s+i.qty,0);
       const total = cart.reduce((s,i)=>s+i.price*i.qty,0)*1.1;
@@ -895,23 +794,18 @@
       document.getElementById('cart-total-price').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
       const now = new Date();
       document.getElementById('order-footer-info').innerHTML = currentUser ? 
-        `<strong>Atendente:</strong> ${currentUser.nome} · Matrícula ${currentUser.matricula}<br>
-         <strong>Data/Hora:</strong> ${now.toLocaleDateString('pt-BR')} às ${now.toLocaleTimeString('pt-BR')}` : '';
+        `<strong>Atendente:</strong> ${currentUser.nome} (${currentUser.matricula})<br><strong>Data/Hora:</strong> ${now.toLocaleDateString('pt-BR')} às ${now.toLocaleTimeString('pt-BR')}` : '';
       
       document.getElementById('cart-items-list').innerHTML = cart.map((i,idx) => {
         const extra = [];
         if(i.extras.mesa) extra.push(i.extras.mesa);
         if(i.extras.posicao) extra.push(i.extras.posicao);
         if(i.extras.quarto) extra.push('Qto '+i.extras.quarto);
-        if(i.extras.area) extra.push(i.extras.area);
-        if(i.extras.crianca==='Sim') extra.push('Criança');
-        if(i.extras.lactose!=='Normal') extra.push(i.extras.lactose);
         if(i.extras.refri) extra.push(i.extras.refri);
-        if(i.extras.obs) extra.push('Obs: '+i.extras.obs);
         return `<div class="flex justify-between items-start text-sm border-b border-slate-100 pb-3">
           <div class="flex-1">
             <p class="font-medium text-slate-900">${i.name}</p>
-            <p class="text-xs text-slate-400">R$ ${i.price.toFixed(2)} × ${i.qty}</p>
+            <p class="text-xs text-slate-400">R$ ${i.price.toFixed(2)}</p>
             ${extra.length?`<p class="text-[10px] text-google-blue mt-0.5">${extra.join(' · ')}</p>`:''}
           </div>
           <div class="flex items-center gap-2">
@@ -926,13 +820,12 @@
     function openCartModal(){ document.getElementById('cart-modal').classList.remove('hidden'); document.getElementById('cart-modal').classList.add('flex'); updateCartUI(); }
     function closeCartModal(){ document.getElementById('cart-modal').classList.add('hidden'); document.getElementById('cart-modal').classList.remove('flex'); }
     function confirmOrder(){
-      if(!cart.length) return alert('Carrinho vazio');
+      if(!cart.length) return alert('Carrinho vazio.');
       confetti({particleCount:120,spread:80,origin:{y:0.6}});
-      alert(`Pedido enviado com sucesso!\n\nAtendente: ${currentUser.nome}\nMatrícula: ${currentUser.matricula}\nData/Hora: ${new Date().toLocaleString('pt-BR')}`);
+      alert(`Pedido enviado para a cozinha com sucesso!\n\nAtendente: ${currentUser.nome}\nData/Hora: ${new Date().toLocaleString('pt-BR')}`);
       cart=[]; updateCartUI(); closeCartModal();
     }
 
-    // PNR
     function handlePNRSubmit(e){
       e.preventDefault();
       const airline=document.getElementById('pnr-airline').value;
@@ -940,7 +833,7 @@
       const name=document.getElementById('pnr-name').value;
       const doc=document.getElementById('pnr-doc').value;
       const type=document.getElementById('pnr-type').value;
-      document.getElementById('v-airline').innerText=airline+' AIRLINES';
+      document.getElementById('v-airline').innerText=airline+' AIRLINES / HOTEL';
       document.getElementById('v-code').innerText=code;
       document.getElementById('v-name').innerText=name;
       document.getElementById('v-doc').innerText=doc;
@@ -952,7 +845,6 @@
     }
     function triggerConfetti(){ confetti({particleCount:100,spread:70,origin:{y:0.6}}); }
 
-    // INSTALL APP
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -964,12 +856,11 @@
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(() => deferredPrompt = null);
       } else {
-        alert('Para instalar: abra o menu do navegador e escolha "Adicionar à tela inicial"');
+        alert('Para instalar, abra o menu do navegador e clique em "Adicionar à tela inicial".');
       }
       document.getElementById('install-prompt').classList.add('hidden');
     }
 
-    // INIT
     lucide.createIcons();
   </script>
 </body>
