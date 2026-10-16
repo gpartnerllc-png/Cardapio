@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>Âmbari &amp; Gastronomia | Next-Gen Hospitality</title>
+  <title>Mandaka &amp; Âmbari | Smart Hospitality &amp; Q-Commerce</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -15,7 +15,8 @@
       theme: {
         extend: {
           colors: {
-            google: { blue: '#4285F4', red: '#EA4335', yellow: '#FBBC05', green: '#34A853' }
+            google: { blue: '#4285F4', red: '#EA4335', yellow: '#FBBC05', green: '#34A853' },
+            mandaka: { dark: '#1e1b18', orange: '#d97706', red: '#b91c1c' }
           }
         }
       }
@@ -26,15 +27,15 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
-    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: linear-gradient(135deg, #f0f7ff 0%, #fff8f0 50%, #f0fff4 100%); min-height: 100vh; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: linear-gradient(135deg, #fef3c7 0%, #fff7ed 50%, #f0fdf4 100%); min-height: 100vh; }
     .glass-card {
-      background: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.9);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255,255,255,0.9);
-      box-shadow: 0 20px 40px -12px rgba(66,133,244,0.18);
+      box-shadow: 0 20px 40px -12px rgba(217,119,6,0.15);
       transition: all 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
     }
-    .glass-card:hover { transform: translateY(-6px); box-shadow: 0 30px 50px -15px rgba(66,133,244,0.25); }
+    .glass-card:hover { transform: translateY(-4px); box-shadow: 0 25px 45px -12px rgba(217,119,6,0.25); }
     .btn-3d {
       border-radius: 9999px; font-weight: 700;
       box-shadow: 0 6px 0 rgba(0,0,0,0.12), 0 10px 20px rgba(0,0,0,0.1);
@@ -42,9 +43,9 @@
     }
     .btn-3d:active { top: 4px; box-shadow: 0 2px 0 rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08); }
     .voucher-card {
-      background: linear-gradient(145deg, #ffffff, #f8fafc);
-      border: 2px solid #4285F4;
-      box-shadow: 0 25px 50px -12px rgba(66,133,244,0.35);
+      background: linear-gradient(145deg, #ffffff, #fffbeb);
+      border: 2px solid #d97706;
+      box-shadow: 0 25px 50px -12px rgba(217,119,6,0.35);
     }
     .room-btn { cursor: pointer; transition: all 0.2s; }
     .room-btn:hover { transform: scale(1.05); }
@@ -58,18 +59,18 @@
 <body class="text-slate-800 antialiased">
 
   <!-- ==================== TELA DE LOGIN ==================== -->
-  <div id="auth-screen" class="fixed inset-0 z-[100] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+  <div id="auth-screen" class="fixed inset-0 z-[100] bg-gradient-to-br from-slate-900 via-amber-950 to-slate-900 flex items-center justify-center p-4">
     <div class="glass-card max-w-md w-full p-8 rounded-3xl text-center space-y-5">
-      <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-google-blue via-google-red to-google-yellow flex items-center justify-center text-white text-3xl font-black shadow-xl">AG</div>
+      <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 flex items-center justify-center text-white text-3xl font-black shadow-xl">MK</div>
       <div>
-        <h1 class="text-2xl font-extrabold text-slate-900">Âmbari &amp; Gastronomia</h1>
-        <p class="text-sm text-slate-500 mt-1">Acesso por Matrícula / CNPJ + Biometria</p>
+        <h1 class="text-2xl font-extrabold text-slate-900">Mandaka &amp; Âmbari</h1>
+        <p class="text-sm text-slate-500 mt-1">SmartPOS, Comandas &amp; Acesso Biométrico</p>
       </div>
 
       <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4 text-left">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Matrícula (Colaboradores) ou CNPJ (Empresas/Hoteis)</label>
-          <input type="text" id="login-matricula" required placeholder="Ex: 323619 ou 00.000.000/0001-00" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Matrícula (Garçom/Atendente) ou CNPJ (Empresa/Hotel)</label>
+          <input type="text" id="login-matricula" required placeholder="Ex: 323619 ou 00.000.000/0001-00" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-500/40" />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -77,56 +78,55 @@
             <i data-lucide="fingerprint" class="w-4 h-4"></i> Digital
           </button>
           <button type="button" onclick="simulateBiometric('facial')" class="btn-3d bg-slate-100 text-slate-700 py-3 text-xs flex items-center justify-center gap-1.5">
-            <i data-lucide="scan-face" class="w-4 h-4"></i> Facial
+            <i data-lucide="scan-face" class="w-4 h-4"></i> Facial / Palm AI
           </button>
         </div>
         <p id="bio-status" class="text-xs text-center text-slate-500">Aguardando biometria...</p>
 
-        <button type="submit" id="btn-login" disabled class="btn-3d w-full bg-gradient-to-r from-google-blue to-google-green text-white font-bold py-3.5 opacity-50 cursor-not-allowed">
+        <button type="submit" id="btn-login" disabled class="btn-3d w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white font-bold py-3.5 opacity-50 cursor-not-allowed">
           Entrar no Sistema
         </button>
       </form>
 
       <div class="pt-3 border-t border-slate-200 space-y-3">
-        <button onclick="showRegister()" class="text-sm text-google-blue font-semibold hover:underline">Solicitar Acesso / Cadastro (Hotel, Pousada, Garçom)</button>
+        <button onclick="showRegister()" class="text-sm text-amber-700 font-semibold hover:underline">Solicitar Acesso / Cadastro (Garçons, Hotéis, Pousadas)</button>
         <div>
-          <p class="text-xs text-slate-500 mb-2">Cliente? Escaneie o QR do Cardápio</p>
+          <p class="text-xs text-slate-500 mb-2">Cliente? Escaneie o QR Code do Cardápio na Mesa</p>
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://cardapio.droppfy.com" alt="QR Público" class="mx-auto rounded-xl border border-slate-200" />
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TELA DE CADASTRO / SOLICITAÇÃO -->
-  <div id="register-screen" class="fixed inset-0 z-[100] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 hidden items-center justify-center p-4">
+  <!-- TELA DE CADASTRO -->
+  <div id="register-screen" class="fixed inset-0 z-[100] bg-gradient-to-br from-slate-900 via-amber-950 to-slate-900 hidden items-center justify-center p-4">
     <div class="glass-card max-w-md w-full p-8 rounded-3xl space-y-5">
       <div class="text-center">
         <h2 class="text-xl font-extrabold text-slate-900">Solicitação de Acesso</h2>
-        <p class="text-xs text-slate-500">Cadastre sua empresa, hotel, pousada ou cargo. O Admin liberará.</p>
+        <p class="text-xs text-slate-500">Cadastre seu perfil ou estabelecimento. O Admin liberará.</p>
       </div>
       <form onsubmit="handleRegister(event)" class="space-y-3">
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Nome / Razão Social</label>
-          <input type="text" id="reg-nome" required placeholder="Ex: Hotel Laguna / João Garçom" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+          <input type="text" id="reg-nome" required placeholder="Ex: João Garçom / Hotel Mandaka" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Matrícula (Garçons/Colaborador) ou CNPJ (Empresa/Hotel)</label>
-          <input type="text" id="reg-matricula" required placeholder="Ex: 2024001 ou 00.000.000/0001-00" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Matrícula ou CNPJ</label>
+          <input type="text" id="reg-matricula" required placeholder="Ex: 2024001 ou CNPJ" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-500/40" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">E-mail Corporativo</label>
-          <input type="email" id="reg-email" required placeholder="contato@empresa.com" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">E-mail</label>
+          <input type="email" id="reg-email" required class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Categoria de Serviço / Aba</label>
-          <select id="reg-cargo" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40">
-            <option value="garcom">Garçom & Atendimento (Cardápio + QR)</option>
-            <option value="recepcao">Hotel / Pousada / Recepção (Companhias, PNR & Quartos)</option>
-            <option value="atendente">Atendente Geral</option>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Categoria de Serviço</label>
+          <select id="reg-cargo" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40">
+            <option value="garcom">Garçom / Atendente (Cardápio, Mesas & Comandas)</option>
+            <option value="recepcao">Recepção / Hotel / Pousada (Quartos & PNR)</option>
             <option value="admin">Administrador Master</option>
           </select>
         </div>
-        <button type="submit" class="btn-3d w-full bg-google-blue text-white font-bold py-3.5">Enviar Solicitação</button>
+        <button type="submit" class="btn-3d w-full bg-amber-600 text-white font-bold py-3.5">Enviar Solicitação</button>
         <button type="button" onclick="showLogin()" class="w-full text-sm text-slate-500 hover:text-slate-800">Voltar ao Login</button>
       </form>
     </div>
@@ -134,65 +134,63 @@
 
   <!-- ==================== APLICAÇÃO PRINCIPAL ==================== -->
   <div id="app-container" class="hidden">
-    <div class="h-1.5 w-full bg-gradient-to-r from-google-blue via-google-red via-google-yellow to-google-green fixed top-0 z-50"></div>
+    <div class="h-1.5 w-full bg-gradient-to-r from-amber-500 via-orange-600 to-red-600 fixed top-0 z-50"></div>
 
     <div class="max-w-7xl mx-auto px-4 py-5 md:py-8 flex flex-col min-h-screen">
 
       <!-- HEADER -->
       <header class="glass-card rounded-3xl p-5 md:p-6 mb-6 flex flex-col md:flex-row justify-between items-center gap-5">
         <div class="flex items-center gap-4">
-          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-google-blue via-google-red to-google-yellow flex items-center justify-center text-white text-xl font-black shadow-lg">AG</div>
+          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 flex items-center justify-center text-white text-xl font-black shadow-lg">MK</div>
           <div>
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 bg-google-green rounded-full animate-pulse"></span>
-              <span class="text-[11px] font-bold tracking-widest text-google-blue uppercase">Enterprise Hospitality & Omni-Logistics</span>
+              <span class="text-[11px] font-bold tracking-widest text-amber-700 uppercase">Mandaka Hospitality &amp; SmartPOS</span>
             </div>
-            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900">Âmbari &amp; Gastronomia</h1>
+            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900">Mandaka &amp; Âmbari</h1>
             <p class="text-xs text-slate-500" id="header-user-info">—</p>
           </div>
         </div>
 
         <div class="flex flex-wrap gap-2 bg-white/80 p-1.5 rounded-full border border-slate-200" id="main-tabs">
-          <!-- Abas renderizadas dinamicamente de acordo com a categoria de serviço do usuário -->
+          <!-- Abas renderizadas conforme cargo -->
         </div>
       </header>
 
       <main class="flex-1">
 
-        <!-- ABA 1: PAINEL DO ADMINISTRADOR (Apenas Admin) -->
+        <!-- ADMIN PANEL -->
         <section id="section-admin" class="hidden space-y-6">
           <div class="glass-card p-6 rounded-3xl">
             <h2 class="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-              <i data-lucide="shield" class="text-google-blue"></i> Painel do Administrador Master
+              <i data-lucide="shield" class="text-amber-600"></i> Painel do Administrador Master
             </h2>
-            <p class="text-sm text-slate-500 mb-6">Visualização global de todos os serviços, aprovação de cadastros via CNPJ/Matrícula, edição e exclusão de acessos.</p>
-            
+            <p class="text-sm text-slate-500 mb-6">Gestão unificada de acessos, aprovação de cadastros, controle de mesas e faturamento.</p>
             <div class="mb-6">
-              <h3 class="font-bold text-slate-800 mb-3 text-sm">Solicitações Pendentes de Acesso</h3>
+              <h3 class="font-bold text-slate-800 mb-3 text-sm">Solicitações Pendentes</h3>
               <div id="pending-list" class="space-y-3"></div>
             </div>
-
             <div class="border-t border-slate-200 pt-6">
-              <h3 class="font-bold text-slate-800 mb-3 text-sm">Usuários e Empresas Cadastradas (Gerelhamento Completo)</h3>
+              <h3 class="font-bold text-slate-800 mb-3 text-sm">Usuários Aprovados</h3>
               <div id="approved-users-list" class="space-y-2"></div>
             </div>
           </div>
         </section>
 
-        <!-- ABA 2: COMPANHIAS & PNR + QUARTOS (Hotel / Recepção / Admin) -->
+        <!-- COMPANHIAS & PNR + QUARTOS -->
         <section id="section-airline" class="hidden space-y-6">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div class="lg:col-span-5 space-y-5">
-              <div class="inline-flex items-center gap-2 bg-google-blue/10 border border-google-blue/30 px-3 py-1 rounded-full text-google-blue text-xs font-bold">
+              <div class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full text-amber-700 text-xs font-bold">
                 <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Módulo Hoteleiro & PNR
               </div>
               <h2 class="text-3xl md:text-4xl font-black text-slate-900 leading-tight">
                 Gestão de Tripulações<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-google-blue via-google-red to-google-yellow">& Layover Instantâneo</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-600 to-red-600">& Layover Instantâneo</span>
               </h2>
               <div class="glass-card p-4 rounded-2xl">
                 <h4 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
-                  <i data-lucide="bed-double" class="w-4 h-4 text-google-blue"></i> Status Rápido dos Quartos
+                  <i data-lucide="bed-double" class="w-4 h-4 text-amber-600"></i> Status Rápido dos Quartos
                 </h4>
                 <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
                   <div class="bg-google-green/15 text-google-green border border-google-green/40 rounded-xl py-2">
@@ -201,7 +199,7 @@
                   <div class="bg-google-red/15 text-google-red border border-google-red/40 rounded-xl py-2">
                     <span class="text-lg" id="count-occupied">0</span><br>Ocupados
                   </div>
-                  <div class="bg-google-yellow/20 text-amber-700 border border-google-yellow/50 rounded-xl py-2">
+                  <div class="bg-amber-500/20 text-amber-800 border border-amber-500/50 rounded-xl py-2">
                     <span class="text-lg" id="count-maintenance">0</span><br>Manutenção
                   </div>
                 </div>
@@ -217,74 +215,72 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Companhia Aérea / Hotel</label>
-                    <select id="pnr-airline" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40">
+                    <select id="pnr-airline" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40">
                       <option value="LATAM">LATAM Airlines</option>
                       <option value="GOL">GOL Linhas Aéreas</option>
                       <option value="AZUL">AZUL</option>
                       <option value="TAP">TAP Air Portugal</option>
-                      <option value="AMERICAN">American Airlines</option>
                     </select>
                   </div>
                   <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Código PNR / Reserva</label>
-                    <input type="text" id="pnr-code" required placeholder="Ex: K89XPL" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm uppercase font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Código PNR</label>
+                    <input type="text" id="pnr-code" required placeholder="Ex: K89XPL" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm uppercase font-mono focus:outline-none focus:ring-2 focus:ring-amber-500/40" />
                   </div>
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-600 mb-1">Nome Completo do Hóspede/Tripulante</label>
-                  <input type="text" id="pnr-name" required placeholder="Ex: Cristian Ribeiro Florêncio" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Nome Completo</label>
+                  <input type="text" id="pnr-name" required placeholder="Ex: Cristian Ribeiro Florêncio" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40" />
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Documento / Matrícula</label>
-                    <input type="text" id="pnr-doc" required placeholder="000.000.000-00" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-google-blue/40" />
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Documento</label>
+                    <input type="text" id="pnr-doc" required placeholder="000.000.000-00" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-500/40" />
                   </div>
                   <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Categoria</label>
-                    <select id="pnr-type" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40">
+                    <select id="pnr-type" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40">
                       <option value="CREW">Tripulação / Comissários</option>
                       <option value="PAX_VIP">Passageiro VIP / Conexão</option>
-                      <option value="PAX_STANDARD">Passageiro Standard</option>
                     </select>
                   </div>
                 </div>
-                <button type="submit" class="btn-3d w-full bg-gradient-to-r from-google-blue via-google-red to-google-yellow text-white font-extrabold py-3.5 text-sm">
+                <button type="submit" class="btn-3d w-full bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white font-extrabold py-3.5 text-sm">
                   Gerar Voucher & Cartão Flutuante
                 </button>
               </form>
             </div>
           </div>
 
-          <!-- CARTÃO FLUTUANTE VOUCHER -->
+          <!-- VOUCHER FLUTUANTE -->
           <div id="pnr-success-box" class="hidden mt-8">
             <div id="printable-voucher" class="voucher-card max-w-2xl mx-auto rounded-3xl p-6 md:p-8 relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-40 h-40 bg-google-blue/10 rounded-full blur-3xl"></div>
+              <div class="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl"></div>
               <div class="flex justify-between items-start border-b border-slate-200 pb-4 mb-4">
                 <div>
-                  <span class="text-[10px] font-mono bg-google-blue/15 text-google-blue px-3 py-1 rounded-full font-bold">VOUCHER OFICIAL · Âmbari & Gastronomia</span>
+                  <span class="text-[10px] font-mono bg-amber-500/15 text-amber-800 px-3 py-1 rounded-full font-bold">VOUCHER OFICIAL · MANDAKA & ÂMBARI</span>
                   <h4 id="v-airline" class="text-xl font-black text-slate-900 mt-2">LATAM AIRLINES</h4>
-                  <p class="text-xs text-slate-500">Hospedagem + Atendimento Preferencial Restaurante Mandi</p>
+                  <p class="text-xs text-slate-500">Hospedagem + Atendimento Preferencial Restaurante Mandaka</p>
                 </div>
                 <div class="text-right">
                   <p class="text-[10px] text-slate-400 font-mono">PNR</p>
-                  <p id="v-code" class="text-lg font-mono font-bold text-google-yellow">K89XPL</p>
+                  <p id="v-code" class="text-lg font-mono font-bold text-amber-600">K89XPL</p>
                 </div>
               </div>
               <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mb-5">
                 <div><span class="text-slate-400 block">HÓSPEDE</span><strong id="v-name" class="text-slate-900 text-sm">—</strong></div>
                 <div><span class="text-slate-400 block">DOCUMENTO</span><strong id="v-doc" class="text-slate-700">—</strong></div>
                 <div><span class="text-slate-400 block">CATEGORIA</span><strong id="v-type" class="text-google-green">—</strong></div>
-                <div><span class="text-slate-400 block">STATUS</span><strong class="text-google-blue">APROVADO</strong></div>
+                <div><span class="text-slate-400 block">STATUS</span><strong class="text-amber-600">APROVADO</strong></div>
               </div>
               <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200">
                 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
-                  <img id="v-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=VOUCHER-LAGUNA" alt="QR" class="w-28 h-28" />
+                  <img id="v-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=VOUCHER-MANDAKA" alt="QR" class="w-28 h-28" />
                   <p class="text-[9px] text-center font-mono text-slate-500 mt-1">Leia na Recepção / NFC</p>
                 </div>
                 <div class="text-center md:text-right space-y-2">
-                  <p class="text-xs text-slate-500">Apresente este cartão no check-in ou no Restaurante Mandi</p>
+                  <p class="text-xs text-slate-500">Apresente este cartão no check-in ou no restaurante</p>
                   <div class="flex gap-2 justify-center md:justify-end">
-                    <button onclick="window.print()" class="btn-3d bg-google-blue text-white px-5 py-2.5 text-xs flex items-center gap-1.5">
+                    <button onclick="window.print()" class="btn-3d bg-amber-600 text-white px-5 py-2.5 text-xs flex items-center gap-1.5">
                       <i data-lucide="printer" class="w-3.5 h-3.5"></i> Imprimir
                     </button>
                     <button onclick="triggerConfetti()" class="btn-3d bg-google-green text-white px-5 py-2.5 text-xs flex items-center gap-1.5">
@@ -297,20 +293,23 @@
           </div>
         </section>
 
-        <!-- ABA 3: CARDÁPIO & ATENDIMENTO (Garçom / Atendente / Admin) -->
+        <!-- CARDÁPIO DIGITAL & MÁQUINA DO GARÇOM (MANDAKA) -->
         <section id="section-menu" class="hidden space-y-5">
           <div class="glass-card p-4 md:p-5 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="utensils-crossed" class="text-google-yellow w-5 h-5"></i> Cardápio de Atendimento & QR Code
+                <i data-lucide="utensils-crossed" class="text-amber-600 w-5 h-5"></i> Cardápio Digital Mandaka & Terminal do Atendente
               </h2>
-              <p class="text-xs text-slate-500">Ferramenta unificada para garçons e atendentes realizarem pedidos instantâneos.</p>
+              <p class="text-xs text-slate-500">O cliente monta no QR Code da mesa; o garçom revisa, aprova e envia para a cozinha instantaneamente.</p>
             </div>
             <div class="flex items-center gap-2 w-full md:w-auto">
               <div class="relative flex-1 md:w-56">
                 <i data-lucide="search" class="absolute left-3.5 top-3 w-4 h-4 text-slate-400"></i>
-                <input type="text" id="menu-search" oninput="filterMenu(this.value)" placeholder="Buscar prato, drink..." class="w-full bg-white border border-slate-200 rounded-full pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/30" />
+                <input type="text" id="menu-search" oninput="filterMenu(this.value)" placeholder="Buscar prato, carne de sol..." class="w-full bg-white border border-slate-200 rounded-full pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30" />
               </div>
+              <button onclick="openWaiterApprovalModal()" class="btn-3d bg-amber-600 text-white px-4 py-2.5 text-xs flex items-center gap-1.5">
+                <i data-lucide="bell-ring" class="w-4 h-4"></i> Mesas QR <span id="qr-pending-count" class="bg-white text-amber-800 px-1.5 py-0.5 rounded-full font-bold text-[10px]">0</span>
+              </button>
               <button onclick="openCartModal()" class="btn-3d bg-google-yellow text-slate-900 px-4 py-2.5 text-sm flex items-center gap-1.5">
                 <i data-lucide="shopping-cart" class="w-4 h-4"></i> <span id="cart-counter">0</span>
               </button>
@@ -320,25 +319,25 @@
           <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
         </section>
 
-        <!-- ABA 4: QUARTOS BACKEND (Recepção / Admin) -->
+        <!-- QUARTOS -->
         <section id="section-rooms" class="hidden space-y-6">
           <div class="glass-card p-6 rounded-3xl">
             <h2 class="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-              <i data-lucide="bed-double" class="text-google-blue"></i> Backend de Quartos & Hospedagem
+              <i data-lucide="bed-double" class="text-amber-600"></i> Backend de Quartos & Hospedagem
             </h2>
-            <p class="text-xs text-slate-500 mb-6">Aba isolada de serviços hoteleiros. Clique no quarto para alternar: Disponível → Ocupado → Manutenção</p>
+            <p class="text-xs text-slate-500 mb-6">Controle integrado de leitos e status hoteleiro.</p>
             <div class="space-y-8" id="rooms-container"></div>
           </div>
         </section>
 
-        <!-- ABA 5: QR & NFC -->
+        <!-- QR & NFC -->
         <section id="section-qrcode" class="hidden max-w-lg mx-auto text-center space-y-6">
           <div class="glass-card p-8 rounded-3xl space-y-5">
-            <div class="w-16 h-16 bg-google-blue/10 rounded-2xl mx-auto flex items-center justify-center text-google-blue">
+            <div class="w-16 h-16 bg-amber-500/10 rounded-2xl mx-auto flex items-center justify-center text-amber-600">
               <i data-lucide="qr-code" class="w-8 h-8"></i>
             </div>
-            <h2 class="text-2xl font-extrabold text-slate-900">QR Code & NFC de Acesso</h2>
-            <p class="text-sm text-slate-600">Escaneie para abrir o cardápio ou aproxime com NFC na mesa/quarto.</p>
+            <h2 class="text-2xl font-extrabold text-slate-900">QR Code da Mesa & NFC</h2>
+            <p class="text-sm text-slate-600">Aponte a câmera para abrir o cardápio digital do Mandaka.</p>
             <div class="bg-white p-5 rounded-2xl inline-block shadow-lg">
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://cardapio.droppfy.com" alt="QR" class="mx-auto rounded-lg" />
             </div>
@@ -350,17 +349,17 @@
       </main>
 
       <footer class="border-t border-slate-200/80 pt-5 mt-10 text-center text-xs text-slate-500 flex flex-col md:flex-row justify-between items-center gap-3">
-        <p>© 2026 Âmbari &amp; Gastronomia</p>
+        <p>© 2026 Mandaka &amp; Âmbari Hospitality</p>
         <div class="flex gap-4 font-mono text-[11px]">
-          <span class="text-google-green">● Redis</span>
-          <span class="text-google-blue">● Cloudflare Workers</span>
-          <span class="text-google-yellow">● 3D UI</span>
+          <span class="text-google-green">● Redis / Edge</span>
+          <span class="text-amber-700">● VucaFood Engine</span>
+          <span class="text-google-yellow">● Apple / Google Pay</span>
         </div>
       </footer>
     </div>
   </div>
 
-  <!-- MODAL DE ADIÇÃO DE ITEM AO PEDIDO (Garçons) -->
+  <!-- MODAL DE ADIÇÃO DE PRATO MANDAKA COM ACOMPANHAMENTOS -->
   <div id="item-modal" class="fixed inset-0 z-50 bg-black/50 hidden items-center justify-center p-4 backdrop-blur-sm">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center">
@@ -382,111 +381,100 @@
               <option value="">-</option>
               <option value="P1">P1</option><option value="P2">P2</option><option value="P3">P3</option>
               <option value="P4">P4</option><option value="P5">P5</option><option value="P6">P6</option>
-              <option value="P7">P7</option><option value="P8">P8</option><option value="P9">P9</option>
-              <option value="P10">P10</option><option value="P11">P11</option><option value="P12">P12</option>
             </select>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="text-xs font-semibold text-slate-600">Quarto</label>
-            <input type="text" id="order-quarto" placeholder="Ex: 205" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm" />
-          </div>
-          <div>
-            <label class="text-xs font-semibold text-slate-600">Área</label>
-            <select id="order-area" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm">
-              <option value="Salão">Salão</option>
-              <option value="Piscina">Piscina</option>
-              <option value="Área Externa">Área Externa</option>
-            </select>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="text-xs font-semibold text-slate-600">Criança?</label>
-            <select id="order-crianca" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm">
-              <option value="Não">Não</option>
-              <option value="Sim">Sim</option>
-            </select>
-          </div>
-          <div>
-            <label class="text-xs font-semibold text-slate-600">Lactose</label>
-            <select id="order-lactose" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm">
-              <option value="Normal">Normal</option>
-              <option value="Sem Lactose">Sem Lactose</option>
-              <option value="Intolerante">Intolerante</option>
-            </select>
-          </div>
-        </div>
-        <div id="soft-drink-options" class="hidden">
-          <label class="text-xs font-semibold text-slate-600">Opção de Refrigerante</label>
-          <select id="order-refri" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm">
-            <option value="Coca-Cola">Coca-Cola</option>
-            <option value="Coca-Cola Zero">Coca-Cola Zero</option>
-            <option value="Guaraná">Guaraná</option>
-            <option value="Guaraná Zero">Guaraná Zero</option>
-            <option value="Sprite">Sprite</option>
-            <option value="Fanta">Fanta</option>
-            <option value="Schweppes">Schweppes</option>
+
+        <div>
+          <label class="text-xs font-semibold text-slate-600">Sugestão de Acompanhamento (Padrão Mandaka)</label>
+          <select id="order-acompanhamento" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm">
+            <option value="Baião de Dois + Macaxeira Frita">Baião de Dois Cremoso + Macaxeira Frita</option>
+            <option value="Arroz Branco + Farofa de Pai D'égua + Feijão de Corda">Arroz Branco + Farofa de Pai D'égua + Feijão</option>
+            <option value="Purê de Mandioca + Legumes na Manteiga">Purê de Mandioca + Legumes</option>
           </select>
         </div>
+
         <div>
-          <label class="text-xs font-semibold text-slate-600">Observações</label>
-          <textarea id="order-obs" rows="2" placeholder="Ex: sem cebola, ponto da carne..." class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm"></textarea>
+          <label class="text-xs font-semibold text-slate-600">Observações Especiais para Cozinha</label>
+          <textarea id="order-obs" rows="2" placeholder="Ex: Carne ao ponto, sem cebola..." class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm"></textarea>
         </div>
       </div>
-      <button onclick="confirmAddToCart()" class="btn-3d w-full bg-google-blue text-white py-3 text-sm font-bold">Adicionar ao Carrinho</button>
+      <button onclick="confirmAddToCart()" class="btn-3d w-full bg-amber-600 text-white py-3 text-sm font-bold">Adicionar ao Carrinho / Mesa</button>
     </div>
   </div>
 
-  <!-- CARRINHO -->
+  <!-- MODAL DE APROVAÇÃO DO GARÇOM (MESA PENDENTE QR CODE) -->
+  <div id="waiter-approval-modal" class="fixed inset-0 z-50 bg-black/50 hidden items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+          <i data-lucide="smartphone" class="w-5 h-5 text-amber-600"></i> Pedidos QR Code (Aguardando Garçom)
+        </h3>
+        <button onclick="closeWaiterApprovalModal()" class="text-slate-400 hover:text-slate-700 text-xl">✕</button>
+      </div>
+      <div id="waiter-pending-container" class="space-y-3">
+        <!-- Renderizado dinamicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CARRINHO & CHECKOUT (PIX, APPLE PAY, GOOGLE PAY, NFC) -->
   <div id="cart-modal" class="fixed inset-0 z-50 bg-black/40 hidden justify-end backdrop-blur-sm">
     <div class="w-full max-w-md bg-white h-full p-5 flex flex-col border-l border-slate-200 shadow-2xl">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
         <h2 class="font-bold text-lg text-slate-900 flex items-center gap-2">
-          <i data-lucide="shopping-bag" class="w-5 h-5 text-google-yellow"></i> Seu Pedido / Comanda
+          <i data-lucide="credit-card" class="w-5 h-5 text-amber-600"></i> Fechamento &amp; Pagamento
         </h2>
         <button onclick="closeCartModal()" class="text-slate-400 hover:text-slate-700 text-xl">✕</button>
       </div>
       <div id="cart-items-list" class="mt-4 space-y-3 flex-1 overflow-y-auto"></div>
       <div class="space-y-3 pt-4 border-t border-slate-100">
         <div class="flex justify-between items-center font-bold text-lg">
-          <span>Total (+10% taxa)</span>
+          <span>Total (+10% Taxa Serv.)</span>
           <span id="cart-total-price" class="text-google-green">R$ 0,00</span>
         </div>
-        <div class="text-[10px] text-slate-500 bg-slate-50 rounded-xl p-3" id="order-footer-info"></div>
-        <button onclick="confirmOrder()" class="btn-3d w-full bg-google-green text-white py-3.5 text-sm">Enviar para Cozinha / Quarto</button>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="processPayment('pix')" class="btn-3d bg-teal-600 text-white py-2.5 text-xs flex items-center justify-center gap-1">
+            <i data-lucide="qr-code" class="w-3.5 h-3.5"></i> PIX Dinâmico
+          </button>
+          <button onclick="processPayment('apple')" class="btn-3d bg-black text-white py-2.5 text-xs flex items-center justify-center gap-1">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> Apple / Google Pay
+          </button>
+        </div>
+        <button onclick="processPayment('nfc')" class="btn-3d w-full bg-amber-600 text-white py-3 text-xs flex items-center justify-center gap-1.5 font-bold">
+          <i data-lucide="wifi" class="w-4 h-4"></i> Passar Cartão na Máquina (NFC / Aproximação)
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- PROMPT INSTALAÇÃO PWA -->
+  <!-- PROMPT PWA -->
   <div id="install-prompt" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:w-80 z-50 hidden">
     <div class="glass-card p-4 rounded-2xl flex items-center gap-3 shadow-xl">
-      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-google-blue to-google-green flex items-center justify-center text-white font-bold">AG</div>
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold">MK</div>
       <div class="flex-1">
-        <p class="text-sm font-bold text-slate-900">Instalar App</p>
-        <p class="text-xs text-slate-500">Adicione à tela inicial</p>
+        <p class="text-sm font-bold text-slate-900">Instalar SmartPOS</p>
+        <p class="text-xs text-slate-500">Adicionar à tela inicial</p>
       </div>
-      <button onclick="installApp()" class="btn-3d bg-google-blue text-white px-4 py-2 text-xs">Instalar</button>
+      <button onclick="installApp()" class="btn-3d bg-amber-600 text-white px-4 py-2 text-xs">Instalar</button>
       <button onclick="document.getElementById('install-prompt').classList.add('hidden')" class="text-slate-400">✕</button>
     </div>
   </div>
 
   <script>
-    // ========== BASE DE DADOS LOCAL E USUÁRIOS ==========
-    let users = JSON.parse(localStorage.getItem('lp_users') || '[]');
-    let pending = JSON.parse(localStorage.getItem('lp_pending') || '[]');
+    // ========== DADOS E ESTADO DA APLICAÇÃO ==========
+    let users = JSON.parse(localStorage.getItem('mk_users') || '[]');
+    let pending = JSON.parse(localStorage.getItem('mk_pending') || '[]');
+    let qrPendingOrders = JSON.parse(localStorage.getItem('mk_qr_orders') || '[{"id":101,"mesa":"Mesa 05","itens":[{"name":"Carne de Sol Mandaka","price":89.00,"acompanhamento":"Baião de Dois","qty":1}],"status":"aguardando_garcom"}]');
     let currentUser = null;
     let biometricOk = false;
 
-    // Garante Admin Master padrão se não existir
     if (!users.find(u => u.matricula === '323619')) {
-      users.push({ nome: 'Administrador Master', matricula: '323619', email: 'admin@droppfy.com', cargo: 'admin', status: 'aprovado' });
-      localStorage.setItem('lp_users', JSON.stringify(users));
+      users.push({ nome: 'Administrador Master Mandaka', matricula: '323619', email: 'admin@mandaka.com', cargo: 'admin', status: 'aprovado' });
+      localStorage.setItem('mk_users', JSON.stringify(users));
     }
 
-    // ========== CONTROLE DE TELA AUTH ==========
     function showLogin() {
       document.getElementById('auth-screen').classList.remove('hidden');
       document.getElementById('auth-screen').classList.add('flex');
@@ -501,11 +489,11 @@
 
     function simulateBiometric(type) {
       const status = document.getElementById('bio-status');
-      status.innerText = type === 'digital' ? 'Lendo biometria digital...' : 'Reconhecendo face (Palm AI)...';
-      status.className = 'text-xs text-center text-google-yellow';
+      status.innerText = type === 'digital' ? 'Lendo digital...' : 'Reconhecendo face / Palm AI...';
+      status.className = 'text-xs text-center text-amber-600';
       setTimeout(() => {
         biometricOk = true;
-        status.innerText = '✓ Biometria confirmada com sucesso';
+        status.innerText = '✓ Biometria confirmada';
         status.className = 'text-xs text-center text-google-green font-bold';
         document.getElementById('btn-login').disabled = false;
         document.getElementById('btn-login').classList.remove('opacity-50', 'cursor-not-allowed');
@@ -514,23 +502,21 @@
 
     function handleLogin(e) {
       e.preventDefault();
-      if (!biometricOk) return alert('Confirme a biometria antes de entrar.');
+      if (!biometricOk) return alert('Confirme a biometria.');
       const val = document.getElementById('login-matricula').value.trim();
       const user = users.find(u => (u.matricula === val || u.email === val) && u.status === 'aprovado');
-      
       if (!user) {
-        alert('Credencial não encontrada ou aguardando liberação do Administrador.');
+        alert('Credencial não encontrada ou pendente de aprovação.');
         return;
       }
       currentUser = user;
       document.getElementById('auth-screen').classList.add('hidden');
       document.getElementById('app-container').classList.remove('hidden');
-      document.getElementById('header-user-info').innerText = `${user.nome} · Matrícula/CNPJ: ${user.matricula} · ${user.cargo.toUpperCase()}`;
-      
+      document.getElementById('header-user-info').innerText = `${user.nome} · ID: ${user.matricula} · ${user.cargo.toUpperCase()}`;
       renderTabsByRole(user.cargo);
       initRooms();
       lucide.createIcons();
-      setTimeout(() => document.getElementById('install-prompt').classList.remove('hidden'), 2000);
+      updateQRPendingBadge();
     }
 
     function handleRegister(e) {
@@ -543,36 +529,30 @@
         status: 'pendente',
         data: new Date().toLocaleString('pt-BR')
       };
-      if (users.find(u => u.matricula === novo.matricula) || pending.find(p => p.matricula === novo.matricula)) {
-        alert('Esta matrícula ou CNPJ já está cadastrada ou pendente.');
-        return;
-      }
       pending.push(novo);
-      localStorage.setItem('lp_pending', JSON.stringify(pending));
-      alert('Solicitação enviada! O Administrador irá analisar e liberar seu acesso.');
+      localStorage.setItem('mk_pending', JSON.stringify(pending));
+      alert('Solicitação enviada com sucesso! O Admin irá liberar.');
       showLogin();
     }
 
-    // ========== RENDERIZAÇÃO DE ABAS POR CATEGORIA DE SERVIÇO ==========
     function renderTabsByRole(cargo) {
       const tabs = document.getElementById('main-tabs');
       let html = '';
       if (cargo === 'admin') {
         html += tabBtn('admin', 'shield', 'Admin');
         html += tabBtn('airline', 'plane', 'Companhias & PNR');
-        html += tabBtn('menu', 'utensils', 'Cardápio & QR');
+        html += tabBtn('menu', 'utensils', 'Cardápio Mandaka');
         html += tabBtn('rooms', 'bed', 'Quartos');
         html += tabBtn('qrcode', 'qr-code', 'QR & NFC');
       } else if (cargo === 'recepcao') {
         html += tabBtn('airline', 'plane', 'Companhias & PNR');
-        html += tabBtn('rooms', 'bed', 'Quartos Backend');
+        html += tabBtn('rooms', 'bed', 'Quartos');
         html += tabBtn('qrcode', 'qr-code', 'QR & NFC');
-      } else if (cargo === 'garcom' || cargo === 'atendente') {
-        html += tabBtn('menu', 'utensils', 'Cardápio de Atendimento');
+      } else if (cargo === 'garcom') {
+        html += tabBtn('menu', 'utensils', 'Cardápio & Mesas');
         html += tabBtn('qrcode', 'qr-code', 'QR & NFC');
       }
       tabs.innerHTML = html;
-      
       if (cargo === 'admin') switchTab('admin');
       else if (cargo === 'recepcao') switchTab('airline');
       else switchTab('menu');
@@ -584,131 +564,6 @@
       </button>`;
     }
 
-    // ========== PAINEL DO ADMINISTRADOR (GERENCIAMENTO TOTAL) ==========
-    function renderAdminPanel() {
-      const pendingDiv = document.getElementById('pending-list');
-      if (!pending.length) {
-        pendingDiv.innerHTML = '<p class="text-slate-400 text-xs py-2">Nenhuma solicitação pendente no momento.</p>';
-      } else {
-        pendingDiv.innerHTML = pending.map((p, idx) => `
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200">
-            <div>
-              <p class="font-bold text-slate-900">${p.nome} <span class="text-xs font-normal text-google-blue">(${p.cargo})</span></p>
-              <p class="text-xs text-slate-500 font-mono">ID/CNPJ: ${p.matricula} · E-mail: ${p.email}</p>
-              <p class="text-[10px] text-slate-400">Solicitado em: ${p.data}</p>
-            </div>
-            <div class="flex gap-2">
-              <button onclick="approveUser(${idx})" class="btn-3d bg-google-green text-white px-4 py-2 text-xs">Liberar</button>
-              <button onclick="denyUser(${idx})" class="btn-3d bg-google-red text-white px-4 py-2 text-xs">Negar</button>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      const approvedDiv = document.getElementById('approved-users-list');
-      approvedDiv.innerHTML = users.map((u, idx) => `
-        <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200 text-xs">
-          <div>
-            <strong>${u.nome}</strong> (${u.cargo.toUpperCase()}) — <span class="font-mono">${u.matricula}</span>
-          </div>
-          ${u.matricula !== '323619' ? `<button onclick="deleteUser(${idx})" class="text-google-red hover:underline font-bold">Excluir</button>` : '<span class="text-slate-400">Master</span>'}
-        </div>
-      `).join('');
-    }
-
-    function approveUser(idx) {
-      const user = pending.splice(idx, 1)[0];
-      user.status = 'aprovado';
-      users.push(user);
-      localStorage.setItem('lp_users', JSON.stringify(users));
-      localStorage.setItem('lp_pending', JSON.stringify(pending));
-      renderAdminPanel();
-      alert(`Acesso liberado para ${user.nome}!`);
-    }
-
-    function denyUser(idx) {
-      pending.splice(idx, 1);
-      localStorage.setItem('lp_pending', JSON.stringify(pending));
-      renderAdminPanel();
-    }
-
-    function deleteUser(idx) {
-      if(confirm('Deseja realmente remover este usuário/empresa?')) {
-        users.splice(idx, 1);
-        localStorage.setItem('lp_users', JSON.stringify(users));
-        renderAdminPanel();
-      }
-    }
-
-    // ========== CARDÁPIO E RESTANTE DA APLICAÇÃO (MANTIDOS PERFEITOS) ==========
-    const categories = [
-      { id: 'all', title: '✨ Todos' },
-      { id: 'entradas', title: '🥟 Entradas & Sopas' },
-      { id: 'principais', title: '🥩 Pratos Principais' },
-      { id: 'grelhados', title: '🔥 Grelhados' },
-      { id: 'petiscos', title: '🍢 Petiscos' },
-      { id: 'massas', title: '🍝 Massas' },
-      { id: 'pizzas', title: '🍕 Pizzas' },
-      { id: 'hamburgueres', title: '🍔 Hambúrgueres' },
-      { id: 'executivo', title: '✈️ Menu Executivo' },
-      { id: 'bebidas', title: '🍹 Drinks & Bebidas' },
-      { id: 'sobremesas', title: '🍨 Sobremesas' }
-    ];
-
-    const menuItems = [
-      {id:'e1',category_id:'entradas',name:'Antepasto de Berinjela',description:'Acompanhado de torradas crocantes.',price:10.00,image:'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=600&q=80'},
-      {id:'e2',category_id:'entradas',name:'Caesar Salad',description:'Alfaces variadas, molho clássico caesar, croutons, peito de frango grelhado.',price:37.00,image:'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=600&q=80'},
-      {id:'p1',category_id:'principais',name:'Carne de Sol Tambaú',description:'Deliciosa carne de sol, servida com mandioca frita, arroz branco e vinagrete.',price:62.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
-      {id:'p2',category_id:'principais',name:'Parmegiana de Filé',description:'Filé empanado em crosta de panko, coberto com presunto, queijo derretido e molho.',price:62.00,image:'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=600&q=80'},
-      {id:'d1',category_id:'bebidas',name:'Caipirinha',description:'Feita com cachaça artesanal, limão e açúcar.',price:25.00,image:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'},
-      {id:'d22',category_id:'bebidas',name:'Refrigerante em Lata',description:'Escolha: Coca-Cola, Zero, Guaraná, Sprite, Fanta.',price:8.00,image:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80',isSoftDrink:true},
-      {id:'s1',category_id:'sobremesas',name:'Tradicional Pudim de Leite',description:'Pudim cremoso de leite condensado com calda de caramelo.',price:25.00,image:'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80'}
-    ];
-
-    let currentCategory = 'all';
-    let cart = [];
-    let selectedItem = null;
-    let roomStatus = {};
-
-    function initRooms() {
-      const floors = [[101,129],[201,229],[301,329],[401,429]];
-      floors.forEach(([s,e]) => {
-        for (let i=s; i<=e; i++) roomStatus[i] = Math.random()>0.6 ? 'available' : (Math.random()>0.5 ? 'occupied' : 'maintenance');
-      });
-      updateRoomCounts();
-    }
-    function updateRoomCounts() {
-      let a=0,o=0,m=0;
-      Object.values(roomStatus).forEach(s => { if(s==='available')a++; else if(s==='occupied')o++; else m++; });
-      document.getElementById('count-available').innerText = a;
-      document.getElementById('count-occupied').innerText = o;
-      document.getElementById('count-maintenance').innerText = m;
-    }
-    function toggleRoom(num) {
-      const cur = roomStatus[num];
-      roomStatus[num] = cur==='available' ? 'occupied' : (cur==='occupied' ? 'maintenance' : 'available');
-      renderRooms(); updateRoomCounts();
-    }
-    function renderRooms() {
-      const container = document.getElementById('rooms-container');
-      const floors = [
-        {label:'1º Andar (101-129)',start:101,end:129},
-        {label:'2º Andar (201-229)',start:201,end:229},
-        {label:'3º Andar (301-329)',start:301,end:329},
-        {label:'4º Andar (401-429)',start:401,end:429}
-      ];
-      const colors = {available:'bg-google-green/15 border-google-green text-google-green',occupied:'bg-google-red/15 border-google-red text-google-red',maintenance:'bg-google-yellow/20 border-google-yellow text-amber-700'};
-      const labels = {available:'Disponível',occupied:'Ocupado',maintenance:'Manutenção'};
-      container.innerHTML = floors.map(f => {
-        let rooms = '';
-        for (let i=f.start;i<=f.end;i++) {
-          const st = roomStatus[i]||'available';
-          rooms += `<div onclick="toggleRoom(${i})" class="room-btn rounded-xl border-2 p-2 text-center ${colors[st]}"><p class="font-bold text-sm">${i}</p><p class="text-[9px] font-semibold">${labels[st]}</p></div>`;
-        }
-        return `<div><h4 class="text-sm font-bold text-slate-700 mb-2">${f.label}</h4><div class="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2">${rooms}</div></div>`;
-      }).join('');
-    }
-
     function switchTab(tab) {
       ['admin','airline','menu','rooms','qrcode'].forEach(t => {
         const el = document.getElementById('section-'+t);
@@ -718,36 +573,90 @@
       });
       const section = document.getElementById('section-'+tab);
       if (section) section.classList.remove('hidden');
-      const colors = {admin:'bg-google-blue text-white',airline:'bg-google-blue text-white',menu:'bg-google-yellow text-slate-900',rooms:'bg-google-green text-white',qrcode:'bg-google-red text-white'};
       const btn = document.getElementById('tab-btn-'+tab);
-      if (btn) btn.className = 'btn-3d px-4 py-2.5 text-xs ' + (colors[tab]||'') + ' flex items-center gap-1.5 shadow-md';
-      
+      if (btn) btn.className = 'btn-3d px-4 py-2.5 text-xs bg-amber-600 text-white flex items-center gap-1.5 shadow-md';
       if (tab === 'menu') renderMenu();
       if (tab === 'rooms') renderRooms();
       if (tab === 'admin') renderAdminPanel();
       lucide.createIcons();
     }
 
+    // ========== ADMIN PANEL ==========
+    function renderAdminPanel() {
+      const pList = document.getElementById('pending-list');
+      pList.innerHTML = pending.length ? pending.map((p, idx) => `
+        <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border">
+          <div><strong>${p.nome}</strong> (${p.cargo}) — ${p.matricula}</div>
+          <div class="flex gap-2">
+            <button onclick="approveUser(${idx})" class="btn-3d bg-google-green text-white px-3 py-1 text-xs">Liberar</button>
+            <button onclick="denyUser(${idx})" class="btn-3d bg-google-red text-white px-3 py-1 text-xs">Negar</button>
+          </div>
+        </div>
+      `).join('') : '<p class="text-xs text-slate-400">Nenhuma solicitação.</p>';
+
+      const aList = document.getElementById('approved-users-list');
+      aList.innerHTML = users.map(u => `
+        <div class="p-2 bg-white rounded-lg border text-xs flex justify-between">
+          <span>${u.nome} — <strong>${u.cargo.toUpperCase()}</strong></span>
+          <span class="font-mono text-slate-400">${u.matricula}</span>
+        </div>
+      `).join('');
+    }
+    function approveUser(idx){
+      const u = pending.splice(idx,1)[0]; u.status='aprovado'; users.push(u);
+      localStorage.setItem('mk_users', JSON.stringify(users));
+      localStorage.setItem('mk_pending', JSON.stringify(pending));
+      renderAdminPanel();
+    }
+    function denyUser(idx){ pending.splice(idx,1); localStorage.setItem('mk_pending', JSON.stringify(pending)); renderAdminPanel(); }
+
+    // ========== CARDÁPIO MANDAKA (BASE COMPLETA) ==========
+    const categories = [
+      { id: 'all', title: '✨ Todos os Pratos' },
+      { id: 'carnes', title: '🥩 Carne de Sol Mandaka' },
+      { id: 'petiscos', title: '🍢 Petiscos Nordestinos' },
+      { id: 'acompanhamentos', title: '🍛 Acompanhamentos' },
+      { id: 'bebidas', title: '🍹 Drinks & Chopp' },
+      { id: 'sobremesas', title: '🍨 Sobremesas' }
+    ];
+
+    const menuItems = [
+      {id:'m1',category_id:'carnes',name:'Carne de Sol Mandaka (2 Pessoas)',description:'Tradicional carne de sol macia, servida com mandioca cozida na manteiga de garrafa, arroz branco e paçoca de pilão.',price:119.00,image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80'},
+      {id:'m2',category_id:'carnes',name:'Carne de Sol Completa com Baião de Dois',description:'Acompanha queijo coalho grelhado, baião de dois cremoso, macaxeira frita e vinagrete.',price:135.00,image:'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80'},
+      {id:'m3',category_id:'petiscos',name:'Dadinhos de Tapioca com Geléia de Pimenta',description:'Porção com 12 unidades crocantes acompanhadas de geleia artesanal de pimenta biquinho.',price:48.00,image:'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=600&q=80'},
+      {id:'m4',category_id:'petiscos',name:'Queijo Coalho Grelhado com Mel de Engenho',description:'Espetos de queijo coalho dourados na chapa com toque de mel de engenho e oregano.',price:39.00,image:'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=600&q=80'},
+      {id:'m5',category_id:'acompanhamentos',name:'Baião de Dois Cremoso',description:'Arroz, feijão de corda, queijo coalho em cubos, bacon e coentro fresquíssimo.',price:32.00,image:'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80'},
+      {id:'m6',category_id:'acompanhamentos',name:'Macaxeira Frita na Manteiga de Garrafa',description:'Crocante por fora e macia por dentro.',price:28.00,image:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80'},
+      {id:'m7',category_id:'bebidas',name:'Caipirinha Mandaka de Cachaça Artesanal',description:'Limão tahiti espremido na hora, cachaça envelhecida e gelo triturado.',price:26.00,image:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'},
+      {id:'m8',category_id:'bebidas',name:'Chopp Gelado 300ml',description:'Colarinho cremoso, trincando.',price:12.00,image:'https://images.unsplash.com/photo-1608270105740-972173f4439c?auto=format&fit=crop&w=600&q=80'},
+      {id:'m9',category_id:'sobremesas',name:'Cartola Nordestina',description:'Banana frita, queijo manteiga derretido, açúcar e canela.',price:24.00,image:'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80'}
+    ];
+
+    let currentCategory = 'all';
+    let cart = [];
+    let selectedItem = null;
+    let roomStatus = {};
+
     function renderMenu(q='') {
       const tabs = document.getElementById('category-container');
-      tabs.innerHTML = categories.map(c => `<button onclick="setCategory('${c.id}')" class="btn-3d px-3.5 py-2 text-xs whitespace-nowrap ${currentCategory===c.id?'bg-google-yellow text-slate-900 font-bold':'bg-white text-slate-600 border border-slate-200'}">${c.title}</button>`).join('');
+      tabs.innerHTML = categories.map(c => `<button onclick="setCategory('${c.id}')" class="btn-3d px-3.5 py-2 text-xs whitespace-nowrap ${currentCategory===c.id?'bg-amber-600 text-white font-bold':'bg-white text-slate-600 border'}">${c.title}</button>`).join('');
       const filtered = menuItems.filter(i => (currentCategory==='all'||i.category_id===currentCategory) && (i.name.toLowerCase().includes(q.toLowerCase())||i.description.toLowerCase().includes(q.toLowerCase())));
       document.getElementById('menu-grid').innerHTML = filtered.map(item => `
         <div class="glass-card rounded-3xl overflow-hidden flex flex-col group">
           <div class="relative h-44 overflow-hidden">
             <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-            <span class="absolute bottom-3 left-3 bg-white/95 text-google-green font-mono text-xs px-3 py-1 rounded-full font-bold shadow">R$ ${item.price.toFixed(2).replace('.',',')}</span>
+            <span class="absolute bottom-3 left-3 bg-white/95 text-amber-700 font-mono text-xs px-3 py-1 rounded-full font-bold shadow">R$ ${item.price.toFixed(2).replace('.',',')}</span>
           </div>
           <div class="p-4 flex-1 flex flex-col justify-between gap-3">
             <div>
-              <h3 class="font-bold text-slate-900 group-hover:text-google-blue transition-colors">${item.name}</h3>
+              <h3 class="font-bold text-slate-900 group-hover:text-amber-600 transition-colors">${item.name}</h3>
               <p class="text-xs text-slate-500 mt-1 leading-relaxed line-clamp-3">${item.description}</p>
             </div>
-            <button onclick="openItemModal('${item.id}')" class="btn-3d w-full bg-slate-100 hover:bg-google-blue hover:text-white text-google-blue border border-slate-200 py-2.5 text-xs flex items-center justify-center gap-1.5">
-              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Adicionar à Comanda
+            <button onclick="openItemModal('${item.id}')" class="btn-3d w-full bg-amber-50 hover:bg-amber-600 hover:text-white text-amber-700 border border-amber-200 py-2.5 text-xs flex items-center justify-center gap-1.5">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Adicionar à Comanda / Mesa
             </button>
           </div>
-        </div>`).join('') || '<p class="col-span-full text-center text-slate-400 py-16">Nenhum item encontrado.</p>';
+        </div>`).join('') || '<p class="col-span-full text-center text-slate-400 py-16">Nenhum prato encontrado.</p>';
       lucide.createIcons();
     }
     function setCategory(id){ currentCategory=id; renderMenu(document.getElementById('menu-search').value); }
@@ -759,105 +668,157 @@
       document.getElementById('modal-item-desc').innerText = selectedItem.description;
       document.getElementById('modal-item-price').innerText = `R$ ${selectedItem.price.toFixed(2).replace('.',',')}`;
       const mesaSelect = document.getElementById('order-mesa');
-      mesaSelect.innerHTML = '<option value="">Selecione Mesa</option>';
-      for(let i=1;i<=50;i++) mesaSelect.innerHTML += `<option value="Mesa ${String(i).padStart(2,'0')}">Mesa ${String(i).padStart(2,'0')}</option>`;
-      document.getElementById('soft-drink-options').classList.toggle('hidden', !selectedItem.isSoftDrink);
+      mesaSelect.innerHTML = '';
+      for(let i=1;i<=30;i++) mesaSelect.innerHTML += `<option value="Mesa ${String(i).padStart(2,'0')}">Mesa ${String(i).padStart(2,'0')}</option>`;
       document.getElementById('item-modal').classList.remove('hidden');
       document.getElementById('item-modal').classList.add('flex');
     }
-    function closeItemModal() {
-      document.getElementById('item-modal').classList.add('hidden');
-      document.getElementById('item-modal').classList.remove('flex');
-    }
+    function closeItemModal() { document.getElementById('item-modal').classList.add('hidden'); document.getElementById('item-modal').classList.remove('flex'); }
+
     function confirmAddToCart() {
-      if (!selectedItem) return;
+      if(!selectedItem) return;
       const extras = {
         mesa: document.getElementById('order-mesa').value,
         posicao: document.getElementById('order-posicao').value,
-        quarto: document.getElementById('order-quarto').value,
-        area: document.getElementById('order-area').value,
-        crianca: document.getElementById('order-crianca').value,
-        lactose: document.getElementById('order-lactose').value,
-        obs: document.getElementById('order-obs').value,
-        refri: selectedItem.isSoftDrink ? document.getElementById('order-refri').value : null
+        acompanhamento: document.getElementById('order-acompanhamento').value,
+        obs: document.getElementById('order-obs').value
       };
-      cart.push({...selectedItem, qty:1, extras, cartId:Date.now()});
+      cart.push({...selectedItem, qty:1, extras});
       updateCartUI();
       closeItemModal();
-      confetti({particleCount:30,spread:50,origin:{y:0.8}});
+      confetti({particleCount:35,spread:60,origin:{y:0.8}});
     }
 
+    // ========== APROVAÇÃO DO GARÇOM (MESA PENDENTE QR CODE) ==========
+    function updateQRPendingBadge() {
+      document.getElementById('qr-pending-count').innerText = qrPendingOrders.length;
+    }
+
+    function openWaiterApprovalModal() {
+      const container = document.getElementById('waiter-pending-container');
+      if(!qrPendingOrders.length) {
+        container.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">Nenhum pedido pendente vindo dos QR Codes das mesas.</p>';
+      } else {
+        container.innerHTML = qrPendingOrders.map((ord, idx) => `
+          <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-amber-900">${ord.mesa}</span>
+              <span class="text-[10px] bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full font-bold">Aguardando Garçom</span>
+            </div>
+            <div class="text-xs text-slate-600">
+              ${ord.itens.map(it => `• ${it.qty}x ${it.name} (${it.acompanhamento || ''})`).join('<br>')}
+            </div>
+            <div class="flex gap-2 pt-2 border-t border-amber-200">
+              <select id="change-mesa-${idx}" class="text-xs bg-white border rounded-lg px-2 py-1">
+                <option value="">Mudar Mesa...</option>
+                <option value="Mesa 01">Mesa 01</option><option value="Mesa 02">Mesa 02</option><option value="Mesa 03">Mesa 03</option><option value="Mesa 04">Mesa 04</option><option value="Mesa 05">Mesa 05</option>
+              </select>
+              <button onclick="approveQROrder(${idx})" class="btn-3d bg-google-green text-white px-3 py-1.5 text-xs flex-1">Aprovar e Enviar Cozinha</button>
+            </div>
+          </div>
+        `).join('');
+      }
+      document.getElementById('waiter-approval-modal').classList.remove('hidden');
+      document.getElementById('waiter-approval-modal').classList.add('flex');
+      lucide.createIcons();
+    }
+    function closeWaiterApprovalModal() { document.getElementById('waiter-approval-modal').classList.add('hidden'); document.getElementById('waiter-approval-modal').classList.remove('flex'); }
+
+    function approveQROrder(idx) {
+      const select = document.getElementById(`change-mesa-${idx}`);
+      if(select && select.value) {
+        qrPendingOrders[idx].mesa = select.value;
+      }
+      const approved = qrPendingOrders.splice(idx,1)[0];
+      localStorage.setItem('mk_qr_orders', JSON.stringify(qrPendingOrders));
+      updateQRPendingBadge();
+      closeWaiterApprovalModal();
+      confetti({particleCount:80,spread:70,origin:{y:0.6}});
+      alert(`Pedido da ${approved.mesa} aceito pelo garçom e transmitido com sucesso para a Cozinha Mandaka!`);
+    }
+
+    // ========== CARRINHO & CHECKOUT (PIX, APPLE/GOOGLE PAY, NFC) ==========
     function updateCartUI() {
       const count = cart.reduce((s,i)=>s+i.qty,0);
       const total = cart.reduce((s,i)=>s+i.price*i.qty,0)*1.1;
       document.getElementById('cart-counter').innerText = count;
       document.getElementById('cart-total-price').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
-      const now = new Date();
-      document.getElementById('order-footer-info').innerHTML = currentUser ? 
-        `<strong>Atendente:</strong> ${currentUser.nome} (${currentUser.matricula})<br><strong>Data/Hora:</strong> ${now.toLocaleDateString('pt-BR')} às ${now.toLocaleTimeString('pt-BR')}` : '';
       
-      document.getElementById('cart-items-list').innerHTML = cart.map((i,idx) => {
-        const extra = [];
-        if(i.extras.mesa) extra.push(i.extras.mesa);
-        if(i.extras.posicao) extra.push(i.extras.posicao);
-        if(i.extras.quarto) extra.push('Qto '+i.extras.quarto);
-        if(i.extras.refri) extra.push(i.extras.refri);
-        return `<div class="flex justify-between items-start text-sm border-b border-slate-100 pb-3">
-          <div class="flex-1">
+      document.getElementById('cart-items-list').innerHTML = cart.map((i,idx) => `
+        <div class="flex justify-between items-start text-sm border-b pb-3">
+          <div>
             <p class="font-medium text-slate-900">${i.name}</p>
-            <p class="text-xs text-slate-400">R$ ${i.price.toFixed(2)}</p>
-            ${extra.length?`<p class="text-[10px] text-google-blue mt-0.5">${extra.join(' · ')}</p>`:''}
+            <p class="text-xs text-slate-400">R$ ${i.price.toFixed(2)} · ${i.extras.mesa || ''}</p>
+            <p class="text-[10px] text-amber-700">${i.extras.acompanhamento || ''}</p>
           </div>
           <div class="flex items-center gap-2">
             <p class="font-bold text-google-green">R$ ${(i.price*i.qty).toFixed(2)}</p>
-            <button onclick="removeFromCart(${idx})" class="text-google-red hover:bg-red-50 p-1.5 rounded-full"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            <button onclick="removeFromCart(${idx})" class="text-google-red p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
           </div>
-        </div>`;
-      }).join('') || '<p class="text-center text-slate-400 py-10">Carrinho vazio</p>';
+        </div>
+      `).join('') || '<p class="text-center text-slate-400 py-10">Comanda vazia</p>';
       lucide.createIcons();
     }
     function removeFromCart(idx){ cart.splice(idx,1); updateCartUI(); }
     function openCartModal(){ document.getElementById('cart-modal').classList.remove('hidden'); document.getElementById('cart-modal').classList.add('flex'); updateCartUI(); }
     function closeCartModal(){ document.getElementById('cart-modal').classList.add('hidden'); document.getElementById('cart-modal').classList.remove('flex'); }
-    function confirmOrder(){
-      if(!cart.length) return alert('Carrinho vazio.');
-      confetti({particleCount:120,spread:80,origin:{y:0.6}});
-      alert(`Pedido enviado para a cozinha com sucesso!\n\nAtendente: ${currentUser.nome}\nData/Hora: ${new Date().toLocaleString('pt-BR')}`);
-      cart=[]; updateCartUI(); closeCartModal();
+
+    function processPayment(type) {
+      if(!cart.length) return alert('Comanda vazia.');
+      confetti({particleCount:100,spread:70,origin:{y:0.6}});
+      if(type === 'pix') {
+        alert('QR Code PIX gerado na máquina do atendente com sucesso! Aguardando liquidação instantânea.');
+      } else if(type === 'apple') {
+        alert('Aproxime o iPhone ou Dispositivo com Apple / Google Pay do leitor NFC da máquina.');
+      } else {
+        alert('Transação aprovada via Cartão por Aproximação / NFC (Chip & PIN / Contactless).');
+      }
+      cart = []; updateCartUI(); closeCartModal();
+    }
+
+    // PNR & QUARTOS
+    function initRooms() {
+      for(let i=101;i<=115;i++) roomStatus[i] = Math.random()>0.5 ? 'available' : 'occupied';
+      updateRoomCounts();
+    }
+    function updateRoomCounts() {
+      let a=0,o=0,m=0;
+      Object.values(roomStatus).forEach(s => { if(s==='available')a++; else if(s==='occupied')o++; else m++; });
+      document.getElementById('count-available').innerText = a;
+      document.getElementById('count-occupied').innerText = o;
+      document.getElementById('count-maintenance').innerText = m;
+    }
+    function renderRooms() {
+      const container = document.getElementById('rooms-container');
+      const colors = {available:'bg-google-green/15 border-google-green text-google-green',occupied:'bg-google-red/15 border-google-red text-google-red'};
+      let html = '<div class="grid grid-cols-5 gap-3">';
+      for(let i=101;i<=115;i++) {
+        html += `<div class="p-3 rounded-xl border-2 text-center ${colors[roomStatus[i]]||''}"><p class="font-bold">${i}</p><p class="text-[9px]">${roomStatus[i]}</p></div>`;
+      }
+      html += '</div>';
+      container.innerHTML = html;
     }
 
     function handlePNRSubmit(e){
       e.preventDefault();
       const airline=document.getElementById('pnr-airline').value;
       const code=document.getElementById('pnr-code').value.toUpperCase();
-      const name=document.getElementById('pnr-name').value;
-      const doc=document.getElementById('pnr-doc').value;
-      const type=document.getElementById('pnr-type').value;
-      document.getElementById('v-airline').innerText=airline+' AIRLINES / HOTEL';
+      document.getElementById('v-airline').innerText=airline+' AIRLINES';
       document.getElementById('v-code').innerText=code;
-      document.getElementById('v-name').innerText=name;
-      document.getElementById('v-doc').innerText=doc;
-      document.getElementById('v-type').innerText=type;
-      document.getElementById('v-qr').src=`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=VOUCHER-${airline}-${code}`;
+      document.getElementById('v-name').innerText=document.getElementById('pnr-name').value;
+      document.getElementById('v-doc').innerText=document.getElementById('pnr-doc').value;
       document.getElementById('pnr-success-box').classList.remove('hidden');
-      document.getElementById('pnr-success-box').scrollIntoView({behavior:'smooth'});
-      confetti({particleCount:100,spread:70,origin:{y:0.6}});
+      confetti({particleCount:80,spread:60,origin:{y:0.6}});
     }
-    function triggerConfetti(){ confetti({particleCount:100,spread:70,origin:{y:0.6}}); }
+    function triggerConfetti(){ confetti({particleCount:80,spread:60,origin:{y:0.6}}); }
 
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
+      e.preventDefault(); deferredPrompt = e;
       document.getElementById('install-prompt').classList.remove('hidden');
     });
     function installApp() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(() => deferredPrompt = null);
-      } else {
-        alert('Para instalar, abra o menu do navegador e clique em "Adicionar à tela inicial".');
-      }
+      if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(() => deferredPrompt = null); }
       document.getElementById('install-prompt').classList.add('hidden');
     }
 
