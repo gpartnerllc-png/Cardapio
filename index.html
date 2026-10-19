@@ -202,7 +202,7 @@
                     <span class="text-lg" id="count-occupied">0</span><br>Ocupados
                   </div>
                   <div class="bg-google-yellow/20 text-amber-700 border border-google-yellow/50 rounded-xl py-2">
-                    <span class="text-lg" id="count-maintenance">0</span><br>Manutenção
+                    <span class="text-lg" id="count-maintenance">0</span><br>Fechado
                   </div>
                 </div>
               </div>
@@ -338,7 +338,7 @@
               <i data-lucide="qr-code" class="w-8 h-8"></i>
             </div>
             <h2 class="text-2xl font-extrabold text-slate-900">QR Code & NFC de Acesso</h2>
-            <p class="text-sm text-slate-600">Escaneie para abrir o cardápio ou aproxime com NFC na mesa/quarto.</p>
+            <p class="text-sm text-slate-600">Escaneie para abrir o cardápio ou aproxime com NFC.</p>
             <div class="bg-white p-5 rounded-2xl inline-block shadow-lg">
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=?modo=cliente&mesa=" alt="QR" class="mx-auto rounded-lg" />
             </div>
@@ -352,9 +352,9 @@
       <footer class="border-t border-slate-200/80 pt-5 mt-10 text-center text-xs text-slate-500 flex flex-col md:flex-row justify-between items-center gap-3">
         <p>© 2026 Âmbari &amp; Gastronomia</p>
         <div class="flex gap-4 font-mono text-[11px]">
-          <span class="text-google-green">● Redis</span>
-          <span class="text-google-blue">● Cloudflare Workers</span>
-          <span class="text-google-yellow">● 3D UI</span>
+          <span class="text-google-green">● Waitstaff</span>
+          <span class="text-google-blue">● Todos os Direitos Reservados</span>
+          <span class="text-google-yellow">● x-Partner</span>
         </div>
       </footer>
     </div>
@@ -373,7 +373,7 @@
       <div class="space-y-3 border-t border-slate-100 pt-3">
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="text-xs font-semibold text-slate-600">Mesa (01-50)</label>
+            <label class="text-xs font-semibold text-slate-600">Mesa (01-350)</label>
             <select id="order-mesa" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm"></select>
           </div>
           <div>
@@ -389,7 +389,7 @@
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="text-xs font-semibold text-slate-600">Quarto</label>
+            <label class="text-xs font-semibold text-slate-600">Mesa</label>
             <input type="text" id="order-quarto" placeholder="Ex: 205" class="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm" />
           </div>
           <div>
