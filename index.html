@@ -82,7 +82,7 @@
         </div>
         <p id="bio-status" class="text-xs text-center text-slate-500">Aguardando biometria...</p>
 
-        <button type="submit" id="btn-login" disabled class="btn-3d w-full bg-gradient-to-r from-google-blue to-google-green text-white font-bold py-3.5 opacity-50 cursor-not-allowed">
+        <button type="submit" id="btn-login" class="btn-3d w-full bg-gradient-to-r from-google-blue to-google-green text-white font-bold py-3.5 ">
           Entrar no Sistema
         </button>
       </form>
@@ -91,7 +91,7 @@
         <button onclick="showRegister()" class="text-sm text-google-blue font-semibold hover:underline">Solicitar Acesso / Cadastro (Hotel, Pousada, Garçom)</button>
         <div>
           <p class="text-xs text-slate-500 mb-2">Cliente? Escaneie o QR do Cardápio</p>
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=file:///workspace/artifacts/ambari_mandaka_completo.html?modo=cliente" alt="QR Público" class="mx-auto rounded-xl border border-slate-200" />
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://cardapio.droppfy.com/" alt="QR Público" class="mx-auto rounded-xl border border-slate-200" />
         </div>
       </div>
     </div>
@@ -1485,5 +1485,31 @@ const menuItems = [
 
     lucide.createIcons();
   </script>
+
+<script>
+// OVERRIDE LIMPO DE LOGIN
+window.handleLogin = async function(e) {
+  if (e) e.preventDefault();
+  const val = document.getElementById('login-matricula').value.trim();
+  if (!val) return alert('Digite a matrícula');
+  try {
+    const r = await fetch('https://ambari-api.contatodroppfy.workers.dev/api/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ matricula: val })
+    });
+    if (!r.ok) throw new Error();
+    const user = await r.json();
+    localStorage.setItem('ambari_session', JSON.stringify(user));
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('app-container').classList.remove('hidden');
+    document.getElementById('header-user-info').textContent = user.nome + ' · ' + user.matricula + ' · ' + (user.cargo||'').toUpperCase();
+    alert('Login realizado: ' + user.nome);
+  } catch(err) {
+    alert('Matrícula não encontrada ou pendente. Verifique no D1.');
+  }
+};
+</script>
+
 </body>
 </html>
