@@ -1487,7 +1487,6 @@ const menuItems = [
   </script>
 
 <script>
-// OVERRIDE LIMPO DE LOGIN
 window.handleLogin = async function(e) {
   if (e) e.preventDefault();
   const val = document.getElementById('login-matricula').value.trim();
@@ -1500,13 +1499,17 @@ window.handleLogin = async function(e) {
     });
     if (!r.ok) throw new Error();
     const user = await r.json();
+    window.currentUser = user;
     localStorage.setItem('ambari_session', JSON.stringify(user));
     document.getElementById('auth-screen').classList.add('hidden');
     document.getElementById('app-container').classList.remove('hidden');
     document.getElementById('header-user-info').textContent = user.nome + ' · ' + user.matricula + ' · ' + (user.cargo||'').toUpperCase();
-    alert('Login realizado: ' + user.nome);
+    // Render tabs using original function
+    if (typeof renderTabsByRole === 'function') renderTabsByRole(user.cargo);
+    if (typeof initRooms === 'function') initRooms();
+    if (user.cargo === 'admin' && typeof renderAdminPanel === 'function') renderAdminPanel();
   } catch(err) {
-    alert('Matrícula não encontrada ou pendente. Verifique no D1.');
+    alert('Matrícula não encontrada ou pendente.');
   }
 };
 </script>
