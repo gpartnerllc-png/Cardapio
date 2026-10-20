@@ -119,22 +119,11 @@
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Categoria de Serviço / Aba</label>
-          <select id="reg-cargo" onchange="document.getElementById('praca-field').classList.toggle('hidden', this.value!=='garcom' && this.value!=='atendente')" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40">
+          <select id="reg-cargo" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue/40">
             <option value="garcom">Garçom & Atendimento (Cardápio + QR)</option>
             <option value="recepcao">Hotel / Pousada / Recepção (Companhias, PNR & Quartos)</option>
             <option value="atendente">Atendente Geral</option>
             <option value="admin">Administrador Master</option>
-          </select>
-        </div>
-        <div id="praca-field" class="hidden">
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Praça</label>
-          <select id="reg-praca" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm">
-            <option value="1">Praça 1 (Mesas 1-50)</option>
-            <option value="2">Praça 2 (Mesas 51-100)</option>
-            <option value="3">Praça 3 (Mesas 101-150)</option>
-            <option value="4">Praça 4 (Mesas 151-200)</option>
-            <option value="5">Praça 5 (Mesas 201-250)</option>
-            <option value="6">Praça 6 (Mesas 251-300)</option>
           </select>
         </div>
         <button type="submit" class="btn-3d w-full bg-google-blue text-white font-bold py-3.5">Enviar Solicitação</button>
@@ -1498,14 +1487,12 @@ const menuItems = [
   </script>
 
 <script>
-const API = 'https://ambari-api.contatodroppfy.workers.dev';
-
 window.handleLogin = async function(e) {
   if (e) e.preventDefault();
   const val = document.getElementById('login-matricula').value.trim();
   if (!val) return alert('Digite a matrícula');
   try {
-    const r = await fetch(API + '/api/login', {
+    const r = await fetch('https://ambari-api.contatodroppfy.workers.dev/api/login', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ matricula: val })
@@ -1517,91 +1504,33 @@ window.handleLogin = async function(e) {
     document.getElementById('auth-screen').classList.add('hidden');
     document.getElementById('app-container').classList.remove('hidden');
     document.getElementById('header-user-info').textContent = user.nome + ' · ' + user.matricula + ' · ' + (user.cargo||'').toUpperCase();
+    // Render tabs using original function
     if (typeof renderTabsByRole === 'function') renderTabsByRole(user.cargo);
     if (typeof initRooms === 'function') initRooms();
-    if (user.cargo === 'admin') carregarAdmin();
-    carregarPedidos();
+    if (user.cargo === 'admin' && typeof renderAdminPanel === 'function') renderAdminPanel();
   } catch(err) {
     alert('Matrícula não encontrada ou pendente.');
   }
 };
+</script>
 
-window.handleRegister = async function(e) {
-  e.preventDefault();
-  const cargo = document.getElementById('reg-cargo').value;
-  const praca = document.getElementById('reg-praca')?.value || null;
-  const body = {
-    nome: document.getElementById('reg-nome').value,
-    matricula: document.getElementById('reg-matricula').value,
-    email: document.getElementById('reg-email').value,
-    cargo, praca
-  };
-  const r = await fetch(API + '/api/register', {
+
+<script>
+window.editarPedido = async function(id) {
+  const n = prompt('Nova mesa:');
+  if (!n) return;
+  await fetch('https://ambari-api.contatodroppfy.workers.dev/api/orders/' + id + '/change-table', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify(body)
+    body: JSON.stringify({ newMesa: n })
   });
-  if (r.ok) { alert('Solicitação enviada!'); showLogin(); }
-  else alert('Erro ao enviar.');
+  location.reload();
 };
-
-async function carregarAdmin() {
-  if (!window.currentUser || window.currentUser.cargo !== 'admin') return;
-  const pending = await fetch(API + '/api/pending').then(r => r.json());
-  document.getElementById('pending-list').innerHTML = pending.length ? pending.map(p => 
-    `<div class="flex justify-between p-3 bg-white rounded-xl border text-sm mb-2">
-      <span>${p.nome} (${p.cargo}) ${p.matricula} ${p.praca ? 'Praça '+p.praca : ''}</span>
-      <button onclick="aprovar(${p.id})" class="text-green-600 font-bold text-xs">Aprovar</button>
-    </div>`).join('') : '<p class="text-slate-400 text-sm">Nenhuma pendente</p>';
-
-  const users = await fetch(API + '/api/users').then(r => r.json());
-  document.getElementById('approved-users-list').innerHTML = users.map(u => 
-    `<div class="flex justify-between p-3 bg-white rounded-xl border text-sm mb-2">
-      <span>${u.nome} (${u.cargo}) ${u.matricula} ${u.praca ? 'Praça '+u.praca : ''}</span>
-      ${u.cargo !== 'admin' ? `<button onclick="excluir('${u.matricula}')" class="text-red-500 text-xs">Excluir</button>` : ''}
-    </div>`).join('');
-}
-
-async function aprovar(id) {
-  await fetch(API + '/api/approve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id})});
-  carregarAdmin();
-}
-
-async function excluir(mat) {
-  if (!confirm('Excluir?')) return;
-  await fetch(API + '/api/users/delete', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({matricula:mat})});
-  carregarAdmin();
-}
-
-async function carregarPedidos() {
-  if (!window.currentUser) return;
-  const praca = window.currentUser.cargo === 'admin' ? 'all' : (window.currentUser.praca || '1');
-  const orders = await fetch(API + '/api/orders/pending?praca=' + praca).then(r => r.json());
-  let el = document.getElementById('pedidos-praca');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'pedidos-praca';
-    el.className = 'mt-6';
-    document.querySelector('main').prepend(el);
-  }
-  el.innerHTML = `<div class="glass-card p-5 rounded-3xl mb-4">
-    <h3 class="font-bold mb-3">Pedidos Pendentes ${praca === 'all' ? '(Todas)' : 'Praça ' + praca}</h3>
-    ${orders.length ? orders.map(o => `
-      <div class="bg-white rounded-xl p-3 border mb-2 text-sm">
-        <div class="flex justify-between"><strong>${o.mesa}</strong><span class="text-xs text-slate-400">Praça ${o.praca}</span></div>
-        <div class="text-slate-600">${(o.items||[]).map(i => i.name + ' R$' + (i.price||0).toFixed(2)).join(', ')}</div>
-        <button onclick="aceitar('${o.id}')" class="mt-1 bg-green-500 text-white text-xs px-3 py-1 rounded-full">Aceitar</button>
-      </div>`).join('') : '<p class="text-slate-400">Nenhum pedido</p>'}
-  </div>`;
-}
-
-async function aceitar(id) {
-  await fetch(API + '/api/orders/' + id + '/accept', {method:'POST'});
-  carregarPedidos();
-}
-
-// Auto refresh pedidos a cada 15s
-setInterval(carregarPedidos, 15000);
+window.deletarPedido = async function(id) {
+  if (!confirm('Deletar pedido?')) return;
+  await fetch('https://ambari-api.contatodroppfy.workers.dev/api/orders/' + id + '/accept', { method: 'POST' });
+  location.reload();
+};
 </script>
 
 </body>
