@@ -1653,14 +1653,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
               <label for="login-cpf">CPF</label>
               <div class="input-wrap">
                 <span data-icon="user"></span>
-                <input class="input" id="login-cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="342.599.988-54" maxlength="14" required />
+                <input class="input" id="login-cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14" required />
               </div>
             </div>
             <div class="field">
               <label for="login-senha">Senha</label>
               <div class="input-wrap">
                 <span data-icon="key"></span>
-                <input class="input" id="login-senha" name="senha" type="password" autocomplete="current-password" placeholder="323619AmparY" required />
+                <input class="input" id="login-senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua Senha" required />
               </div>
             </div>
 
@@ -2365,7 +2365,7 @@ function newSeedDB() {
     return { passSalt: salt, passHash: hashPassword(senha, salt) };
   };
   const users = [
-    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', cpf: '323.619.280-19', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('admin2026') },
+    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', cpf: '342.599.988-54', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('admin2026') },
     { id: 'u-recepcao', nome: 'Marina Duarte', matricula: '2024001', cpf: '202.400.100-94', email: 'marina@ambari.local', cargo: 'recepcao', active: true, createdAt: ago(60 * 24 * 48), ...credentials('recep2026') },
     { id: 'u-garcom', nome: 'Lucas Prado', matricula: '2024002', cpf: '202.400.200-57', email: 'lucas@ambari.local', cargo: 'garcom', active: true, createdAt: ago(60 * 24 * 35), ...credentials('garcom2026') },
     { id: 'u-atendente', nome: 'Ana Beatriz', matricula: '2024003', cpf: '202.400.300-10', email: 'ana@ambari.local', cargo: 'atendente', active: true, createdAt: ago(60 * 24 * 21), ...credentials('atende2026') }
