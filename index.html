@@ -417,21 +417,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .bio-btn:hover { border-color: #cbd8cf; background: var(--brand-tint); color: var(--brand); transform: translateY(-1px); }
 .auth-note { text-align: center; color: var(--muted-2); font-size: 10.5px; line-height: 1.5; }
-.demo-block { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
-.demo-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 9px; }
-.demo-title::after { content: ''; height: 1px; flex: 1; background: var(--line); }
-.demo-list { display: flex; flex-direction: column; gap: 6px; }
-.demo-user {
-  display: flex; align-items: center; gap: 10px; width: 100%;
-  padding: 8px 10px; border-radius: 10px;
-  border: 1px solid transparent; text-align: left;
-  transition: all .16s ease;
-}
-.demo-user:hover { background: var(--surface-2); border-color: var(--line); }
-.demo-user .avatar { width: 30px; height: 30px; font-size: 10px; border-radius: 9px; }
-.demo-user strong { display: block; font-size: 11.5px; line-height: 1.25; }
-.demo-user span { display: block; color: var(--muted); font-size: 10px; }
-.demo-user .ic { margin-left: auto; color: var(--muted-2); }
 .auth-client-link {
   display: flex; align-items: center; gap: 11px; margin-top: 16px;
   padding: 12px 13px; border-radius: var(--r-sm);
@@ -509,7 +494,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   display: flex; align-items: center; gap: 9px;
   padding: 4px 10px 4px 4px; border-radius: 999px;
   border: 1px solid var(--line); background: rgba(255, 255, 255, .72);
+  transition: border-color .16s ease, box-shadow .16s ease;
 }
+.user-box:hover { border-color: var(--line-strong); box-shadow: var(--shadow-sm); }
 .avatar {
   width: 36px; height: 36px; border-radius: 50%;
   display: grid; place-items: center; flex: none;
@@ -1659,14 +1646,21 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
         <div id="auth-login" class="auth-step">
           <h2>Bem-vindo de volta.</h2>
-          <p>Entre com sua matrícula ou CNPJ para abrir a operação.</p>
+          <p>Entre com seu CPF e senha para abrir a operação.</p>
 
-          <form id="login-form" class="auth-form" novalidate>
+          <form id="login-form" class="auth-form" novalidate autocomplete="off">
             <div class="field">
-              <label for="login-matricula">Matrícula ou CNPJ</label>
+              <label for="login-cpf">CPF</label>
               <div class="input-wrap">
                 <span data-icon="user"></span>
-                <input class="input" id="login-matricula" name="matricula" type="text" autocomplete="username" placeholder="Ex.: 323619" required />
+                <input class="input" id="login-cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="login-senha">Senha</label>
+              <div class="input-wrap">
+                <span data-icon="key"></span>
+                <input class="input" id="login-senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha de acesso" required />
               </div>
             </div>
 
@@ -1678,7 +1672,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
                 <span data-icon="scan-face"></span> Facial
               </button>
             </div>
-            <p class="auth-note">A biometria é uma simulação de demonstração. Informe a matrícula para validar.</p>
+            <p class="auth-note">A biometria é uma simulação e só valida com o CPF e a senha corretos.</p>
 
             <p id="login-error" class="form-error hidden" role="alert"></p>
 
@@ -1687,49 +1681,28 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
             </button>
           </form>
 
-          <div class="demo-block">
-            <div class="demo-title">Acesso rápido de demonstração</div>
-            <div class="demo-list">
-              <button type="button" class="demo-user" data-demo-login="323619">
-                <span class="avatar">CF</span>
-                <span class="grow"><strong>Cristian Florencio</strong><span>Administrador · 323619</span></span>
-                <span data-icon="arrow-right"></span>
-              </button>
-              <button type="button" class="demo-user" data-demo-login="2024001">
-                <span class="avatar blue">MD</span>
-                <span class="grow"><strong>Marina Duarte</strong><span>Recepção · 2024001</span></span>
-                <span data-icon="arrow-right"></span>
-              </button>
-              <button type="button" class="demo-user" data-demo-login="2024002">
-                <span class="avatar accent">LP</span>
-                <span class="grow"><strong>Lucas Prado</strong><span>Garçom · 2024002</span></span>
-                <span data-icon="arrow-right"></span>
-              </button>
-            </div>
-          </div>
-
           <a class="auth-client-link" href="?modo=cliente&mesa=12">
             <span data-icon="utensils"></span>
             <span class="grow"><strong>É cliente? Abra o cardápio</strong>Mesa 12 · demonstração do modo cliente</span>
             <span data-icon="chevron-right"></span>
           </a>
 
-          <p class="auth-local">Demonstração local · Nenhuma informação é enviada para servidores.<br />Sem senha nesta versão — use apenas com dados fictícios.</p>
+          <p class="auth-local">Demonstração local · Nenhuma informação é enviada para servidores.<br />Cada pessoa da equipe entra com o próprio CPF e senha — não compartilhe suas credenciais.</p>
         </div>
 
         <div id="auth-register" class="auth-step hidden">
           <h2>Solicitar acesso.</h2>
-          <p>Cadastre a equipe, hotel ou empresa. Um administrador revisa e libera o acesso.</p>
+          <p>Cadastre a equipe com CPF e senha. Um administrador revisa e libera o acesso.</p>
 
-          <form id="register-form" class="auth-form" novalidate>
+          <form id="register-form" class="auth-form" novalidate autocomplete="off">
             <div class="field">
-              <label for="reg-nome">Nome ou razão social</label>
-              <input class="input" id="reg-nome" name="nome" type="text" placeholder="Ex.: Hotel Costa Verde" required maxlength="80" />
+              <label for="reg-nome">Nome completo ou razão social</label>
+              <input class="input" id="reg-nome" name="nome" type="text" placeholder="Ex.: João Batista" required maxlength="80" />
             </div>
             <div class="form-grid">
               <div class="field">
-                <label for="reg-matricula">Matrícula ou CNPJ</label>
-                <input class="input" id="reg-matricula" name="matricula" type="text" placeholder="Ex.: 2024009" required maxlength="24" />
+                <label for="reg-cpf">CPF</label>
+                <input class="input" id="reg-cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14" required />
               </div>
               <div class="field">
                 <label for="reg-cargo">Perfil desejado</label>
@@ -1745,10 +1718,20 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
               <label for="reg-email">E-mail corporativo</label>
               <input class="input" id="reg-email" name="email" type="email" placeholder="contato@empresa.com" required maxlength="120" />
             </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="reg-senha">Crie uma senha</label>
+                <input class="input" id="reg-senha" name="senha" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" minlength="6" required />
+              </div>
+              <div class="field">
+                <label for="reg-senha2">Confirmar senha</label>
+                <input class="input" id="reg-senha2" name="senha2" type="password" autocomplete="new-password" placeholder="Repita a senha" minlength="6" required />
+              </div>
+            </div>
 
             <div class="auth-register-note">
-              <span data-icon="info" style="margin-top:1px"></span>
-              O acesso só é liberado após aprovação em Administração. Sem senha nesta demonstração.
+              <span data-icon="shield" style="margin-top:1px"></span>
+              A senha é guardada apenas como hash neste navegador. O acesso só funciona após aprovação em Administração.
             </div>
 
             <p id="register-error" class="form-error hidden" role="alert"></p>
@@ -1780,13 +1763,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
           <button type="button" class="btn-icon" data-act="help" title="Guia rápido" aria-label="Guia rápido">
             <span data-icon="help"></span>
           </button>
-          <div class="user-box">
+          <button type="button" class="user-box" data-act="open-account" title="Minha conta e senha" aria-label="Minha conta">
             <div class="avatar" id="user-avatar">—</div>
             <div class="user-meta">
               <strong id="user-name">—</strong>
               <span id="user-role">—</span>
             </div>
-          </div>
+          </button>
           <button type="button" class="btn-icon" data-act="logout" title="Sair" aria-label="Sair">
             <span data-icon="logout"></span>
           </button>
@@ -1823,10 +1806,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
    ========================================================================== */
 
 const APP_VERSION = '3.0.0';
-const DB_KEY = 'ambari.db.v3';
-const SESSION_KEY = 'ambari.session.v3';
+const DB_KEY = 'ambari.db.v4';
+const SESSION_KEY = 'ambari.session.v4';
 const CLIENT_TABLE_KEY = 'ambari.client.table';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 /* Substituídos no build pelos dados reais do cardápio. */
 const CATEGORIES_RAW = [{"id":"happy-mandaka","title":"Happy Mandaka"},{"id":"promocao","title":"Promocao"},{"id":"pra-comecar","title":"pra Comecar"},{"id":"saladas","title":"Saladas"},{"id":"entre-amigos","title":"Entre Amigos"},{"id":"sandubas","title":"Sandubas"},{"id":"parrilla","title":"Parrilla"},{"id":"acompanhamentos","title":"Acompanhamentos"},{"id":"familia","title":"Familia"},{"id":"mandakeiros","title":"Mandakeiros"},{"id":"sobremesas","title":"Sobremesas"},{"id":"executivos","title":"Executivos"},{"id":"pra-viagem---individuais","title":"pra Viagem - Individuais"},{"id":"paleta-viva","title":"Paleta Viva"},{"id":"kids","title":"Kids"},{"id":"molhos","title":"Molhos"},{"id":"bebidas","title":"Bebidas"},{"id":"sucos","title":"Sucos"},{"id":"smoothies","title":"Smoothies"},{"id":"mocktails---drinks-sem-alcool","title":"Mocktails - Drinks sem Alcool"},{"id":"destilados","title":"Destilados"},{"id":"cachacas","title":"Cachacas"},{"id":"licores","title":"Licores"},{"id":"chopp","title":"Chopp"},{"id":"long-neck","title":"Long Neck"},{"id":"cerveja-garrafa","title":"Cerveja Garrafa"},{"id":"cervejas-especiais","title":"Cervejas Especiais"},{"id":"drinks-classicos","title":"Drinks Classicos"},{"id":"drinks-especiais","title":"Drinks Especiais"},{"id":"ginkeria","title":"Ginkeria"},{"id":"caipis","title":"Caipis"},{"id":"vodka","title":"Vodka"},{"id":"whisky","title":"Whisky"},{"id":"complementos","title":"Complementos"},{"id":"mdk-store","title":"mdk Store"},{"id":"espumantes","title":"Espumantes"},{"id":"vinhos-brancos","title":"Vinhos Brancos"},{"id":"vinhos-roses","title":"Vinhos Roses"},{"id":"vinhos-tintos","title":"Vinhos Tintos"},{"id":"vinhos---250ml","title":"Vinhos - 250ml"},{"id":"regras-e-avisos","title":"Regras e Avisos"}];
@@ -2165,6 +2148,87 @@ function normalizeText(value) {
 function normalizeCode(value) {
   return String(value ?? '').trim().toUpperCase();
 }
+function onlyDigits(value) {
+  return String(value ?? '').replace(/\D+/g, '');
+}
+function formatCpf(value) {
+  const d = onlyDigits(value).slice(0, 11);
+  if (d.length <= 3) return d;
+  if (d.length <= 6) return `${d.slice(0, 3)}.${d.slice(3)}`;
+  if (d.length <= 9) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}`;
+  return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`;
+}
+function isValidCpf(value) {
+  const cpf = onlyDigits(value);
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+  const checkDigit = (base) => {
+    let sum = 0;
+    for (let i = 0; i < base.length; i++) sum += Number(base[i]) * (base.length + 1 - i);
+    return String((sum * 10) % 11 % 10);
+  };
+  return checkDigit(cpf.slice(0, 9)) === cpf[9] && checkDigit(cpf.slice(0, 10)) === cpf[10];
+}
+function sha256Hex(message) {
+  const K = [
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+  ];
+  const utf8 = new TextEncoder().encode(message);
+  const bitLen = utf8.length * 8;
+  const padded = new Uint8Array((((utf8.length + 8) >> 6) + 1) << 6);
+  padded.set(utf8);
+  padded[utf8.length] = 0x80;
+  const view = new DataView(padded.buffer);
+  view.setUint32(padded.length - 8, Math.floor(bitLen / 0x100000000));
+  view.setUint32(padded.length - 4, bitLen >>> 0);
+  const H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+  const w = new Uint32Array(64);
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let block = 0; block < padded.length; block += 64) {
+    for (let i = 0; i < 16; i++) w[i] = view.getUint32(block + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const s0 = rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+      const s1 = rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+      w[i] = (w[i - 16] + s0 + w[i - 7] + s1) >>> 0;
+    }
+    let a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+    for (let i = 0; i < 64; i++) {
+      const S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K[i] + w[i]) >>> 0;
+      const S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + maj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0;
+      d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+    }
+    H[0] = (H[0] + a) >>> 0; H[1] = (H[1] + b) >>> 0; H[2] = (H[2] + c) >>> 0; H[3] = (H[3] + d) >>> 0;
+    H[4] = (H[4] + e) >>> 0; H[5] = (H[5] + f) >>> 0; H[6] = (H[6] + g) >>> 0; H[7] = (H[7] + h) >>> 0;
+  }
+  return H.map((x) => x.toString(16).padStart(8, '0')).join('');
+}
+function newSalt() {
+  const bytes = new Uint8Array(12);
+  if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(bytes);
+  else for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+}
+function hashPassword(password, salt) {
+  return sha256Hex(`ambari::${salt}::${password}`);
+}
+function passwordMatches(user, senha) {
+  return !!user && !!user.passHash && hashPassword(String(senha ?? ''), user.passSalt || '') === user.passHash;
+}
+function setPassword(user, senha) {
+  user.passSalt = newSalt();
+  user.passHash = hashPassword(senha, user.passSalt);
+}
 function maskDoc(doc) {
   const raw = String(doc || '');
   const digits = raw.replace(/\D/g, '');
@@ -2296,11 +2360,15 @@ function newSeedDB() {
     }
   });
 
+  const credentials = (senha) => {
+    const salt = newSalt();
+    return { passSalt: salt, passHash: hashPassword(senha, salt) };
+  };
   const users = [
-    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60) },
-    { id: 'u-recepcao', nome: 'Marina Duarte', matricula: '2024001', email: 'marina@ambari.local', cargo: 'recepcao', active: true, createdAt: ago(60 * 24 * 48) },
-    { id: 'u-garcom', nome: 'Lucas Prado', matricula: '2024002', email: 'lucas@ambari.local', cargo: 'garcom', active: true, createdAt: ago(60 * 24 * 35) },
-    { id: 'u-atendente', nome: 'Ana Beatriz', matricula: '2024003', email: 'ana@ambari.local', cargo: 'atendente', active: true, createdAt: ago(60 * 24 * 21) }
+    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', cpf: '323.619.280-19', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('admin2026') },
+    { id: 'u-recepcao', nome: 'Marina Duarte', matricula: '2024001', cpf: '202.400.100-94', email: 'marina@ambari.local', cargo: 'recepcao', active: true, createdAt: ago(60 * 24 * 48), ...credentials('recep2026') },
+    { id: 'u-garcom', nome: 'Lucas Prado', matricula: '2024002', cpf: '202.400.200-57', email: 'lucas@ambari.local', cargo: 'garcom', active: true, createdAt: ago(60 * 24 * 35), ...credentials('garcom2026') },
+    { id: 'u-atendente', nome: 'Ana Beatriz', matricula: '2024003', cpf: '202.400.300-10', email: 'ana@ambari.local', cargo: 'atendente', active: true, createdAt: ago(60 * 24 * 21), ...credentials('atende2026') }
   ];
 
   const vouchers = [
@@ -2380,14 +2448,14 @@ function newSeedDB() {
 
   const requests = [
     {
-      id: 'REQ-1001', nome: 'Hotel Costa Verde', matricula: '45.678.910/0001-22',
+      id: 'REQ-1001', nome: 'Hotel Costa Verde', matricula: '45678910', cpf: '123.456.789-09',
       email: 'reservas@costaverde.com.br', cargo: 'recepcao', status: 'pending',
-      createdAt: ago(60 * 22), note: 'Equipe de tripulação, 8 quartos por semana.'
+      createdAt: ago(60 * 22), note: 'Equipe de tripulação, 8 quartos por semana.', ...credentials('costa2026')
     },
     {
-      id: 'REQ-1002', nome: 'João Batista', matricula: '2024009',
+      id: 'REQ-1002', nome: 'João Batista', matricula: '52998224725', cpf: '529.982.247-25',
       email: 'joao.batista@ambari.local', cargo: 'garcom', status: 'pending',
-      createdAt: ago(60 * 4), note: 'Atendimento de salão.'
+      createdAt: ago(60 * 4), note: 'Atendimento de salão.', ...credentials('joao2026')
     }
   ];
 
@@ -2455,7 +2523,7 @@ function replaceDB(next) {
     const fresh = db.users.find((u) => u.id === storedId);
     if (!fresh || !fresh.active) {
       currentUser = null;
-      localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
       showAuthView();
       toast('Seu acesso foi encerrado pela administração.', 'info');
       return;
@@ -2484,16 +2552,19 @@ function checkForExternalChanges() {
    Sessão
    ========================================================================== */
 function restoreSession() {
-  const saved = safeReadJSON(SESSION_KEY, null);
+  let saved = null;
+  try { saved = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null'); } catch (err) { saved = null; }
   if (!saved || !saved.userId) return null;
   const user = db.users.find((u) => u.id === saved.userId && u.active);
-  if (!user) { localStorage.removeItem(SESSION_KEY); return null; }
+  if (!user) { sessionStorage.removeItem(SESSION_KEY); return null; }
   currentUser = user;
   return user;
 }
 
 function persistSession(user) {
-  saveJSON(SESSION_KEY, { userId: user.id, at: new Date().toISOString() });
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({ userId: user.id, at: new Date().toISOString() }));
+  } catch (err) { /* modo privado */ }
 }
 
 function finishLogin(user) {
@@ -2512,7 +2583,7 @@ function logout() {
     confirm: 'Sair do sistema',
     icon: 'logout',
     onConfirm: () => {
-      localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
       currentUser = null;
       showAuthView();
       if (history.replaceState) history.replaceState(null, '', location.pathname);
@@ -2521,19 +2592,26 @@ function logout() {
   });
 }
 
-function validateLogin(matricula) {
-  const value = String(matricula || '').trim();
-  if (!value) return { error: 'Digite uma matrícula ou CNPJ para continuar.' };
-  if (value.length < 3) return { error: 'Matrícula muito curta. Confira os números.' };
-  const user = db.users.find((u) => u.active && normalizeText(u.matricula) === normalizeText(value));
-  if (!user) return { error: 'Acesso não encontrado. Verifique a matrícula ou solicite cadastro.' };
+function validateLogin(cpf, senha) {
+  const digits = onlyDigits(cpf);
+  if (!digits) return { error: 'Digite seu CPF e sua senha para continuar.' };
+  if (digits.length !== 11) return { error: 'CPF incompleto. Confira os 11 números.' };
+  if (!isValidCpf(digits)) return { error: 'CPF inválido. Confira os números digitados.' };
+  if (!senha) return { error: 'Informe sua senha.' };
+  const user = db.users.find((u) => u.active && onlyDigits(u.cpf) === digits);
+  if (!user) return { error: 'CPF não cadastrado. Solicite acesso e aguarde a aprovação.' };
+  if (!passwordMatches(user, senha)) return { error: 'Senha incorreta para este CPF.' };
   return { user };
 }
 
-function attemptLogin(matricula, { silent = false } = {}) {
-  const result = validateLogin(matricula);
+function attemptLogin(cpf, senha, { silent = false } = {}) {
+  const result = validateLogin(cpf, senha);
   if (result.error) {
-    if (!silent) showLoginError(result.error);
+    if (!silent) {
+      showLoginError(result.error);
+      const senhaInput = $('#login-senha');
+      if (senhaInput) senhaInput.value = '';
+    }
     return false;
   }
   hideLoginError();
@@ -2553,12 +2631,19 @@ function hideLoginError() {
 }
 
 function startBiometric(kind) {
-  const input = $('#login-matricula');
-  const value = input ? input.value.trim() : '';
-  const result = validateLogin(value);
+  const cpfInput = $('#login-cpf');
+  const senhaInput = $('#login-senha');
+  const cpf = cpfInput ? cpfInput.value.trim() : '';
+  const senha = senhaInput ? senhaInput.value : '';
+  const result = validateLogin(cpf, senha);
   if (result.error) {
-    showLoginError(value ? result.error : 'Informe a matrícula para iniciar a validação biométrica.');
-    input?.focus();
+    const message = !onlyDigits(cpf)
+      ? 'Informe o CPF para iniciar a validação biométrica.'
+      : !senha
+        ? 'Informe a senha para iniciar a validação biométrica.'
+        : result.error;
+    showLoginError(message);
+    (!onlyDigits(cpf) ? cpfInput : senhaInput)?.focus();
     return;
   }
   hideLoginError();
@@ -2584,11 +2669,7 @@ function startBiometric(kind) {
   window.setTimeout(() => {
     if (token !== bioToken) return;
     closeModal();
-    if (attemptLogin(value, { silent: true })) {
-      toast(`${kind === 'facial' ? 'Reconhecimento facial confirmado' : 'Leitura digital confirmada'}. Acesso liberado.`, 'success');
-    } else {
-      showLoginError('Não foi possível confirmar a biometria.');
-    }
+    attemptLogin(cpf, senha, { silent: true });
   }, 1500);
 }
 
@@ -2608,7 +2689,7 @@ function setAuthMode(mode) {
   const regError = $('#register-error');
   if (regError) { regError.textContent = ''; regError.classList.add('hidden'); }
   window.setTimeout(() => {
-    const target = state.authMode === 'login' ? $('#login-matricula') : $('#reg-nome');
+    const target = state.authMode === 'login' ? $('#login-cpf') : $('#reg-nome');
     target?.focus();
   }, 60);
 }
@@ -2622,25 +2703,33 @@ function showRegisterError(message) {
 
 function submitRegistration(form) {
   const nome = form.nome.value.trim();
-  const matricula = form.matricula.value.trim();
+  const cpf = formatCpf(form.cpf.value);
   const email = form.email.value.trim();
   const cargo = form.cargo.value;
+  const senha = form.senha.value;
+  const senha2 = form.senha2.value;
   if (nome.length < 3) return showRegisterError('Informe o nome completo ou a razão social.');
-  if (matricula.length < 3) return showRegisterError('Informe uma matrícula ou CNPJ válido.');
+  if (!isValidCpf(cpf)) return showRegisterError('Informe um CPF válido, com os 11 números.');
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showRegisterError('Informe um e-mail corporativo válido.');
-  const existsUser = db.users.some((u) => normalizeText(u.matricula) === normalizeText(matricula));
-  const existsRequest = db.requests.some((r) => r.status === 'pending' && normalizeText(r.matricula) === normalizeText(matricula));
-  if (existsUser || existsRequest) return showRegisterError('Já existe um acesso ou solicitação com essa matrícula.');
+  if (senha.length < 6) return showRegisterError('A senha deve ter pelo menos 6 caracteres.');
+  if (senha !== senha2) return showRegisterError('As senhas não conferem. Revise a confirmação.');
+  const digits = onlyDigits(cpf);
+  const existsUser = db.users.some((u) => onlyDigits(u.cpf) === digits);
+  const existsRequest = db.requests.some((r) => r.status === 'pending' && onlyDigits(r.cpf) === digits);
+  if (existsUser || existsRequest) return showRegisterError('Já existe um acesso ou solicitação com este CPF.');
 
   const requestNumber = Number(db.counters.request || 1000) + 1;
   db.counters.request = requestNumber;
+  const salt = newSalt();
   const request = {
     id: `REQ-${requestNumber}`,
-    nome, matricula, email,
+    nome, matricula: digits, cpf, email,
     cargo: ROLE_LABELS[cargo] ? cargo : 'garcom',
     status: 'pending',
     createdAt: new Date().toISOString(),
-    note: 'Solicitação enviada pelo formulário de acesso.'
+    note: 'Solicitação enviada pelo formulário de acesso.',
+    passSalt: salt,
+    passHash: hashPassword(senha, salt)
   };
   db.requests.unshift(request);
   persistDB();
@@ -2652,13 +2741,13 @@ function submitRegistration(form) {
       <div class="auth-success">
         <div class="success-icon">${ic('check', 30)}</div>
         <h3>Recebemos seu pedido.</h3>
-        <p>O administrador da operação precisa aprovar o acesso antes do primeiro login. Nesta demonstração, entre com a matrícula <strong>323619</strong> e abra a aba Administração.</p>
+        <p>O administrador da operação precisa aprovar o acesso. Depois da aprovação, entre com o CPF <strong>${esc(cpf)}</strong> e a senha que você cadastrou.</p>
         <span class="protocol">${ic('clipboard', 13)} ${esc(request.id)} · ${esc(ROLE_LABELS[request.cargo])}</span>
       </div>
     </div>
     <div class="modal-foot">
       <button type="button" class="btn btn-ghost" data-act="close-modal">Fechar</button>
-      <button type="button" class="btn btn-primary" data-demo-login="323619">Entrar como administrador</button>
+      <button type="button" class="btn btn-primary" data-act="close-modal">Entendi</button>
     </div>
   `, { size: 'compact', label: 'Solicitação enviada' });
 }
@@ -2680,8 +2769,10 @@ function showAuthView() {
   hydrateStaticIcons($('#auth-view'));
   setAuthMode(state.authMode || 'login');
   hideLoginError();
-  const loginInput = $('#login-matricula');
-  if (loginInput && state.mode === 'auth') loginInput.value = '';
+  const cpfInput = $('#login-cpf');
+  const senhaInput = $('#login-senha');
+  if (cpfInput) cpfInput.value = '';
+  if (senhaInput) senhaInput.value = '';
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
@@ -3041,7 +3132,7 @@ function renderStaffHeader() {
     avatar.className = 'avatar ' + (currentUser.cargo === 'recepcao' ? 'blue' : currentUser.cargo === 'garcom' || currentUser.cargo === 'atendente' ? 'accent' : '');
   }
   if (nameEl) nameEl.textContent = currentUser.nome;
-  if (roleEl) roleEl.innerHTML = `${ic(currentUser.cargo === 'admin' ? 'shield' : 'user', 10)} ${esc(roleLabel(currentUser.cargo))} · ${esc(currentUser.matricula)}`;
+  if (roleEl) roleEl.innerHTML = `${ic(currentUser.cargo === 'admin' ? 'shield' : 'user', 10)} ${esc(roleLabel(currentUser.cargo))}`;
 }
 
 function pendingRequests() { return db.requests.filter((r) => r.status === 'pending'); }
@@ -4348,7 +4439,7 @@ function renderRequestCard(request) {
         <span class="tiny muted">${timeAgo(request.createdAt)}</span>
       </div>
       <div class="request-details">
-        <span>${ic('user', 12)} ${esc(request.matricula)}</span>
+        <span>${ic('user', 12)} CPF ${esc(request.cpf || request.matricula || '—')}</span>
         <span>${ic('building', 12)} ${esc(request.note || 'Solicitação de acesso')}</span>
       </div>
       <div class="request-actions">
@@ -4370,14 +4461,17 @@ function renderUserRow(user) {
         <span class="avatar ${user.cargo === 'recepcao' ? 'blue' : user.cargo === 'garcom' || user.cargo === 'atendente' ? 'accent' : ''}" style="width:31px;height:31px;border-radius:9px;font-size:10px">${esc(initials(user.nome))}</span>
         <div style="min-width:0">
           <strong>${esc(user.nome)} ${isSelf ? '<span class="tiny muted">(você)</span>' : ''}</strong>
-          <span>${esc(user.matricula)} · ${esc(user.email)}</span>
+          <span>CPF ${esc(user.cpf || user.matricula || '—')} · ${esc(user.email)}</span>
         </div>
       </div>
       <select class="select user-role-select" data-user-role="${escAttr(user.id)}" aria-label="Perfil de ${escAttr(user.nome)}" ${isSelf ? 'disabled title="Você não pode alterar o próprio perfil"' : ''}>
         ${Object.entries(ROLE_LABELS).map(([role, label]) => `<option value="${role}" ${user.cargo === role ? 'selected' : ''}>${esc(label)}</option>`).join('')}
       </select>
       <div class="user-actions">
-        ${isSelf ? `<span class="badge source-staff">Sessão atual</span>` : `<button type="button" class="btn btn-ghost btn-sm" data-act="remove-user" data-id="${escAttr(user.id)}" title="Remover acesso">${ic('trash', 13)}</button>`}
+        ${isSelf
+          ? `<span class="badge source-staff">Sessão atual</span>`
+          : `<button type="button" class="btn btn-ghost btn-sm" data-act="reset-pass" data-id="${escAttr(user.id)}" title="Redefinir senha">${ic('key', 13)}</button>
+             <button type="button" class="btn btn-ghost btn-sm" data-act="remove-user" data-id="${escAttr(user.id)}" title="Remover acesso">${ic('trash', 13)}</button>`}
       </div>
     </div>
   `;
@@ -4389,18 +4483,22 @@ function approveRequest(id) {
   const select = document.querySelector(`[data-req-role="${CSS.escape(id)}"]`);
   const role = select?.value || request.cargo || 'garcom';
   if (!ROLE_LABELS[role]) { toast('Perfil inválido.', 'error'); return; }
-  if (db.users.some((u) => normalizeText(u.matricula) === normalizeText(request.matricula))) {
-    toast('Já existe um usuário com essa matrícula.', 'error');
+  if (!request.passHash) { toast('Esta solicitação não tem senha cadastrada. Peça um novo cadastro.', 'error'); return; }
+  if (db.users.some((u) => onlyDigits(u.cpf) === onlyDigits(request.cpf || ''))) {
+    toast('Já existe um usuário com este CPF.', 'error');
     return;
   }
   const user = {
     id: `u-${Date.now().toString(36)}`,
     nome: request.nome,
-    matricula: request.matricula,
+    matricula: onlyDigits(request.cpf) || request.matricula || '',
+    cpf: request.cpf,
     email: request.email,
     cargo: role,
     active: true,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    passSalt: request.passSalt,
+    passHash: request.passHash
   };
   db.users.push(user);
   request.status = 'approved';
@@ -4463,7 +4561,7 @@ function removeUser(userId) {
   }
   askConfirm({
     title: 'Remover acesso?',
-    message: `O acesso de ${user.nome} (${user.matricula}) será removido. O histórico de pedidos e vouchers permanece.`,
+    message: `O acesso de ${user.nome} (CPF ${user.cpf || user.matricula || '—'}) será removido. O histórico de pedidos e vouchers permanece.`,
     confirm: 'Remover acesso',
     danger: true,
     onConfirm: () => {
@@ -4473,6 +4571,96 @@ function removeUser(userId) {
       toast('Acesso removido.', 'info');
     }
   });
+}
+
+function openAccountModal() {
+  if (!currentUser) return;
+  const me = currentUser;
+  openModal(`
+    ${modalHead('Minha conta', me.nome, 'Acesso e senha')}
+    <div class="modal-body">
+      <div class="request-details" style="margin-bottom:16px">
+        <span>${ic('user', 12)} ${esc(me.nome)}</span>
+        <span>${ic('shield', 12)} ${esc(roleLabel(me.cargo))}</span>
+        <span>${ic('clipboard', 12)} CPF ${esc(me.cpf || me.matricula || '—')}</span>
+      </div>
+      <form data-form="change-pass" novalidate autocomplete="off">
+        <div class="field">
+          <label for="pass-atual">Senha atual</label>
+          <input class="input" id="pass-atual" name="atual" type="password" autocomplete="current-password" required />
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="pass-nova">Nova senha</label>
+            <input class="input" id="pass-nova" name="nova" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" minlength="6" required />
+          </div>
+          <div class="field">
+            <label for="pass-conf">Confirmar nova senha</label>
+            <input class="input" id="pass-conf" name="conf" type="password" autocomplete="new-password" required />
+          </div>
+        </div>
+        <p class="small muted" style="margin-top:10px">A senha é guardada apenas como hash neste navegador.</p>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-act="close-modal">Cancelar</button>
+      <button type="button" class="btn btn-primary" data-act="submit-change-pass">Salvar senha</button>
+    </div>
+  `, { size: 'compact', label: 'Minha conta' });
+}
+
+function changeOwnPassword(form) {
+  if (!currentUser) return;
+  const atual = form.atual.value;
+  const nova = form.nova.value;
+  const conf = form.conf.value;
+  if (!passwordMatches(currentUser, atual)) { toast('A senha atual está incorreta.', 'error'); form.atual.focus(); return; }
+  if (nova.length < 6) { toast('A nova senha deve ter pelo menos 6 caracteres.', 'error'); form.nova.focus(); return; }
+  if (nova !== conf) { toast('As senhas não conferem. Revise a confirmação.', 'error'); form.conf.focus(); return; }
+  setPassword(currentUser, nova);
+  persistDB();
+  closeModal();
+  toast('Sua senha foi atualizada.', 'success');
+}
+
+function openResetPasswordModal(userId) {
+  const user = db.users.find((u) => u.id === userId);
+  if (!user) return;
+  openModal(`
+    ${modalHead('Redefinir senha', user.nome, 'Acesso')}
+    <div class="modal-body">
+      <p class="small muted" style="margin-bottom:14px">Defina uma senha temporária e combine com ${esc(user.nome.split(' ')[0])} fora do sistema. A senha atual deixa de valer imediatamente.</p>
+      <form data-form="reset-pass" data-id="${escAttr(user.id)}" novalidate autocomplete="off">
+        <div class="field">
+          <label for="reset-nova">Nova senha</label>
+          <input class="input" id="reset-nova" name="nova" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" minlength="6" required />
+        </div>
+        <div class="field">
+          <label for="reset-conf">Confirmar nova senha</label>
+          <input class="input" id="reset-conf" name="conf" type="password" autocomplete="new-password" required />
+        </div>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-act="close-modal">Cancelar</button>
+      <button type="button" class="btn btn-primary" data-act="submit-reset-pass">Redefinir senha</button>
+    </div>
+  `, { size: 'compact', label: 'Redefinir senha' });
+}
+
+function resetUserPassword(form) {
+  const user = db.users.find((u) => u.id === form.dataset.id);
+  if (!user) return;
+  const nova = form.nova.value;
+  const conf = form.conf.value;
+  if (nova.length < 6) { toast('A senha deve ter pelo menos 6 caracteres.', 'error'); form.nova.focus(); return; }
+  if (nova !== conf) { toast('As senhas não conferem. Revise a confirmação.', 'error'); form.conf.focus(); return; }
+  setPassword(user, nova);
+  user.updatedAt = new Date().toISOString();
+  persistDB();
+  closeModal();
+  refreshStaffUI();
+  toast(`Senha de ${user.nome.split(' ')[0]} redefinida.`, 'success');
 }
 
 function saveSettings(form) {
@@ -4538,6 +4726,7 @@ function resetDemoData() {
 function openHelp() {
   const role = currentUser?.cargo;
   const staffSteps = [
+    { title: 'Acesso por CPF e senha', text: 'Cada pessoa entra com o próprio CPF e senha — nada fica exposto na tela inicial. Novos acessos passam por aprovação e o administrador pode redefinir senhas (ícone de chave) em Administração.' },
     { title: 'Recepção & PNR', text: 'Emita um voucher com companhia, PNR, hóspede e quarto. O QR abre a consulta; o check-in e o check-out movimentam o mapa de quartos.' },
     { title: 'Cardápio & pedidos', text: role === 'garcom' || role === 'atendente' ? 'Aprove pedidos de clientes, avance a cozinha e feche a conta na mesa.' : 'Monte comandas, aprove pedidos de clientes, avance a cozinha e feche contas com Pix, cartão, aproximação ou dinheiro.' },
     { title: 'QR & clientes', text: 'Gere o QR do cardápio por mesa e imprima um display. O cliente envia pedidos sem login e pode chamar a equipe.' },
@@ -6715,11 +6904,6 @@ function handleDocumentClick(event) {
     setAuthMode(authMode.dataset.authMode);
     return;
   }
-  const demo = event.target.closest('[data-demo-login]');
-  if (demo) {
-    attemptLogin(demo.dataset.demoLogin);
-    return;
-  }
   const bio = event.target.closest('[data-bio]');
   if (bio) {
     startBiometric(bio.dataset.bio);
@@ -6831,6 +7015,18 @@ function handleDocumentClick(event) {
     case 'approve-request': approveRequest(target.dataset.id); break;
     case 'reject-request': rejectRequest(target.dataset.id); break;
     case 'remove-user': removeUser(target.dataset.id); break;
+    case 'reset-pass': openResetPasswordModal(target.dataset.id); break;
+    case 'submit-reset-pass': {
+      const form = $('#modal-root form[data-form="reset-pass"]');
+      if (form) resetUserPassword(form);
+      break;
+    }
+    case 'open-account': openAccountModal(); break;
+    case 'submit-change-pass': {
+      const form = $('#modal-root form[data-form="change-pass"]');
+      if (form) changeOwnPassword(form);
+      break;
+    }
     case 'export-data': exportData(); break;
     case 'reset-data': resetDemoData(); break;
 
@@ -6866,7 +7062,7 @@ function handleDocumentSubmit(event) {
   if (!(form instanceof HTMLFormElement)) return;
   if (form.id === 'login-form') {
     event.preventDefault();
-    attemptLogin(form.matricula.value);
+    attemptLogin(form.cpf.value, form.senha.value);
     return;
   }
   if (form.id === 'register-form') {
@@ -6879,6 +7075,12 @@ function handleDocumentSubmit(event) {
   event.preventDefault();
 
   switch (kind) {
+    case 'change-pass':
+      changeOwnPassword(form);
+      break;
+    case 'reset-pass':
+      resetUserPassword(form);
+      break;
     case 'voucher':
       generateVoucher(form);
       break;
@@ -6930,7 +7132,9 @@ function handleDocumentSubmit(event) {
 function handleDocumentInput(event) {
   const target = event.target;
   if (!(target instanceof HTMLElement)) return;
-  if (target.id === 'login-matricula') { hideLoginError(); return; }
+  if (target.id === 'login-cpf') { hideLoginError(); target.value = formatCpf(target.value); return; }
+  if (target.id === 'reg-cpf') { target.value = formatCpf(target.value); return; }
+  if (target.id === 'login-senha') { hideLoginError(); return; }
   const name = target.dataset.input;
   if (!name) return;
 
