@@ -1596,6 +1596,348 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 760px) {
   .public-lookup { padding: 22px 0 6px; }
 }
+
+/* ==========================================================================
+   Dashboard DRE, desempenho, gráficos e carteiras
+   ========================================================================== */
+.period-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.dre-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.dre-metric {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.dre-metric span { font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.dre-metric strong { font-size: 17px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+.dre-metric small { font-size: 10px; color: var(--muted-2); }
+.dre-metric.good { background: var(--brand-soft); border-color: #cfe3d8; }
+.dre-metric.good strong { color: var(--brand-2); }
+.dre-metric.warn { background: #fbf0ee; border-color: #f0d4d0; }
+.dre-metric.warn strong { color: var(--danger); }
+
+.dre-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+.dre-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.dre-chart {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px 10px;
+  min-width: 0;
+}
+.dre-chart-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: .03em;
+  color: var(--ink-2);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chart-svg { width: 100%; height: auto; display: block; }
+.bar-rect { transition: opacity .15s ease; }
+.bar-rect:hover { opacity: .82; }
+.bar-x { font-size: 8px; fill: var(--muted-2); }
+.bar-max { font-size: 8px; fill: var(--muted-2); font-weight: 700; }
+.bar-base { stroke: var(--line); stroke-width: 1; }
+.area-line { stroke: #1f7a55; stroke-width: 2.2; stroke-linecap: round; }
+.area-dot { fill: #fff; stroke: #1f7a55; stroke-width: 1.6; }
+
+.donut-wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.donut-svg { width: 132px; height: 132px; flex: none; }
+.donut-seg { transition: stroke-width .15s ease; }
+.donut-seg:hover { stroke-width: 20; }
+.donut-total { font-size: 13px; font-weight: 800; fill: var(--ink); }
+.donut-sub { font-size: 7.5px; fill: var(--muted-2); letter-spacing: .05em; text-transform: uppercase; }
+.chart-legend { flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 5px; }
+.chart-legend-row { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink-2); }
+.chart-legend-row strong { margin-left: auto; font-variant-numeric: tabular-nums; }
+.chart-legend-row .tiny { min-width: 30px; text-align: right; }
+.chart-legend-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chart-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+.mini-bars { display: flex; flex-direction: column; gap: 7px; }
+.mini-bar-row { display: grid; grid-template-columns: minmax(72px, 128px) 1fr auto; align-items: center; gap: 8px; }
+.mini-bar-label { font-size: 10.5px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mini-bar-track { height: 8px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+.mini-bar-fill { display: block; height: 100%; border-radius: 99px; }
+.mini-bar-value { font-size: 10.5px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+.rank-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.rank-row {
+  display: grid;
+  grid-template-columns: 34px 40px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  font-family: inherit;
+}
+.rank-row:hover { border-color: var(--line-strong); transform: translateY(-1px); box-shadow: var(--shadow-sm, 0 2px 8px rgba(21, 32, 25, .06)); }
+.rank-pos {
+  width: 28px; height: 28px; border-radius: 9px;
+  display: grid; place-items: center;
+  background: var(--surface-3); color: var(--muted);
+  font-size: 11px; font-weight: 800;
+}
+.rank-pos.first { background: linear-gradient(135deg, #e9c46a, #d9a441); color: #4a3512; }
+.rank-pos.second { background: linear-gradient(135deg, #dfe3e6, #b9c2c9); color: #3d454c; }
+.rank-pos.third { background: linear-gradient(135deg, #ecc9a8, #c98d54); color: #523311; }
+.rank-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--brand); color: #fff;
+  display: grid; place-items: center;
+  font-size: 12px; font-weight: 800; letter-spacing: .02em;
+  flex: none;
+}
+.rank-main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.rank-name { font-size: 12.5px; font-weight: 800; color: var(--ink); display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.rank-bar { height: 7px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+.rank-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--brand-3), var(--brand)); }
+.rank-sub { font-size: 10px; }
+.rank-side { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.rank-total { font-size: 13.5px; font-weight: 800; color: var(--brand-2); font-variant-numeric: tabular-nums; }
+.rank-points { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 700; color: var(--accent-2); }
+.rank-points-bar { width: 64px; height: 4px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+.rank-points-bar i { display: block; height: 100%; border-radius: 99px; background: var(--gold); }
+
+.person-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 9px; }
+.person-tile {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.person-tile span { font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.person-tile strong { font-size: 15.5px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+.person-tile small { font-size: 9.5px; color: var(--muted-2); }
+.person-pays { display: flex; flex-direction: column; gap: 7px; margin-top: 8px; }
+
+.wallet-panel { display: flex; flex-direction: column; gap: 12px; }
+.wallet-sheet {
+  background: linear-gradient(160deg, #ffffff, var(--surface-2));
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(21, 32, 25, .06);
+}
+.wallet-brand { display: flex; align-items: center; gap: 10px; padding-bottom: 11px; border-bottom: 1px dashed var(--line-strong); }
+.wallet-brand.gpay svg { color: #4285f4; }
+.wallet-brand.apay svg { color: #152019; }
+.wallet-brand strong { display: block; font-size: 13.5px; color: var(--ink); }
+.wallet-brand span { font-size: 10px; color: var(--muted); }
+.wallet-amount { margin-left: auto; font-size: 15px; font-weight: 800; color: var(--brand-2); font-variant-numeric: tabular-nums; }
+.wallet-rows { display: flex; flex-direction: column; gap: 7px; padding-top: 11px; }
+.wallet-row { display: flex; justify-content: space-between; gap: 10px; font-size: 11px; }
+.wallet-row span { color: var(--muted); }
+.wallet-row strong { color: var(--ink); text-align: right; }
+
+@media (max-width: 640px) {
+  .rank-row { grid-template-columns: 28px 1fr auto; }
+  .rank-avatar { display: none; }
+  .dre-grid, .dre-grid-2 { grid-template-columns: 1fr; }
+  .donut-wrap { justify-content: center; }
+}
+
+/* ==========================================================================
+   Nuvem & assinaturas
+   ========================================================================== */
+.auth-cloud {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--ink);
+  text-align: left;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.auth-cloud:hover { border-color: var(--line-strong); background: var(--surface); transform: translateY(-1px); }
+.auth-cloud > .ic { color: var(--brand-2); flex: none; }
+.auth-cloud .grow { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.auth-cloud strong { font-size: 12px; letter-spacing: -.01em; }
+.auth-cloud .grow > span { font-size: 10.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.auth-cloud [data-cloud-tone="ok"] { color: var(--green); }
+.auth-cloud [data-cloud-tone="warn"] { color: var(--accent-2); }
+
+.cloud-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin: 14px 0;
+}
+.cloud-facts > div {
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+}
+.cloud-facts span { display: block; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.cloud-facts strong { display: block; font-size: 11.5px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cloud-form { display: flex; flex-direction: column; gap: 10px; }
+.cloud-form .tool-row { margin-top: 2px; }
+.cloud-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(178, 58, 55, .22);
+  border-radius: var(--r-xs);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.cloud-error > .ic { flex: none; margin-top: 1px; }
+
+.plan-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0;
+}
+.plan-chip {
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.plan-chip.is-base { border-color: rgba(18, 60, 47, .22); background: var(--brand-tint); }
+.plan-chip > span { font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.plan-chip strong { font-size: 14px; color: var(--brand); font-variant-numeric: tabular-nums; }
+.plan-chip strong em { font-style: normal; font-size: 9.5px; font-weight: 500; color: var(--muted); margin-left: 2px; }
+.plan-chip small { font-size: 9.5px; color: var(--muted); }
+
+.bill-list { display: flex; flex-direction: column; }
+.bill-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "main value" "side side";
+  align-items: center;
+  gap: 9px 14px;
+  padding: 12px 2px;
+  border-top: 1px solid var(--line);
+}
+.bill-row:first-child { border-top: 0; }
+.bill-row.is-owner { background: linear-gradient(90deg, var(--brand-tint), transparent 70%); border-radius: var(--r-xs); padding-left: 8px; padding-right: 8px; }
+.bill-main { grid-area: main; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bill-avatar {
+  width: 34px; height: 34px; border-radius: 11px; flex: none;
+  display: grid; place-items: center;
+  background: var(--brand-soft); color: var(--brand-2);
+  font-size: 10.5px; font-weight: 800; letter-spacing: .02em;
+}
+.bill-row.is-owner .bill-avatar { background: var(--brand); color: #fff; }
+.bill-copy { min-width: 0; }
+.bill-copy strong { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12.5px; letter-spacing: -.01em; }
+.bill-copy > span { display: block; font-size: 10px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bill-value { grid-area: value; text-align: right; }
+.bill-value strong { display: block; font-size: 13px; color: var(--brand); font-variant-numeric: tabular-nums; }
+.bill-value span { display: block; font-size: 9px; color: var(--muted); }
+.bill-side { grid-area: side; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.bill-actions { display: flex; align-items: center; gap: 6px; }
+.bill-actions .btn { white-space: nowrap; }
+
+.bill-add { margin-top: 12px; border-top: 1px dashed var(--line-strong); padding-top: 12px; }
+.bill-add summary {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11.5px; font-weight: 700; color: var(--brand-2);
+  cursor: pointer; list-style: none; user-select: none;
+}
+.bill-add summary::-webkit-details-marker { display: none; }
+.bill-add[open] summary { margin-bottom: 12px; }
+.billing-form { display: flex; flex-direction: column; gap: 10px; }
+.billing-form .btn { margin-top: 2px; }
+
+.bill-history { margin-top: 16px; border-top: 1px dashed var(--line-strong); padding-top: 12px; }
+.bill-history-head { display: flex; justify-content: space-between; gap: 10px; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.bill-history-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+.bill-history-row:last-child { border-bottom: 0; }
+.bill-history-copy { min-width: 0; }
+.bill-history-copy strong { display: block; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bill-history-copy span { display: block; font-size: 9.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bill-history-value { font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.bill-history-row .link { font-size: 10.5px; color: var(--brand-2); text-decoration: underline; white-space: nowrap; }
+
+.bill-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.bill-summary-tile {
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.bill-summary-tile.highlight { border-color: rgba(18, 60, 47, .22); background: var(--brand-tint); }
+.bill-summary-tile > span { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.bill-summary-tile strong { font-size: 14px; color: var(--brand); font-variant-numeric: tabular-nums; }
+.bill-summary-tile small { font-size: 9.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.billing-paid {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 22px 10px; text-align: center; color: var(--green);
+}
+.billing-paid strong { font-size: 14px; color: var(--ink); }
+.billing-paid span { font-size: 10.5px; color: var(--muted); }
+#billing-pay-area .notice { margin-bottom: 10px; }
+
+@media (max-width: 720px) {
+  .cloud-facts, .plan-strip { grid-template-columns: 1fr; }
+  .bill-row { grid-template-areas: "main value" "side side"; }
+  .bill-side { flex-direction: column; align-items: flex-start; }
+  .bill-history-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 4px; }
+  .bill-history-row > .badge, .bill-history-row > .link { justify-self: start; }
+  .bill-summary { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -1637,8 +1979,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
         </div>
 
         <div class="auth-brand-foot">
-          <span data-icon="shield"></span>
-          Demonstração local · seus dados ficam neste navegador
+          <span data-icon="cloud"></span>
+          <span data-cloud-detail>Sincronização Cloudflare (D1 + KV) entre aparelhos</span>
         </div>
       </div>
     </section>
@@ -1693,7 +2035,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
             <span data-icon="chevron-right"></span>
           </a>
 
-          <p class="auth-local">Demonstração local · Nenhuma informação é enviada para servidores.<br />Cada pessoa da equipe entra com o próprio CPF e senha — não compartilhe suas credenciais.</p>
+          <button type="button" class="auth-cloud" data-act="cloud-settings">
+            <span data-icon="cloud"></span>
+            <span class="grow"><strong data-cloud-label>Verificando nuvem…</strong><span data-cloud-detail>Conecte este aparelho ao Worker</span></span>
+            <span data-icon="chevron-right"></span>
+          </button>
+
+          <p class="auth-local">Cada pessoa da equipe entra com o próprio CPF e senha — não compartilhe suas credenciais.<br />Ao conectar à nuvem, os acessos aparecem em todos os aparelhos.</p>
         </div>
 
         <div id="auth-register" class="auth-step hidden">
@@ -1788,7 +2136,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     <main class="page" id="staff-main"></main>
     <footer class="site-foot">
       <span>Âmbari &amp; Gastronomia · v3.0</span>
-      <span class="foot-brand"><span data-icon="shield"></span> Dados locais neste navegador · demonstração</span>
+      <span class="foot-brand"><span data-icon="cloud"></span> <span data-cloud-label>Nuvem</span> · <span data-cloud-url>—</span></span>
     </footer>
   </div>
 
@@ -1976,8 +2324,180 @@ const PAY_METHODS = {
   pix: { label: 'Pix', icon: 'qr' },
   card: { label: 'Cartão', icon: 'card' },
   nfc: { label: 'Aproximação', icon: 'nfc' },
+  walletgoogle: { label: 'Google Pay', icon: 'smartphone' },
+  walletapple: { label: 'Apple Pay', icon: 'smartphone' },
   cash: { label: 'Dinheiro', icon: 'wallet' }
 };
+const OWNER_CPF = '342.599.988-54';
+const OWNER_NAME = 'Cristian Ribeiro Florencio';
+const BILLING_PLANS = [
+  { id: 'base', label: 'Essencial', maxSeats: 30, price: 37.98, hint: 'até 30 acessos' },
+  { id: 'pro', label: 'Empresa', maxSeats: 120, price: 59.9, hint: '31 a 120 acessos' },
+  { id: 'enterprise', label: 'Rede', maxSeats: Infinity, price: 99.9, hint: 'acima de 120 acessos' }
+];
+function isOwnerDoc(doc) { return onlyDigits(doc) === onlyDigits(OWNER_CPF); }
+function planForSeats(seats) {
+  const count = Math.max(1, Number(seats) || 1);
+  return BILLING_PLANS.find((p) => count <= p.maxSeats) || BILLING_PLANS[BILLING_PLANS.length - 1];
+}
+function isValidCnpj(value) {
+  const cnpj = onlyDigits(value);
+  if (cnpj.length !== 14 || /^(\d)\1{13}$/.test(cnpj)) return false;
+  const digit = (base) => {
+    const weights = base.length === 12
+      ? [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+      : [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    let sum = 0;
+    for (let i = 0; i < base.length; i++) sum += Number(base[i]) * weights[i];
+    const rest = sum % 11;
+    return rest < 2 ? 0 : 11 - rest;
+  };
+  return digit(cnpj.slice(0, 12)) === Number(cnpj[12]) && digit(cnpj.slice(0, 13)) === Number(cnpj[13]);
+}
+function formatDoc(doc) {
+  const digits = onlyDigits(doc);
+  if (digits.length === 14) return digits.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+  return formatCpf(digits);
+}
+function isValidDoc(doc) {
+  return onlyDigits(doc).length === 14 ? isValidCnpj(doc) : isValidCpf(doc);
+}
+function formatCnpjPartial(value) {
+  const d = onlyDigits(value).slice(0, 14);
+  if (d.length <= 2) return d;
+  if (d.length <= 5) return `${d.slice(0, 2)}.${d.slice(2)}`;
+  if (d.length <= 8) return `${d.slice(0, 2)}.${d.slice(2, 5)}.${d.slice(5)}`;
+  if (d.length <= 12) return `${d.slice(0, 2)}.${d.slice(2, 5)}.${d.slice(5, 8)}/${d.slice(8)}`;
+  return `${d.slice(0, 2)}.${d.slice(2, 5)}.${d.slice(5, 8)}/${d.slice(8, 12)}-${d.slice(12)}`;
+}
+function formatDocInput(value) {
+  const digits = onlyDigits(value);
+  return digits.length > 11 ? formatCnpjPartial(digits) : formatCpf(digits.slice(0, 11));
+}
+function billingPeriod(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+}
+function shiftMonthKey(offset) {
+  const d = new Date();
+  d.setDate(5);
+  d.setMonth(d.getMonth() + offset);
+  return billingPeriod(d);
+}
+function billingAccountView(account) {
+  const exempt = !!account.exempt || isOwnerDoc(account.doc);
+  const plan = planForSeats(account.seats);
+  const month = billingPeriod();
+  const monthCharges = (db.billing?.charges || []).filter((c) => c.accountId === account.id && (c.period || String(c.at || '').slice(0, 7)) === month);
+  const paidThisMonth = monthCharges.some((c) => c.status === 'pago');
+  const pending = monthCharges.find((c) => c.status === 'pendente' && c.provider !== 'demo')
+    || monthCharges.find((c) => c.status === 'pendente')
+    || null;
+  const failed = monthCharges.find((c) => c.status === 'divergente' || c.status === 'expirado') || null;
+  return {
+    account,
+    plan,
+    exempt,
+    amount: exempt ? 0 : plan.price,
+    status: exempt ? 'isento' : paidThisMonth ? 'em dia' : pending ? 'aguardando' : failed ? failed.status : 'pendente',
+    paidThisMonth,
+    pending,
+    failed
+  };
+}
+function seedBillingData() {
+  const now = Date.now();
+  const daysAgo = (n) => new Date(now - n * 86400000).toISOString();
+  return {
+    accounts: [
+      { id: 'ACC-1000', type: 'pessoa', name: OWNER_NAME, doc: OWNER_CPF, email: 'cristian@ambari.local', seats: 1, exempt: true, active: true, createdAt: daysAgo(120), note: 'Proprietário — isento de cobrança' },
+      { id: 'ACC-1001', type: 'empresa', name: 'Hotel Costa Verde', doc: '11.222.333/0001-81', email: 'financeiro@costaverde.com.br', seats: 28, active: true, createdAt: daysAgo(96) },
+      { id: 'ACC-1002', type: 'empresa', name: 'Rede Pousadas Litoral', doc: '11.444.777/0001-61', email: 'contas@pousadaslitoral.com.br', seats: 52, active: true, createdAt: daysAgo(64) },
+      { id: 'ACC-1003', type: 'empresa', name: 'Aerohotel Brasil', doc: '11.333.555/0001-71', email: 'administrativo@aerohotel.com.br', seats: 135, active: true, createdAt: daysAgo(38) }
+    ],
+    charges: [
+      { id: 'BIL-1001', accountId: 'ACC-1001', txid: 'BIL1001DEMO', amount: 37.98, plan: 'base', period: shiftMonthKey(-1), status: 'pago', provider: 'demo', at: daysAgo(33), paidAt: daysAgo(32) },
+      { id: 'BIL-1002', accountId: 'ACC-1002', txid: 'BIL1002DEMO', amount: 59.9, plan: 'pro', period: shiftMonthKey(-1), status: 'pago', provider: 'demo', at: daysAgo(32), paidAt: daysAgo(31) },
+      { id: 'BIL-1003', accountId: 'ACC-1001', txid: 'BIL1003DEMO', amount: 37.98, plan: 'base', period: shiftMonthKey(0), status: 'pago', provider: 'demo', at: daysAgo(3), paidAt: daysAgo(2) },
+      { id: 'BIL-1004', accountId: 'ACC-1002', txid: 'BIL1004DEMO', amount: 59.9, plan: 'pro', period: shiftMonthKey(0), status: 'pendente', provider: 'demo', at: daysAgo(1), paidAt: null }
+    ]
+  };
+}
+function ensureBillingShape(target) {
+  if (!target || typeof target !== 'object') return target;
+  let changed = false;
+  if (!target.billing || !Array.isArray(target.billing.accounts)) {
+    target.billing = { accounts: [], charges: [] };
+    changed = true;
+  }
+  if (!Array.isArray(target.billing.charges)) {
+    target.billing.charges = [];
+    changed = true;
+  }
+  if (!target.billing.accounts.some((a) => isOwnerDoc(a.doc))) {
+    target.billing.accounts.unshift({
+      id: 'ACC-1000', type: 'pessoa', name: OWNER_NAME, doc: OWNER_CPF,
+      email: target.users?.find((u) => u.cargo === 'admin')?.email || '',
+      seats: 1, exempt: true, active: true, createdAt: target.createdAt || new Date().toISOString(),
+      note: 'Proprietário — isento de cobrança'
+    });
+    changed = true;
+  }
+  const legacyAdmin = (target.users || []).find((u) => u.cargo === 'admin' && onlyDigits(u.cpf) === '32361928019');
+  if (legacyAdmin) {
+    legacyAdmin.nome = OWNER_NAME;
+    legacyAdmin.cpf = OWNER_CPF;
+    legacyAdmin.matricula = '342599';
+    changed = true;
+  }
+  if (!target.counters || typeof target.counters !== 'object') {
+    target.counters = {};
+    changed = true;
+  }
+  if (!Number(target.counters.billing)) {
+    target.counters.billing = 1004;
+    changed = true;
+  }
+  if (changed) {
+    target.revision = (Number(target.revision) || 1) + 1;
+    target.updatedAt = new Date().toISOString();
+  }
+  return target;
+}
+function billingAccountById(id) {
+  return (db.billing?.accounts || []).find((a) => a.id === id) || null;
+}
+function billingChargesSorted(accountId = '') {
+  return (db.billing?.charges || [])
+    .filter((c) => !accountId || c.accountId === accountId)
+    .slice()
+    .sort((a, b) => new Date(b.at || 0) - new Date(a.at || 0));
+}
+function billingChargeForPeriod(accountId, period) {
+  const list = (db.billing?.charges || []).filter((c) => c.accountId === accountId && c.period === period);
+  return list.find((c) => c.status === 'pago' && c.provider !== 'demo')
+    || list.find((c) => c.provider !== 'demo')
+    || list.find((c) => c.status === 'pago')
+    || list[0]
+    || null;
+}
+function nextBillingNumber() {
+  const next = Number(db.counters.billing || 1004) + 1;
+  db.counters.billing = next;
+  return `BIL-${next}`;
+}
+function billingStatusBadge(status) {
+  const map = {
+    pago: { label: 'Pago', badge: 'paid' },
+    pendente: { label: 'Aguardando Pix', badge: 'pending' },
+    expirado: { label: 'Expirado', badge: 'cancelled' },
+    divergente: { label: 'Divergente', badge: 'cancelled' },
+    isento: { label: 'Isento', badge: 'available' },
+    'em dia': { label: 'Em dia', badge: 'paid' },
+    aguardando: { label: 'Aguardando', badge: 'pending' }
+  };
+  const info = map[status] || { label: status || '—', badge: 'active' };
+  return `<span class="badge ${info.badge}">${esc(info.label)}</span>`;
+}
 const OPEN_ORDER_STATUSES = ['pending', 'kitchen', 'ready', 'served'];
 
 /* ==========================================================================
@@ -2046,6 +2566,8 @@ const ICONS = {
   'receipt': '<path d="M6 2h12v20l-3-2-3 2-3-2-3 2zM9 7h6M9 11h6M9 15h4"/>',
   'key': '<circle cx="7.5" cy="15.5" r="3.5"/><path d="m10.5 12.5 9.5-9.5M16 7l3 3M14 9l2 2"/>',
   'clipboard': '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 10h6M9 14h6M9 18h4"/>',
+  'cloud': '<path d="M7 18h10a4 4 0 0 0 .8-7.9A6 6 0 0 0 6.2 8.3 4.5 4.5 0 0 0 7 18z"/>',
+  'database': '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',
   'dot': '<circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/>'
 };
 
@@ -2297,6 +2819,7 @@ const state = {
   menu: { cat: 'destaques', q: '', limit: 16, sort: 'default' },
   builder: { cat: 'all', q: '', limit: 16, sort: 'default' },
   orders: { filter: 'open', q: '' },
+  dre: { period: '7d' },
   rooms: { floor: 'all', status: 'all', q: '' },
   vouchers: { status: 'active', q: '' },
   admin: { requestRole: {} },
@@ -2371,7 +2894,7 @@ function newSeedDB() {
     return { passSalt: salt, passHash: hashPassword(senha, salt) };
   };
   const users = [
-    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', cpf: '323.619.280-19', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('admin2026') },
+    { id: 'u-admin', nome: OWNER_NAME, matricula: '342599', cpf: OWNER_CPF, email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('admin2026') },
     { id: 'u-recepcao', nome: 'Marina Duarte', matricula: '2024001', cpf: '202.400.100-94', email: 'marina@ambari.local', cargo: 'recepcao', active: true, createdAt: ago(60 * 24 * 48), ...credentials('recep2026') },
     { id: 'u-garcom', nome: 'Lucas Prado', matricula: '2024002', cpf: '202.400.200-57', email: 'lucas@ambari.local', cargo: 'garcom', active: true, createdAt: ago(60 * 24 * 35), ...credentials('garcom2026') },
     { id: 'u-atendente', nome: 'Ana Beatriz', matricula: '2024003', cpf: '202.400.300-10', email: 'ana@ambari.local', cargo: 'atendente', active: true, createdAt: ago(60 * 24 * 21), ...credentials('atende2026') }
@@ -2444,13 +2967,45 @@ function newSeedDB() {
   ];
 
   const paidOrder = orders.find((o) => o.paymentId === 'PAY-1001');
-  const payments = [{
-    id: 'PAY-1001', code: 'REC-1001', mesa: '9',
-    orderIds: ['ORD-1005'], subtotal: paidOrder.subtotal, feeIncluded: true,
-    serviceFee: round2(paidOrder.subtotal * 0.1), total: round2(paidOrder.subtotal * 1.1),
-    method: 'pix', methodLabel: 'Pix', items: paidOrder.items.map((i) => ({ ...i })),
-    at: ago(70), by: 'u-garcom', byName: 'Lucas Prado'
-  }];
+  const userName = (id) => (users.find((u) => u.id === id) || {}).nome || 'Equipe';
+  const mkPay = ({ id, offset, hour, userId, method, items, fee = true, mesa }) => {
+    const cleanItems = items.filter(Boolean);
+    const subtotal = round2(sumBy(cleanItems, (i) => i.price * i.qty));
+    const serviceFee = fee ? round2(subtotal * 0.1) : 0;
+    const total = round2(subtotal + serviceFee);
+    return {
+      id, code: `REC-${id.replace('PAY-', '')}`, mesa: String(mesa), orderIds: [],
+      subtotal, feeIncluded: fee, serviceFee, total,
+      method, methodLabel: PAY_METHODS[method]?.label || method, items: cleanItems,
+      at: atDay(-offset, hour), by: userId, byName: userName(userId),
+      cashback: round2(total * 0.05), points: Math.max(1, Math.floor(total / 10)) + 5
+    };
+  };
+  const payments = [
+    mkPay({ id: 'PAY-0985', offset: 13, hour: 12, userId: 'u-admin', method: 'pix', mesa: '4', items: [line('item57', 1), line('item250', 2)] }),
+    mkPay({ id: 'PAY-0986', offset: 12, hour: 20, userId: 'u-garcom', method: 'card', mesa: '7', items: [line('item77', 2), line('item200', 2)] }),
+    mkPay({ id: 'PAY-0987', offset: 11, hour: 13, userId: 'u-atendente', method: 'pix', mesa: '3', items: [line('item67', 1), line('item131', 1)] }),
+    mkPay({ id: 'PAY-0988', offset: 10, hour: 21, userId: 'u-garcom', method: 'nfc', mesa: '12', items: [line('item57', 2)] }),
+    mkPay({ id: 'PAY-0989', offset: 9, hour: 12, userId: 'u-admin', method: 'cash', mesa: '5', items: [line('item36', 2), line('item250', 4)] }),
+    mkPay({ id: 'PAY-0990', offset: 8, hour: 19, userId: 'u-atendente', method: 'walletgoogle', mesa: '8', items: [line('item100', 2), line('item200', 1)] }),
+    mkPay({ id: 'PAY-0991', offset: 7, hour: 13, userId: 'u-garcom', method: 'pix', mesa: '2', items: [line('item77', 1), line('item250', 2)] }),
+    mkPay({ id: 'PAY-0992', offset: 7, hour: 20, userId: 'u-admin', method: 'card', mesa: '10', items: [line('item350', 1), line('item131', 1)] }),
+    mkPay({ id: 'PAY-0993', offset: 6, hour: 12, userId: 'u-atendente', method: 'pix', mesa: '6', items: [line('item67', 2)] }),
+    mkPay({ id: 'PAY-0994', offset: 5, hour: 21, userId: 'u-garcom', method: 'walletapple', mesa: '9', items: [line('item57', 1), line('item200', 2)] }),
+    mkPay({ id: 'PAY-0995', offset: 4, hour: 12, userId: 'u-admin', method: 'pix', mesa: '1', items: [line('item36', 1), line('item250', 2), line('item131', 1)] }),
+    mkPay({ id: 'PAY-0996', offset: 3, hour: 20, userId: 'u-atendente', method: 'card', mesa: '11', items: [line('item100', 2), line('item200', 2)] }),
+    mkPay({ id: 'PAY-0997', offset: 2, hour: 13, userId: 'u-garcom', method: 'pix', mesa: '4', items: [line('item77', 2)] }),
+    mkPay({ id: 'PAY-0998', offset: 1, hour: 20, userId: 'u-admin', method: 'nfc', mesa: '7', items: [line('item57', 1), line('item350', 1)] }),
+    mkPay({ id: 'PAY-0999', offset: 1, hour: 13, userId: 'u-atendente', method: 'cash', mesa: '3', fee: false, items: [line('item131', 1), line('item250', 1)] }),
+    {
+      id: 'PAY-1001', code: 'REC-1001', mesa: '9',
+      orderIds: ['ORD-1005'], subtotal: paidOrder.subtotal, feeIncluded: true,
+      serviceFee: round2(paidOrder.subtotal * 0.1), total: round2(paidOrder.subtotal * 1.1),
+      method: 'pix', methodLabel: 'Pix', items: paidOrder.items.map((i) => ({ ...i })),
+      at: ago(70), by: 'u-garcom', byName: 'Lucas Prado',
+      cashback: round2(round2(paidOrder.subtotal * 1.1) * 0.05), points: Math.max(1, Math.floor(round2(paidOrder.subtotal * 1.1) / 10)) + 5
+    }
+  ].sort((a, b) => new Date(b.at) - new Date(a.at));
 
   const requests = [
     {
@@ -2475,6 +3030,7 @@ function newSeedDB() {
     orders,
     vouchers,
     rooms,
+    billing: seedBillingData(),
     calls: [{
       id: 'CAL-1001', mesa: '5', type: 'bill', note: 'Cliente pediu a conta.',
       status: 'open', createdAt: ago(2), doneAt: null
@@ -2484,18 +3040,22 @@ function newSeedDB() {
       pixKey: 'financeiro@ambari.local',
       merchantName: 'AMBARI E GASTRONOMIA',
       merchantCity: 'SAO PAULO',
-      serviceFee: 10
+      serviceFee: 10,
+      cashbackPct: 5,
+      payProvider: 'demo'
     },
-    counters: { order: 1006, voucher: 1004, payment: 1001, call: 1001, request: 1002, paymentReceipt: 1001 }
+    counters: { order: 1006, voucher: 1004, payment: 1001, call: 1001, request: 1002, paymentReceipt: 1001, billing: 1004 }
   };
 }
+
+let bootFreshSeed = false;
 
 function tryParseDB(raw) {
   try {
     const parsed = JSON.parse(raw);
     if (!parsed || parsed.version !== DB_VERSION) return null;
     if (!Array.isArray(parsed.users) || !Array.isArray(parsed.orders)) return null;
-    return parsed;
+    return ensureBillingShape(parsed);
   } catch (err) { return null; }
 }
 
@@ -2505,6 +3065,7 @@ function loadDB() {
     const parsed = tryParseDB(stored);
     if (parsed) return parsed;
   }
+  bootFreshSeed = true;
   const seeded = newSeedDB();
   try { localStorage.setItem(DB_KEY, JSON.stringify(seeded)); } catch (err) { /* modo privado */ }
   return seeded;
@@ -2524,7 +3085,7 @@ function persistDB() {
 }
 
 function replaceDB(next) {
-  db = next;
+  db = ensureBillingShape(next);
   try { localStorage.setItem(DB_KEY, JSON.stringify(db)); } catch (err) { /* modo privado */ }
   const storedId = currentUser?.id;
   if (storedId) {
@@ -2557,74 +3118,288 @@ function checkForExternalChanges() {
 }
 
 /* ==========================================================================
-   Nuvem — Cloudflare Workers + D1 (sincronização do estado entre aparelhos)
+   Nuvem — Cloudflare Workers + D1 + KV (mesmo estado em qualquer aparelho)
    ========================================================================== */
-const API_BASE = String(window.AMBARI_API_BASE ?? '').trim().replace(/\/+$/, '');
-const cloud = { available: null, pushTimer: 0, pending: false };
+const CLOUD_URL_KEY = 'ambari.cloud.url.v1';
+const CLOUD_TOKEN_KEY = 'ambari.cloud.token.v1';
+function normalizeCloudUrl(raw) {
+  let value = String(raw || '').trim().replace(/\/+$/, '');
+  if (!value) return '';
+  if (!/^https?:\/\//i.test(value)) value = `https://${value}`;
+  return value.replace(/\/+$/, '');
+}
+function storedCloudUrl() {
+  try { return normalizeCloudUrl(localStorage.getItem(CLOUD_URL_KEY) || ''); } catch (err) { return ''; }
+}
+function storedCloudToken() {
+  try { return localStorage.getItem(CLOUD_TOKEN_KEY) || ''; } catch (err) { return ''; }
+}
+function defaultCloudUrl() {
+  return normalizeCloudUrl(window.AMBARI_API_BASE);
+}
+let API_BASE = storedCloudUrl() || defaultCloudUrl();
+let CLOUD_TOKEN = storedCloudToken();
+let lastCloudProbe = 0;
+let lastBillingSync = 0;
+const cloud = {
+  available: null, pushTimer: 0, pending: false, lastSync: null, service: '',
+  error: '', needsToken: false, authFailed: false, features: {}, provider: ''
+};
+
+function cloudStatusInfo() {
+  if (cloud.available === null) return { tone: 'pending', label: 'Verificando nuvem…', detail: 'Conferindo o Worker configurado.' };
+  if (cloud.available && !cloud.needsToken && !cloud.authFailed) {
+    return { tone: 'ok', label: 'Nuvem conectada', detail: cloud.service || 'Worker ativo' };
+  }
+  if (cloud.available && (cloud.needsToken || cloud.authFailed)) {
+    return { tone: 'warn', label: 'Token necessário', detail: 'Informe o token da nuvem neste aparelho.' };
+  }
+  return {
+    tone: 'off',
+    label: API_BASE ? 'Sem conexão' : 'Modo local',
+    detail: cloud.error || 'Os dados ficam apenas neste aparelho.'
+  };
+}
+
+function updateCloudIndicators() {
+  const info = cloudStatusInfo();
+  document.querySelectorAll('[data-cloud-label]').forEach((el) => {
+    el.textContent = info.label;
+    el.dataset.cloudTone = info.tone;
+  });
+  document.querySelectorAll('[data-cloud-detail]').forEach((el) => { el.textContent = info.detail; });
+  document.querySelectorAll('[data-cloud-url]').forEach((el) => { el.textContent = API_BASE || location.origin; });
+  document.querySelectorAll('[data-cloud-lastsync]').forEach((el) => {
+    el.textContent = cloud.lastSync ? fmtDateTime(cloud.lastSync) : 'ainda não sincronizado';
+  });
+}
+
+function cloudHeaders(extra = {}) {
+  const headers = { ...(extra || {}) };
+  if (CLOUD_TOKEN) headers['X-Ambari-Token'] = CLOUD_TOKEN;
+  return headers;
+}
+
+async function cloudFetch(path, options = {}) {
+  const res = await fetch(`${API_BASE}${path}`, { ...options, headers: cloudHeaders(options.headers) });
+  if (res.status === 401) {
+    cloud.authFailed = true;
+    cloud.error = 'Token da nuvem inválido ou ausente.';
+    updateCloudIndicators();
+  } else if (res.ok && cloud.authFailed) {
+    cloud.authFailed = false;
+  }
+  return res;
+}
 
 async function cloudProbe() {
-  if (!API_BASE && !/^https?:$/.test(location.protocol)) { cloud.available = false; return; }
+  lastCloudProbe = Date.now();
+  const sameOrigin = /^https?:$/.test(location.protocol);
+  if (!API_BASE && !sameOrigin) {
+    cloud.available = false;
+    cloud.error = 'Abra o app pelo endereço do Worker para sincronizar.';
+    return;
+  }
   try {
     const res = await fetch(`${API_BASE}/api/health`);
-    cloud.available = res.ok;
+    const data = res.ok ? await res.json().catch(() => null) : null;
+    cloud.available = res.ok && data?.service === 'ambari';
+    if (cloud.available) {
+      cloud.service = data.state || 'pronto';
+      cloud.features = data.features || {};
+      cloud.provider = data.billing || '';
+      cloud.needsToken = !!data.auth && !CLOUD_TOKEN;
+    }
+    if (!cloud.available) cloud.error = 'O Worker não respondeu neste endereço.';
+    else if (cloud.needsToken) cloud.error = 'Este Worker exige um token de sincronização.';
+    else if (!cloud.authFailed) cloud.error = '';
   } catch (err) {
     cloud.available = false;
+    cloud.error = 'Sem conexão com o Worker.';
   }
 }
 
+async function cloudSetBase(rawUrl, rawToken) {
+  const url = normalizeCloudUrl(rawUrl);
+  try {
+    if (url !== (storedCloudUrl() || '')) {
+      if (url) localStorage.setItem(CLOUD_URL_KEY, url);
+      else localStorage.removeItem(CLOUD_URL_KEY);
+    }
+    if (rawToken !== undefined) {
+      CLOUD_TOKEN = String(rawToken || '').trim();
+      if (CLOUD_TOKEN) localStorage.setItem(CLOUD_TOKEN_KEY, CLOUD_TOKEN);
+      else localStorage.removeItem(CLOUD_TOKEN_KEY);
+    }
+  } catch (err) { /* modo local */ }
+  API_BASE = url;
+  cloud.available = null;
+  cloud.error = '';
+  cloud.authFailed = false;
+  cloud.needsToken = false;
+  bootFreshSeed = false;
+  await bootCloudSync();
+  refreshStaffUI();
+  return cloud.available === true && !cloud.authFailed;
+}
+
+async function cloudSyncNow() {
+  await cloudProbe();
+  updateCloudIndicators();
+  if (cloud.available !== true || cloud.needsToken) return false;
+  await cloudPull(true);
+  cloud.pending = true;
+  await cloudPush();
+  await syncBillingFromCloud(true);
+  updateCloudIndicators();
+  return cloud.available === true && !cloud.authFailed;
+}
+
 function cloudQueuePush() {
-  if (cloud.available !== true) return;
+  if (cloud.available !== true || cloud.needsToken || cloud.authFailed) return;
   cloud.pending = true;
   clearTimeout(cloud.pushTimer);
   cloud.pushTimer = setTimeout(() => { cloudPush(); }, 500);
 }
 
 async function cloudPush() {
-  if (cloud.available !== true || !cloud.pending) return;
+  if (cloud.available !== true || cloud.needsToken || cloud.authFailed || !cloud.pending) return;
   cloud.pending = false;
   try {
-    const res = await fetch(`${API_BASE}/api/state`, {
+    const res = await cloudFetch('/api/state', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ revision: Number(db.revision) || 1, db })
     });
     if (res.status === 409) await cloudPull(true);
-    else if (!res.ok) cloud.available = false;
+    else if (res.status === 401) { /* token inválido */ }
+    else if (!res.ok) { cloud.available = false; cloud.error = 'O Worker recusou a sincronização.'; }
+    else { cloud.lastSync = new Date().toISOString(); cloud.error = ''; }
   } catch (err) {
     cloud.available = false;
+    cloud.error = 'Sem conexão com o Worker.';
   }
+  updateCloudIndicators();
 }
 
 async function cloudPull(full = false) {
-  if (cloud.available !== true) return;
+  if (cloud.available !== true || cloud.needsToken || cloud.authFailed) {
+    if (Date.now() - lastCloudProbe > 15000) {
+      await cloudProbe();
+      updateCloudIndicators();
+      if (cloud.available === true && !cloud.needsToken) await bootCloudSync();
+    }
+    return;
+  }
   try {
     const since = full ? '' : `?since=${encodeURIComponent(Number(db.revision) || 0)}`;
-    const res = await fetch(`${API_BASE}/api/state${since}`);
+    const res = await cloudFetch(`/api/state${since}`);
+    if (res.status === 401) return;
     if (!res.ok) return;
     const data = await res.json();
-    if (!data || data.upToDate || !data.db) return;
-    const parsed = typeof data.db === 'string' ? tryParseDB(data.db) : data.db;
+    if (!data || data.upToDate || !data.db) {
+      await syncBillingFromCloud();
+      return;
+    }
+    const parsed = typeof data.db === 'string' ? tryParseDB(data.db) : ensureBillingShape(data.db);
     if (!parsed || parsed.version !== DB_VERSION) return;
-    if (Number(parsed.revision) > Number(db.revision)) replaceDB(parsed);
+    const localRev = Number(db.revision) || 1;
+    const remoteRev = Number(parsed.revision) || 1;
+    const remoteAt = new Date(parsed.updatedAt || 0).getTime();
+    const localAt = new Date(db.updatedAt || 0).getTime();
+    if (remoteRev > localRev || (full && remoteRev === localRev && remoteAt > localAt)) {
+      replaceDB(parsed);
+      cloud.lastSync = new Date().toISOString();
+    }
+    await syncBillingFromCloud();
   } catch (err) { /* modo local */ }
 }
 
 async function bootCloudSync() {
   await cloudProbe();
-  if (cloud.available !== true) return;
+  updateCloudIndicators();
+  if (cloud.available !== true || cloud.needsToken || cloud.authFailed) return;
   try {
-    const res = await fetch(`${API_BASE}/api/state`);
+    const res = await cloudFetch('/api/state');
+    if (res.status === 401) { updateCloudIndicators(); return; }
     if (res.ok) {
       const data = await res.json();
-      const parsed = data && data.db ? (typeof data.db === 'string' ? tryParseDB(data.db) : data.db) : null;
+      const parsed = data && data.db
+        ? (typeof data.db === 'string' ? tryParseDB(data.db) : ensureBillingShape(data.db))
+        : null;
       if (parsed && parsed.version === DB_VERSION) {
-        if (Number(parsed.revision) > Number(db.revision)) replaceDB(parsed);
-        else if (Number(parsed.revision) < Number(db.revision)) cloudQueuePush();
+        const localRev = Number(db.revision) || 1;
+        const remoteRev = Number(parsed.revision) || 1;
+        const remoteAt = new Date(parsed.updatedAt || 0).getTime();
+        const localAt = new Date(db.updatedAt || 0).getTime();
+        if (remoteRev > localRev || (remoteRev === localRev && (bootFreshSeed || remoteAt > localAt))) {
+          replaceDB(parsed);
+        } else if (localRev > remoteRev) {
+          cloudQueuePush();
+        }
+        bootFreshSeed = false;
+        cloud.lastSync = new Date().toISOString();
+        await syncBillingFromCloud(true);
+        updateCloudIndicators();
         return;
       }
     }
+    bootFreshSeed = false;
     cloudQueuePush();
-  } catch (err) { /* modo local */ }
+  } catch (err) {
+    cloud.error = 'Sem conexão com o Worker.';
+  }
+  updateCloudIndicators();
+}
+
+async function syncBillingFromCloud(force = false) {
+  if (cloud.available !== true || cloud.needsToken || cloud.authFailed) return;
+  if (!force && Date.now() - lastBillingSync < 60000) return;
+  lastBillingSync = Date.now();
+  try {
+    const res = await cloudFetch('/api/billing/overview');
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!Array.isArray(data?.charges)) return;
+    let changed = false;
+    data.charges.forEach((remote) => {
+      if (!remote || !remote.txid) return;
+      const existing = db.billing.charges.find((c) => c.txid === remote.txid);
+      if (!existing) {
+        db.billing.charges.push({
+          id: remote.id || `BIL-${remote.txid.slice(-6)}`,
+          accountId: remote.accountId,
+          txid: remote.txid,
+          amount: Number(remote.amount) || 0,
+          plan: remote.plan || planForSeats(remote.seats || 1).id,
+          period: remote.period || billingPeriod(),
+          status: remote.status || 'pendente',
+          provider: remote.provider || 'asaas',
+          at: remote.createdAt || new Date().toISOString(),
+          paidAt: remote.paidAt || null
+        });
+        changed = true;
+      } else if (remote.status && remote.status !== existing.status && ['pago', 'expirado', 'divergente'].includes(remote.status)) {
+        existing.status = remote.status;
+        if (remote.status === 'pago') existing.paidAt = remote.paidAt || new Date().toISOString();
+        changed = true;
+      }
+    });
+    const remoteKeys = new Set(data.charges
+      .filter((remote) => remote && remote.accountId && remote.period)
+      .map((remote) => `${remote.accountId}|${remote.period}`));
+    if (remoteKeys.size) {
+      const before = db.billing.charges.length;
+      db.billing.charges = db.billing.charges.filter((c) => !(
+        c.provider === 'demo' && c.status === 'pendente' && remoteKeys.has(`${c.accountId}|${c.period}`)
+      ));
+      if (db.billing.charges.length !== before) changed = true;
+    }
+    if (changed) {
+      persistDB();
+      refreshStaffUI();
+    }
+  } catch (err) { /* silencioso */ }
 }
 
 /* ==========================================================================
@@ -2852,6 +3627,7 @@ function showAuthView() {
   const senhaInput = $('#login-senha');
   if (cpfInput) cpfInput.value = '';
   if (senhaInput) senhaInput.value = '';
+  updateCloudIndicators();
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
@@ -2863,6 +3639,7 @@ function showStaffView() {
   renderStaffHeader();
   renderStaffNav();
   renderStaffMain();
+  updateCloudIndicators();
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
@@ -3195,6 +3972,259 @@ function celebrate(amount = 42) {
 }
 
 /* ==========================================================================
+   Gráficos e agregações — DRE, desempenho e estatísticas (SVG puro)
+   ========================================================================== */
+const CHART_COLORS = ['#1f7a55', '#e8a13c', '#4a7de2', '#d05a5a', '#7a5bd6', '#3aa79a', '#c9762e', '#5d7a99'];
+let __chartSeq = 0;
+
+const DRE_PERIODS = {
+  hoje: 'Hoje',
+  '7d': '7 dias',
+  mes: 'Este mês',
+  ano: 'Este ano',
+  tudo: 'Tudo'
+};
+
+function paymentsInRange(range) {
+  const now = new Date();
+  return db.payments.filter((p) => {
+    const d = new Date(p.at);
+    if (Number.isNaN(d.getTime())) return false;
+    if (range === 'hoje') return isToday(p.at);
+    if (range === '7d') return (now - d) <= 7 * 86400000;
+    if (range === 'mes') return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    if (range === 'ano') return d.getFullYear() === now.getFullYear();
+    return true;
+  });
+}
+
+function revenueSeries(payments, range) {
+  const buckets = [];
+  const now = new Date();
+  if (range === 'ano' || range === 'tudo') {
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      buckets.push({ key: `${d.getFullYear()}-${d.getMonth()}`, label: DATE_SHORT.format(d).replace('.', ''), value: 0 });
+    }
+  } else if (range === 'mes') {
+    const days = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    for (let i = 1; i <= days; i++) buckets.push({ key: `${now.getFullYear()}-${now.getMonth()}-${i}`, label: String(i), value: 0 });
+  } else if (range === 'hoje') {
+    for (let h = 0; h < 24; h += 4) buckets.push({ key: `h${h}`, label: `${String(h).padStart(2, '0')}h`, value: 0 });
+  } else {
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+      buckets.push({ key: todayKey(d.toISOString()), label: d.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', ''), value: 0 });
+    }
+  }
+  payments.forEach((p) => {
+    const d = new Date(p.at);
+    let key;
+    if (range === 'ano' || range === 'tudo') key = `${d.getFullYear()}-${d.getMonth()}`;
+    else if (range === 'mes') key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    else if (range === 'hoje') key = `h${Math.floor(d.getHours() / 4) * 4}`;
+    else key = todayKey(d.toISOString());
+    const b = buckets.find((x) => x.key === key);
+    if (b) b.value = round2(b.value + Number(p.total) || 0);
+  });
+  return buckets;
+}
+
+function byMethodData(payments) {
+  const map = new Map();
+  payments.forEach((p) => {
+    const label = p.methodLabel || paymentMethodLabel(p.method);
+    map.set(label, round2((map.get(label) || 0) + Number(p.total)));
+  });
+  return Array.from(map.entries())
+    .map(([label, value]) => ({ label, value }))
+    .sort((a, b) => b.value - a.value);
+}
+
+function topProductsData(payments, limit = 6) {
+  const map = new Map();
+  payments.forEach((p) => {
+    (p.items || []).forEach((i) => {
+      const cur = map.get(i.name) || { label: i.name, value: 0, qty: 0 };
+      cur.qty += Number(i.qty) || 0;
+      cur.value = round2(cur.value + (Number(i.price) || 0) * (Number(i.qty) || 0));
+      map.set(i.name, cur);
+    });
+  });
+  return Array.from(map.values()).sort((a, b) => b.value - a.value).slice(0, limit);
+}
+
+function byCategoryData(payments) {
+  const map = new Map();
+  payments.forEach((p) => {
+    (p.items || []).forEach((i) => {
+      const meta = ITEMS.find((it) => it.name === i.name);
+      const label = meta ? categoryTitle(meta.category_id) : 'Outros';
+      map.set(label, round2((map.get(label) || 0) + (Number(i.price) || 0) * (Number(i.qty) || 0)));
+    });
+  });
+  return Array.from(map.entries()).map(([label, value]) => ({ label, value })).sort((a, b) => b.value - a.value);
+}
+
+function personPayments(userId) {
+  return db.payments.filter((p) => p.by === userId);
+}
+
+function personPoints(userId) {
+  const pays = personPayments(userId);
+  const total = sumBy(pays, (p) => p.total);
+  return Math.floor(total / 10) + pays.length * 5;
+}
+
+function perPersonData() {
+  return db.users
+    .filter((u) => u.active)
+    .map((user) => {
+      const pays = personPayments(user.id);
+      const total = sumBy(pays, (p) => p.total);
+      return {
+        user,
+        total,
+        count: pays.length,
+        itemsQty: pays.reduce((s, p) => s + (p.items || []).reduce((si, i) => si + (Number(i.qty) || 0), 0), 0),
+        avg: pays.length ? total / pays.length : 0,
+        points: personPoints(user.id)
+      };
+    })
+    .sort((a, b) => b.total - a.total);
+}
+
+/* --------------------------------------------------------------------------
+   Construtores visuais
+   -------------------------------------------------------------------------- */
+function barChartSVG(data, { height = 150, color = 'var(--brand)', valueFmt = money } = {}) {
+  __chartSeq += 1;
+  const id = `bar${__chartSeq}`;
+  const W = 340, H = height, padX = 4, padT = 20, padB = 20;
+  const innerW = W - padX * 2, innerH = H - padT - padB;
+  const max = Math.max(...data.map((d) => d.value), 1);
+  const bw = innerW / Math.max(data.length, 1);
+  const labelEvery = Math.ceil(data.length / 9);
+  const bars = data.map((d, i) => {
+    const h = Math.max((d.value / max) * innerH, d.value > 0 ? 3 : 0);
+    const x = padX + i * bw + bw * 0.16;
+    const y = padT + innerH - h;
+    const label = i % labelEvery === 0 ? `<text x="${x + bw * 0.34}" y="${H - 5}" class="bar-x" text-anchor="middle">${esc(d.label)}</text>` : '';
+    return `<g><rect class="bar-rect" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(bw * 0.68).toFixed(1)}" height="${h.toFixed(1)}" rx="3"><title>${esc(d.label)} · ${esc(valueFmt(d.value))}</title></rect>${label}</g>`;
+  }).join('');
+  const maxLabelY = padT - 6;
+  return `
+    <svg class="chart-svg" id="${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de barras">
+      <text x="${padX}" y="${maxLabelY}" class="bar-max">${esc(valueFmt(max))}</text>
+      <line x1="${padX}" y1="${padT + innerH}" x2="${W - padX}" y2="${padT + innerH}" class="bar-base" />
+      <g style="fill:${color}">${bars}</g>
+    </svg>
+  `;
+}
+
+function areaChartSVG(data, { height = 150, valueFmt = money } = {}) {
+  __chartSeq += 1;
+  const id = `area${__chartSeq}`;
+  const W = 340, H = height, padX = 6, padT = 18, padB = 20;
+  const innerW = W - padX * 2, innerH = H - padT - padB;
+  const max = Math.max(...data.map((d) => d.value), 1);
+  const n = Math.max(data.length - 1, 1);
+  const pts = data.map((d, i) => [padX + (i / n) * innerW, padT + innerH - (d.value / max) * innerH]);
+  const smooth = (P) => {
+    if (P.length < 3) return `M ${P[0][0]} ${P[0][1]} L ${P[P.length - 1][0]} ${P[P.length - 1][1]}`;
+    let dPath = `M ${P[0][0].toFixed(1)} ${P[0][1].toFixed(1)}`;
+    for (let i = 0; i < P.length - 1; i++) {
+      const p0 = P[Math.max(i - 1, 0)], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(i + 2, P.length - 1)];
+      const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      dPath += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+    }
+    return dPath;
+  };
+  const line = smooth(pts);
+  const area = `${line} L ${(padX + innerW).toFixed(1)} ${padT + innerH} L ${padX} ${padT + innerH} Z`;
+  const dots = pts.map((p, i) => `<circle class="area-dot" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.4"><title>${esc(data[i].label)} · ${esc(valueFmt(data[i].value))}</title></circle>`).join('');
+  return `
+    <svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de evolução">
+      <defs><linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1f7a55" stop-opacity="0.32" />
+        <stop offset="100%" stop-color="#1f7a55" stop-opacity="0.02" />
+      </linearGradient></defs>
+      <path d="${area}" fill="url(#${id}g)" />
+      <path d="${line}" class="area-line" fill="none" />
+      ${dots}
+      <text x="${padX}" y="${padT - 6}" class="bar-max">${esc(valueFmt(max))}</text>
+    </svg>
+  `;
+}
+
+function donutChartSVG(data, { size = 168, centerLabel = 'Total', valueFmt = money } = {}) {
+  __chartSeq += 1;
+  const id = `donut${__chartSeq}`;
+  const total = sumBy(data, (d) => d.value);
+  const r = 52, C = 2 * Math.PI * r;
+  let acc = 0;
+  const segs = data.map((d, i) => {
+    const frac = total > 0 ? d.value / total : 0;
+    const seg = `
+      <circle class="donut-seg" cx="70" cy="70" r="${r}" fill="none"
+        stroke="${CHART_COLORS[i % CHART_COLORS.length]}" stroke-width="17"
+        stroke-dasharray="${(frac * C).toFixed(1)} ${(C - frac * C).toFixed(1)}"
+        stroke-dashoffset="${(-acc * C).toFixed(1)}" transform="rotate(-90 70 70)">
+        <title>${esc(d.label)} · ${esc(valueFmt(d.value))} (${Math.round(frac * 100)}%)</title>
+      </circle>`;
+    acc += frac;
+    return seg;
+  }).join('');
+  const legend = data.map((d, i) => {
+    const pct = total > 0 ? Math.round((d.value / total) * 100) : 0;
+    return `
+      <div class="chart-legend-row">
+        <span class="chart-dot" style="background:${CHART_COLORS[i % CHART_COLORS.length]}"></span>
+        <span class="chart-legend-label">${esc(d.label)}</span>
+        <strong>${esc(valueFmt(d.value))}</strong>
+        <span class="tiny muted">${pct}%</span>
+      </div>`;
+  }).join('');
+  return `
+    <div class="donut-wrap" id="${id}">
+      <svg viewBox="0 0 140 140" class="donut-svg" role="img" aria-label="Gráfico de pizza">
+        ${segs}
+        <text x="70" y="63" text-anchor="middle" class="donut-total">${esc(valueFmt(total))}</text>
+        <text x="70" y="80" text-anchor="middle" class="donut-sub">${esc(centerLabel)}</text>
+      </svg>
+      <div class="chart-legend">${legend || '<div class="tiny muted" style="padding:6px 2px">Sem dados no período.</div>'}</div>
+    </div>
+  `;
+}
+
+function miniHbarsHTML(data, { valueFmt = money, emptyLabel = 'Sem vendas no período.' } = {}) {
+  if (!data.length) return `<div class="tiny muted" style="padding:10px 2px">${esc(emptyLabel)}</div>`;
+  const max = Math.max(...data.map((d) => d.value), 1);
+  return `
+    <div class="mini-bars">
+      ${data.map((d, i) => `
+        <div class="mini-bar-row" title="${esc(d.label)} · ${esc(valueFmt(d.value))}${d.qty != null ? ` · ${d.qty} un.` : ''}">
+          <span class="mini-bar-label">${esc(d.label)}</span>
+          <span class="mini-bar-track"><span class="mini-bar-fill" style="width:${Math.max((d.value / max) * 100, 2).toFixed(1)}%;background:${CHART_COLORS[i % CHART_COLORS.length]}"></span></span>
+          <span class="mini-bar-value">${esc(valueFmt(d.value))}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function dreMetric(label, value, { hint = '', tone = '' } = {}) {
+  return `
+    <div class="dre-metric ${tone}">
+      <span>${esc(label)}</span>
+      <strong>${esc(value)}</strong>
+      ${hint ? `<small>${esc(hint)}</small>` : ''}
+    </div>
+  `;
+}
+
+/* ==========================================================================
    Âmbari & Gastronomia — painel da equipe
    Dashboard, recepção/PNR, quartos, QR e administração.
    ========================================================================== */
@@ -3240,7 +4270,8 @@ function sourceBadge(source) {
     ? '<span class="badge source-client">Cliente</span>'
     : '<span class="badge source-staff">Equipe</span>';
 }
-function voucherBadge(status) {
+function voucherBadge(status, voucher = null) {
+  if (voucher && voucher.type === 'gift' && status === 'active') return '<span class="badge active">Ativo para uso</span>';
   const info = VOUCHER_STATUS[status] || VOUCHER_STATUS.active;
   return `<span class="badge ${info.badge}">${info.label}</span>`;
 }
@@ -3419,6 +4450,8 @@ function renderDashboard() {
       </article>
     </section>
 
+    ${currentUser.cargo === 'admin' ? `${renderPerformanceSection()}${renderDreSection()}` : ''}
+
     <div class="dash-grid mt-16">
       <div class="dash-col">
         <section class="card card-pad rise">
@@ -3471,7 +4504,7 @@ function renderDashboard() {
                 <strong>${esc(v.guest)}</strong>
                 <span>${esc(v.airlineCode)} · PNR ${esc(v.pnr)} · Quarto ${esc(v.room)}</span>
               </div>
-              ${voucherBadge(v.status)}
+              ${voucherBadge(v.status, v)}
             </button>
           `).join('') : `
             <div class="activity">
@@ -3531,7 +4564,267 @@ function renderDashboard() {
   `;
 }
 
+function renderPerformanceSection() {
+  const rows = perPersonData().filter((r) => r.count > 0);
+  const maxTotal = Math.max(...rows.map((r) => r.total), 1);
+  const maxPoints = Math.max(...rows.map((r) => r.points), 1);
+  const leader = rows[0] || null;
+  return `
+    <section class="card card-pad rise mt-16 perf-section" aria-label="Desempenho da equipe">
+      <div class="card-head">
+        <div>
+          <div class="card-title">${ic('star', 15)} Desempenho da equipe</div>
+          <div class="card-sub">Toque em uma pessoa para ver vendas, gráficos, pontuação e premiação.</div>
+        </div>
+        ${leader ? `<span class="badge active">${ic('star', 12)} Líder: ${esc(leader.user.nome.split(' ')[0])} · ${money(leader.total)}</span>` : ''}
+      </div>
+      ${rows.length ? `
+        <div class="rank-list">
+          ${rows.map((r, i) => `
+            <button type="button" class="rank-row" data-act="person-stats" data-id="${escAttr(r.user.id)}" aria-label="Ver detalhes de ${escAttr(r.user.nome)}">
+              <span class="rank-pos ${i === 0 ? 'first' : i === 1 ? 'second' : i === 2 ? 'third' : ''}">${i + 1}º</span>
+              <span class="rank-avatar">${esc(initials(r.user.nome))}</span>
+              <span class="rank-main">
+                <span class="rank-name">${esc(r.user.nome)} <em class="muted tiny">${esc(ROLE_LABELS[r.user.cargo] || r.user.cargo)}</em></span>
+                <span class="rank-bar"><i style="width:${Math.max((r.total / maxTotal) * 100, 2).toFixed(1)}%"></i></span>
+                <span class="rank-sub tiny muted">${r.count} venda${r.count === 1 ? '' : 's'} · ${r.itemsQty} item(ns) · ticket médio ${money(r.avg)}</span>
+              </span>
+              <span class="rank-side">
+                <strong class="rank-total">${money(r.total)}</strong>
+                <span class="rank-points" title="Pontos: 1 a cada R$ 10 vendidos + 5 por venda">${ic('star', 11)} ${r.points}</span>
+                <span class="rank-points-bar"><i style="width:${Math.max((r.points / maxPoints) * 100, 2).toFixed(1)}%"></i></span>
+              </span>
+            </button>
+          `).join('')}
+        </div>
+      ` : `
+        <div class="empty" style="padding:22px 14px">
+          <div class="empty-icon">${ic('star', 20)}</div>
+          <strong>Sem vendas registradas.</strong>
+          <p>Quando as contas forem fechadas, o ranking da equipe aparece aqui.</p>
+        </div>
+      `}
+    </section>
+  `;
+}
+
+function renderDreSection() {
+  const period = state.dre.period;
+  const rangePayments = paymentsInRange(period);
+  const gross = sumBy(rangePayments, (p) => p.total);
+  const fees = sumBy(rangePayments, (p) => (p.feeIncluded ? Number(p.serviceFee) || 0 : 0));
+  const net = round2(gross - fees);
+  const cashbackGiven = sumBy(rangePayments, (p) => Number(p.cashback) || 0);
+  const cancelled = db.orders.filter((o) => {
+    if (o.status !== 'cancelled') return false;
+    const d = new Date(o.updatedAt || o.createdAt);
+    if (period === 'hoje') return isToday(o.updatedAt || o.createdAt);
+    if (period === '7d') return (Date.now() - d) <= 7 * 86400000;
+    if (period === 'mes') return d.getMonth() === new Date().getMonth() && d.getFullYear() === new Date().getFullYear();
+    if (period === 'ano') return d.getFullYear() === new Date().getFullYear();
+    return true;
+  });
+  const cancelledValue = sumBy(cancelled, (o) => Number(o.subtotal) || 0);
+  const avgTicket = rangePayments.length ? gross / rangePayments.length : 0;
+  const totalCashbackConfigured = Number(db.settings.cashbackPct) || 0;
+
+  return `
+    <section class="card card-pad rise mt-16 dre-section" aria-label="DRE da casa">
+      <div class="card-head">
+        <div>
+          <div class="card-title">${ic('receipt', 15)} DRE · resultado da casa</div>
+          <div class="card-sub">Receita, taxa de serviço, cashback e cancelamentos — filtre o período.</div>
+        </div>
+        <div class="period-chips" role="group" aria-label="Período do DRE">
+          ${Object.entries(DRE_PERIODS).map(([key, label]) => `
+            <button type="button" class="chip ${period === key ? 'active' : ''}" data-act="dre-period" data-period="${key}" aria-pressed="${period === key}">${label}</button>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="dre-metrics">
+        ${dreMetric('Receita bruta', money(gross), { hint: `${rangePayments.length} recebimento(s)` })}
+        ${dreMetric('Taxa de serviço', money(fees), { hint: `${Number(db.settings.serviceFee) || 0}% sobre comandas` })}
+        ${dreMetric('Receita líquida', money(net), { hint: 'Bruta − taxa', tone: 'good' })}
+        ${dreMetric('Cashback dado', money(cashbackGiven), { hint: `${totalCashbackConfigured}% configurado` })}
+        ${dreMetric('Cancelamentos', money(cancelledValue), { hint: `${cancelled.length} pedido(s)`, tone: cancelledValue > 0 ? 'warn' : '' })}
+        ${dreMetric('Ticket médio', money(avgTicket), { hint: 'por recebimento' })}
+      </div>
+
+      <div class="dre-grid">
+        <div class="dre-chart">
+          <div class="dre-chart-title">Vendas no período <span class="tiny muted">(receita por ${period === 'hoje' ? 'turno de 4h' : period === 'mes' ? 'dia' : period === '7d' ? 'dia' : 'mês'})</span></div>
+          ${areaChartSVG(revenueSeries(rangePayments, period), { height: 150 })}
+        </div>
+        <div class="dre-chart">
+          <div class="dre-chart-title">Formas de pagamento</div>
+          ${donutChartSVG(byMethodData(rangePayments), { centerLabel: DRE_PERIODS[period] })}
+        </div>
+        <div class="dre-chart">
+          <div class="dre-chart-title">Produtos mais vendidos <span class="tiny muted">(por receita)</span></div>
+          ${miniHbarsHTML(topProductsData(rangePayments, 6))}
+        </div>
+        <div class="dre-chart">
+          <div class="dre-chart-title">Vendas por categoria</div>
+          ${donutChartSVG(byCategoryData(rangePayments), { centerLabel: 'Categorias' })}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function openPersonStats(userId) {
+  const entry = perPersonData().find((r) => r.user.id === userId);
+  if (!entry) { toast('Pessoa não encontrada.', 'error'); return; }
+  const { user, total, count, itemsQty, avg, points } = entry;
+  const pays = personPayments(userId).slice().sort((a, b) => new Date(b.at) - new Date(a.at));
+  const cashbackGiven = sumBy(pays, (p) => Number(p.cashback) || 0);
+  const gifts = db.vouchers.filter((v) => v.type === 'gift' && v.beneficiaryId === userId);
+  const series = revenueSeries(pays, '7d');
+
+  openModal(`
+    ${modalHead(user.nome, `${ROLE_LABELS[user.cargo] || user.cargo} · CPF ${user.cpf} · Matrícula ${user.matricula}`, 'Desempenho individual')}
+    <div class="modal-body">
+      <div class="person-tiles">
+        <div class="person-tile"><span>Total vendido</span><strong>${money(total)}</strong></div>
+        <div class="person-tile"><span>Vendas</span><strong>${count}</strong><small>ticket médio ${money(avg)}</small></div>
+        <div class="person-tile"><span>Itens servidos</span><strong>${itemsQty}</strong></div>
+        <div class="person-tile"><span>Pontos</span><strong>${points}</strong><small>1 a cada R$ 10 + 5 por venda</small></div>
+        <div class="person-tile"><span>Cashback gerado</span><strong>${money(cashbackGiven)}</strong><small>para os clientes</small></div>
+        <div class="person-tile"><span>Prêmios emitidos</span><strong>${gifts.length}</strong></div>
+      </div>
+
+      <div class="dre-chart mt-16">
+        <div class="dre-chart-title">Vendas nos últimos 7 dias</div>
+        ${areaChartSVG(series, { height: 140 })}
+      </div>
+
+      <div class="dre-grid-2 mt-12">
+        <div class="dre-chart">
+          <div class="dre-chart-title">Formas de pagamento</div>
+          ${donutChartSVG(byMethodData(pays), { centerLabel: 'Vendas' })}
+        </div>
+        <div class="dre-chart">
+          <div class="dre-chart-title">Produtos que mais vendeu</div>
+          ${miniHbarsHTML(topProductsData(pays, 5))}
+        </div>
+      </div>
+
+      <div class="modal-section-title mt-16">Últimos recebimentos</div>
+      ${pays.length ? `
+        <div class="person-pays">
+          ${pays.slice(0, 6).map((p) => `
+            <div class="activity">
+              <span class="activity-icon green">${ic(PAY_METHODS[p.method]?.icon || 'wallet', 14)}</span>
+              <div class="activity-copy">
+                <strong>Mesa ${esc(p.mesa)} · ${money(p.total)}</strong>
+                <span>${esc(paymentMethodLabel(p.method))} · ${esc(fmtDate(p.at))} ${esc(fmtTime(p.at))} · ${esc(p.code)}</span>
+              </div>
+              ${Number(p.cashback) ? `<span class="badge available" title="Cashback dado ao cliente">+${money(p.cashback)}</span>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      ` : `<div class="tiny muted" style="padding:10px 2px">Nenhum recebimento registrado por ${esc(user.nome.split(' ')[0])} ainda.</div>`}
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost left" data-act="open-gift" data-id="${escAttr(user.id)}">${ic('card', 14)} Gerar voucher de prêmio</button>
+      <button type="button" class="btn btn-ghost" data-act="close-modal">Fechar</button>
+    </div>
+  `, { size: 'wide', label: `Desempenho de ${user.nome}` });
+}
+
+function openGiftVoucherModal(userId) {
+  const user = db.users.find((u) => u.id === userId);
+  if (!user) { toast('Pessoa não encontrada.', 'error'); return; }
+  openModal(`
+    ${modalHead(`Voucher de prêmio para ${user.nome.split(' ')[0]}`, `Pontos atuais: ${personPoints(user.id)} · ${ROLE_LABELS[user.cargo] || user.cargo}`, 'Premiação da equipe')}
+    <div class="modal-body">
+      <form data-form="gift-voucher" data-id="${escAttr(user.id)}">
+        <div class="field">
+          <label>Beneficiário(a)</label>
+          <input class="input" type="text" value="${escAttr(user.nome)} · CPF ${escAttr(user.cpf)}" disabled />
+        </div>
+        <div class="field mt-12">
+          <label for="gift-amount">Valor do prêmio (R$)</label>
+          <input class="input" id="gift-amount" name="amount" type="number" min="10" max="2000" step="1" inputmode="decimal" placeholder="100" required />
+          <div class="row-wrap mt-8" style="gap:6px">
+            ${[50, 100, 150, 200].map((v) => `<button type="button" class="chip" data-act="gift-preset" data-value="${v}">R$ ${v}</button>`).join('')}
+          </div>
+        </div>
+        <div class="field mt-12">
+          <label for="gift-days">Validade</label>
+          <select class="input" id="gift-days" name="days">
+            <option value="30">30 dias</option>
+            <option value="60" selected>60 dias</option>
+            <option value="90">90 dias</option>
+          </select>
+        </div>
+        <div class="field mt-12">
+          <label for="gift-note">Motivo <span class="muted tiny">(opcional, aparece no voucher)</span></label>
+          <input class="input" id="gift-note" name="note" type="text" maxlength="80" placeholder="Ex.: melhor vendedor do mês" />
+        </div>
+        <p class="field-hint mt-12">${ic('info', 12)} O voucher vale como crédito na casa e pode ser usado no salão. Ele não ocupa quarto e não faz check-in.</p>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-act="close-modal">Cancelar</button>
+      <button type="button" class="btn btn-primary" data-act="issue-gift">${ic('check-circle', 15)} Emitir voucher</button>
+    </div>
+  `, { size: '', label: `Voucher de prêmio para ${user.nome}` });
+}
+
+function issueGiftVoucher(form) {
+  const user = db.users.find((u) => u.id === form.dataset.id);
+  if (!user) { toast('Pessoa não encontrada.', 'error'); return; }
+  const amount = Math.round(Number(String(form.amount.value).replace(',', '.')) * 100) / 100;
+  const days = Number(form.days.value) || 60;
+  const note = form.note.value.trim();
+
+  if (!(amount >= 10 && amount <= 2000)) { toast('Informe um valor entre R$ 10 e R$ 2.000.', 'error'); form.amount.focus(); return; }
+
+  const counter = Number(db.counters.voucher || 1000) + 1;
+  db.counters.voucher = counter;
+  let code = '';
+  let guard = 0;
+  do {
+    code = `AG-${randToken(4)}`;
+    guard += 1;
+  } while (db.vouchers.some((v) => v.code === code) && guard < 12);
+  if (db.vouchers.some((v) => v.code === code)) code = `AG-${Date.now().toString(36).toUpperCase().slice(-4)}`;
+
+  const now = new Date();
+  const voucher = {
+    id: `V-${counter}`,
+    code,
+    type: 'gift',
+    airline: note ? `Prêmio · ${note}` : 'Voucher de prêmio · Ambari',
+    airlineCode: 'AG',
+    pnr: `GIFT${String(counter)}`,
+    guest: user.nome,
+    doc: user.cpf,
+    category: 'GIFT',
+    beneficiaryId: user.id,
+    amount,
+    room: '',
+    checkIn: now.toISOString(),
+    checkOut: addDays(now, days).toISOString(),
+    nights: 0,
+    status: 'active',
+    createdAt: now.toISOString(),
+    createdBy: currentUser.id,
+    checkedInAt: null,
+    checkedOutAt: null
+  };
+  db.vouchers.unshift(voucher);
+  persistDB();
+  refreshStaffUI();
+  toast(`Voucher de prêmio ${code} de ${money(amount)} emitido para ${user.nome.split(' ')[0]}.`, 'success');
+  celebrate(34);
+  openVoucherModal(voucher.id);
+}
+
 function dashboardOrderRow(order) {
+
   const next = order.status === 'pending' ? { label: 'Aprovar' } : order.status === 'kitchen' ? { label: 'Pronto' } : order.status === 'ready' ? { label: 'Servido' } : null;
   const action = order.status === 'served'
     ? `<button type="button" class="btn btn-soft btn-sm" data-act="open-bill" data-mesa="${escAttr(order.mesa)}">Fechar</button>`
@@ -3580,7 +4873,7 @@ function voucherForRoom(number) {
   return db.vouchers.find((v) => v.room === String(number) && (v.status === 'active' || v.status === 'checked-in'));
 }
 function voucherCategoryLabel(category) {
-  const map = { 'CREW': 'Tripulação', 'PAX VIP': 'Passageiro VIP', 'PAX Standard': 'Passageiro Standard', 'PAX': 'Passageiro' };
+  const map = { 'CREW': 'Tripulação', 'PAX VIP': 'Passageiro VIP', 'PAX Standard': 'Passageiro Standard', 'PAX': 'Passageiro', 'GIFT': 'Prêmio interno' };
   return map[category] || category || 'Tripulação';
 }
 function voucherUrl(code) {
@@ -3783,7 +5076,7 @@ function ticketHTML(v, { publicView = false } = {}) {
         <div class="ticket-code">
           <span>Voucher</span>
           <strong>${esc(v.code)}</strong>
-          ${voucherBadge(v.status)}
+          ${voucherBadge(v.status, v)}
         </div>
       </div>
       <div class="ticket-body">
@@ -3795,8 +5088,8 @@ function ticketHTML(v, { publicView = false } = {}) {
           <div class="ticket-field"><span>Saída</span><strong>${esc(fmtDate(v.checkOut))}</strong></div>
         </div>
         <div class="row-wrap" style="justify-content:space-between;font-size:10px;color:var(--muted);margin-top:13px">
-          <span>Check-in ${esc(fmtDateLong(v.checkIn))}</span>
-          <span>${v.nights} noite${v.nights === 1 ? '' : 's'}</span>
+          <span>${v.type === 'gift' ? `Válido até ${esc(fmtDateLong(v.checkOut))}` : `Check-in ${esc(fmtDateLong(v.checkIn))}`}</span>
+          <span>${v.type === 'gift' ? `Crédito de ${money(v.amount || 0)}` : `${v.nights} noite${v.nights === 1 ? '' : 's'}`}</span>
         </div>
       </div>
       <div class="ticket-foot">
@@ -3821,19 +5114,20 @@ function openVoucherModal(id) {
   const v = db.vouchers.find((item) => item.id === id) || db.vouchers.find((item) => normalizeCode(item.code) === normalizeCode(id));
   if (!v) { toast('Voucher não encontrado.', 'error'); return; }
   const canManage = currentUser && (currentUser.cargo === 'admin' || currentUser.cargo === 'recepcao');
+  const isGift = v.type === 'gift';
   const publicLink = new URL(voucherUrl(v.code), location.href).href;
   const actions = canManage ? `
     <button type="button" class="btn btn-ghost btn-sm" data-act="copy-voucher-link" data-code="${escAttr(v.code)}">${ic('copy', 13)} Copiar link</button>
     <button type="button" class="btn btn-ghost btn-sm" data-act="print-voucher" data-id="${escAttr(v.id)}">${ic('printer', 13)} Imprimir</button>
-    ${v.status === 'active' ? `<button type="button" class="btn btn-primary" data-act="checkin-voucher" data-id="${escAttr(v.id)}">${ic('check-circle', 14)} Fazer check-in</button>` : ''}
-    ${v.status === 'checked-in' ? `<button type="button" class="btn btn-primary" data-act="checkout-voucher" data-id="${escAttr(v.id)}">${ic('logout', 14)} Fazer check-out</button>` : ''}
+    ${isGift ? '' : `${v.status === 'active' ? `<button type="button" class="btn btn-primary" data-act="checkin-voucher" data-id="${escAttr(v.id)}">${ic('check-circle', 14)} Fazer check-in</button>` : ''}
+    ${v.status === 'checked-in' ? `<button type="button" class="btn btn-primary" data-act="checkout-voucher" data-id="${escAttr(v.id)}">${ic('logout', 14)} Fazer check-out</button>` : ''}`}
     ${v.status === 'active' ? `<button type="button" class="btn btn-danger btn-sm" data-act="cancel-voucher" data-id="${escAttr(v.id)}">Cancelar</button>` : ''}
   ` : `
     <button type="button" class="btn btn-ghost btn-sm" data-act="copy-voucher-link" data-code="${escAttr(v.code)}">${ic('copy', 13)} Copiar link</button>
     <button type="button" class="btn btn-ghost btn-sm" data-act="print-voucher" data-id="${escAttr(v.id)}">${ic('printer', 13)} Imprimir</button>
   `;
   openModal(`
-    ${modalHead(`Voucher ${v.code}`, `${v.guest} · ${v.airline}`, 'Recepção & PNR')}
+    ${modalHead(`Voucher ${v.code}`, `${v.guest} · ${v.airline}${isGift && v.amount ? ` · Crédito ${money(v.amount)}` : ''}`, isGift ? 'Prêmio da equipe' : 'Recepção & PNR')}
     <div class="modal-body">
       ${ticketHTML(v)}
       <div class="between mt-16" style="flex-wrap:wrap">
@@ -4166,7 +5460,7 @@ function openRoomModal(number) {
               <span class="vr-avatar">${esc(initials(v.guest))}</span>
               <div><strong style="font-size:12.5px">${esc(v.guest)}</strong><div class="small muted">${esc(v.airline)} · PNR ${esc(v.pnr)}</div></div>
             </div>
-            ${voucherBadge(v.status)}
+            ${voucherBadge(v.status, v)}
           </div>
           <div class="row-wrap" style="gap:20px;font-size:11px;color:var(--muted)">
             <span>${ic('calendar', 13)} ${esc(fmtDate(v.checkIn))} → ${esc(fmtDate(v.checkOut))}</span>
@@ -4321,7 +5615,7 @@ function renderQrSection() {
             <div class="qr-preview-copy">
               <h4>${esc(lookup.code)} · ${esc(lookup.guest)}</h4>
               <p>${esc(lookup.airline)} · PNR ${esc(lookup.pnr)} · Quarto ${esc(lookup.room || '—')}</p>
-              <div class="row-wrap mb-8">${voucherBadge(lookup.status)}</div>
+              <div class="row-wrap mb-8">${voucherBadge(lookup.status, lookup)}</div>
               <span class="qr-link">${esc(voucherLink)}</span>
               <div class="qr-actions">
                 <button type="button" class="btn btn-soft btn-sm" data-act="copy-qr-link" data-kind="voucher">${ic('copy', 13)} Copiar link</button>
@@ -4400,6 +5694,180 @@ function printQr() {
 /* ==========================================================================
    Administração
    ========================================================================== */
+function renderCloudCard(scope = 'admin') {
+  const info = cloudStatusInfo();
+  const badgeClass = info.tone === 'ok' ? 'available' : info.tone === 'warn' ? 'pending' : 'active';
+  return `
+    <section class="card card-pad rise" id="cloud-card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">${ic('cloud', 15)} Nuvem &amp; sincronização</div>
+          <div class="card-sub">Cloudflare Worker com D1 e KV — os mesmos acessos em qualquer aparelho.</div>
+        </div>
+        <span class="badge ${badgeClass}" data-cloud-tone="${info.tone}"><span data-cloud-label>${esc(info.label)}</span></span>
+      </div>
+      <div class="cloud-facts">
+        <div><span>Worker</span><strong class="mono" data-cloud-url>${esc(API_BASE || location.origin)}</strong></div>
+        <div><span>Última sincronização</span><strong data-cloud-lastsync>${cloud.lastSync ? esc(fmtDateTime(cloud.lastSync)) : 'ainda não sincronizado'}</strong></div>
+        <div><span>Armazenamento</span><strong>${cloud.available === null ? 'verificando…' : cloud.available ? (cloud.features?.kv ? 'D1 + KV' : 'D1') : 'somente este aparelho'}</strong></div>
+        <div><span>Cobrança Pix</span><strong>${cloud.provider ? esc(cloud.provider) : (cloud.available ? 'não configurada' : 'local')}</strong></div>
+        <div><span>Token neste aparelho</span><strong>${CLOUD_TOKEN ? 'salvo (oculto)' : 'não informado'}</strong></div>
+      </div>
+      <form data-form="cloud-url" class="cloud-form" autocomplete="off">
+        <div class="field">
+          <label for="cloud-url-${scope}">Endereço do Worker</label>
+          <input class="input mono" id="cloud-url-${scope}" name="url" type="url" placeholder="https://ambari-gastronomia.suaconta.workers.dev" value="${escAttr(API_BASE)}" />
+        </div>
+        <div class="field">
+          <label for="cloud-token-${scope}">Token da nuvem <span class="tiny muted">(se o Worker exigir)</span></label>
+          <input class="input mono" id="cloud-token-${scope}" name="token" type="password" autocomplete="new-password" placeholder="${CLOUD_TOKEN ? 'Token salvo — em branco mantém' : 'SYNC_TOKEN definido no Worker'}" value="" />
+        </div>
+        <div class="tool-row">
+          <button class="btn btn-primary btn-sm" type="submit">${ic('cloud', 13)} Salvar e testar</button>
+          <button class="btn btn-soft btn-sm" type="button" data-act="cloud-sync">${ic('refresh', 13)} Sincronizar agora</button>
+          <button class="btn btn-ghost btn-sm" type="button" data-act="cloud-clear">${ic('home', 13)} Usar este endereço</button>
+          ${CLOUD_TOKEN ? `<button class="btn btn-ghost btn-sm" type="button" data-act="cloud-token-clear">${ic('key', 13)} Remover token</button>` : ''}
+        </div>
+      </form>
+      <div class="settings-note">
+        ${ic('info', 14)} Abra <strong>este mesmo endereço</strong> no celular para ver os acessos cadastrados no computador. O token fica salvo apenas neste aparelho e nunca aparece na tela de login.
+      </div>
+      ${cloud.error ? `<div class="cloud-error">${ic('alert', 14)}<span>${esc(cloud.error)}</span></div>` : ''}
+    </section>
+  `;
+}
+
+function renderPlanStrip() {
+  return `
+    <div class="plan-strip">
+      ${BILLING_PLANS.map((plan) => `
+        <div class="plan-chip ${plan.id === 'base' ? 'is-base' : ''}">
+          <span>${esc(plan.label)}</span>
+          <strong>${money(plan.price)}<em>/mês</em></strong>
+          <small>${esc(plan.hint)}</small>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderBillingRow(account) {
+  const view = billingAccountView(account);
+  const docLabel = account.type === 'empresa' ? 'CNPJ' : 'CPF';
+  return `
+    <div class="bill-row ${view.exempt ? 'is-owner' : ''}">
+      <div class="bill-main">
+        <span class="bill-avatar">${view.exempt ? ic('shield-check', 15) : esc(initials(account.name))}</span>
+        <div class="bill-copy">
+          <strong>${esc(account.name)} ${view.exempt ? '<span class="badge available">Proprietário</span>' : ''}</strong>
+          <span>${docLabel} ${esc(formatDoc(account.doc))} · ${account.seats} acesso${account.seats === 1 ? '' : 's'} · ${esc(view.plan.label)}</span>
+        </div>
+      </div>
+      <div class="bill-value">
+        <strong>${view.exempt ? 'Isento' : money(view.amount)}</strong>
+        <span>${view.exempt ? 'sem cobrança' : 'por mês'}</span>
+      </div>
+      <div class="bill-side">
+        ${billingStatusBadge(view.status)}
+        <div class="bill-actions">
+          ${view.exempt
+            ? `<span class="tiny muted">${ic('check-circle', 12)} nunca cobrado</span>`
+            : `<button class="btn btn-primary btn-sm" type="button" data-act="billing-charge" data-id="${escAttr(account.id)}">${ic('qr', 12)} ${view.pending && view.pending.provider !== 'demo' ? 'Ver Pix' : 'Cobrar Pix'}</button>`}
+          <button class="btn btn-ghost btn-sm" type="button" data-act="billing-account-edit" data-id="${escAttr(account.id)}" aria-label="Editar ${escAttr(account.name)}">${ic('edit', 13)}</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderBillingHistory() {
+  const rows = billingChargesSorted().slice(0, 7);
+  if (!rows.length) {
+    return `<div class="empty" style="padding:20px 12px">${ic('receipt', 22)}<strong>Nenhuma cobrança emitida.</strong><p>Ao cobrar, o Pix aparece aqui com o status confirmado pelo servidor.</p></div>`;
+  }
+  return `
+    <div class="bill-history">
+      <div class="bill-history-head"><span>Histórico de cobranças</span><span>${rows.length} mais recente${rows.length === 1 ? '' : 's'}</span></div>
+      ${rows.map((charge) => {
+        const account = billingAccountById(charge.accountId);
+        return `
+          <div class="bill-history-row">
+            <div class="bill-history-copy">
+              <strong>${esc(account ? account.name : charge.accountId)}</strong>
+              <span>${esc(charge.period || '—')} · ${esc(charge.provider === 'asaas' ? 'Asaas Pix' : 'Demonstração')} · ${esc(charge.txid || '')}</span>
+            </div>
+            <strong class="bill-history-value">${money(charge.amount)}</strong>
+            ${billingStatusBadge(charge.status)}
+            ${charge.status === 'pendente' && charge.provider === 'demo'
+              ? `<button class="link" type="button" data-act="billing-simulate" data-id="${escAttr(charge.id)}">Simular</button>`
+              : charge.status === 'pendente'
+                ? `<button class="link" type="button" data-act="billing-check" data-txid="${escAttr(charge.txid)}">Verificar</button>`
+                : ''}
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderBillingSection() {
+  const accounts = (db.billing?.accounts || []).slice().sort((a, b) => {
+    const rank = (x) => isOwnerDoc(x.doc) ? 0 : 1;
+    return rank(a) - rank(b) || String(a.name).localeCompare(String(b.name), 'pt-BR');
+  });
+  const monthly = accounts.reduce((sum, account) => {
+    if (account.active === false) return sum;
+    return sum + billingAccountView(account).amount;
+  }, 0);
+  return `
+    <section class="card card-pad rise" id="billing-card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">${ic('receipt', 15)} Assinaturas &amp; cobrança</div>
+          <div class="card-sub">${accounts.length} conta${accounts.length === 1 ? '' : 's'} · ${money(monthly)}/mês previstos · cobrança por Pix.</div>
+        </div>
+        <span class="badge active">${ic('shield-check', 11)} Proprietário isento</span>
+      </div>
+      ${renderPlanStrip()}
+      <div class="bill-list">${accounts.map(renderBillingRow).join('')}</div>
+      <details class="bill-add">
+        <summary>${ic('plus', 14)} Nova empresa ou pessoa</summary>
+        <form data-form="billing-account" class="billing-form" autocomplete="off">
+          <div class="form-grid">
+            <div class="field">
+              <label for="bill-type">Tipo</label>
+              <select class="select" id="bill-type" name="type">
+                <option value="empresa">Empresa (CNPJ)</option>
+                <option value="pessoa">Pessoa (CPF)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="bill-seats">Acessos contratados</label>
+              <input class="input" id="bill-seats" name="seats" type="number" min="1" max="5000" step="1" value="10" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="bill-name">Nome ou razão social</label>
+            <input class="input" id="bill-name" name="name" type="text" maxlength="80" placeholder="Ex.: Hotel Costa Verde" required />
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="bill-doc">CPF ou CNPJ</label>
+              <input class="input mono" id="bill-doc" name="doc" type="text" inputmode="numeric" maxlength="18" placeholder="000.000.000-00" required />
+            </div>
+            <div class="field">
+              <label for="bill-email">E-mail financeiro</label>
+              <input class="input" id="bill-email" name="email" type="email" maxlength="120" placeholder="financeiro@empresa.com" required />
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block mt-12" type="submit">${ic('plus', 14)} Cadastrar e calcular plano</button>
+        </form>
+      </details>
+      ${renderBillingHistory()}
+    </section>
+  `;
+}
+
 function renderAdmin() {
   const requests = pendingRequests();
   const users = db.users.slice().sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
@@ -4409,7 +5877,7 @@ function renderAdmin() {
       <div>
         <span class="eyebrow">Administração</span>
         <h2>Acessos, ajustes e confiança.</h2>
-        <p>Aprove a equipe, ajuste a taxa de serviço e a chave Pix local. Todas as alterações valem imediatamente para esta operação.</p>
+        <p>Aprove a equipe, conecte a nuvem, cobre as assinaturas por Pix e ajuste a casa. O proprietário é isento; todas as alterações valem imediatamente para a operação.</p>
       </div>
       <div class="actions">
         <button type="button" class="btn btn-ghost" data-act="export-data">${ic('download', 15)} Exportar dados</button>
@@ -4446,9 +5914,13 @@ function renderAdmin() {
             ${users.map(renderUserRow).join('')}
           </div>
         </section>
+
+        ${renderBillingSection()}
       </div>
 
       <div class="stack">
+        ${renderCloudCard()}
+
         <section class="card card-pad rise">
           <div class="card-head">
             <div>
@@ -4466,6 +5938,18 @@ function renderAdmin() {
                 <label for="set-city">Cidade (Pix)</label>
                 <input class="input" id="set-city" name="city" type="text" maxlength="15" value="${escAttr(settings.merchantCity)}" required />
               </div>
+              <div class="field">
+                <label for="set-cashback">Cashback ao cliente (%)</label>
+                <input class="input" id="set-cashback" name="cashback" type="number" min="0" max="20" step="0.5" value="${escAttr(settings.cashbackPct ?? 5)}" required />
+              </div>
+              <div class="field">
+                <label for="set-provider">Provedor de pagamento</label>
+                <select class="input" id="set-provider" name="payProvider">
+                  <option value="demo" ${(settings.payProvider || 'demo') === 'demo' ? 'selected' : ''}>Simulação local (demonstração)</option>
+                  <option value="psp" ${settings.payProvider === 'psp' ? 'selected' : ''}>Pix real via PSP (Worker configurado)</option>
+                </select>
+                <span class="field-hint">Pix real exige PSP_API_KEY/PSP_BASE_URL nas variáveis do Worker — o Banco Central só fala com PSP licenciado.</span>
+              </div>
               <div class="field span-2">
                 <label for="set-pix">Chave Pix</label>
                 <input class="input" id="set-pix" name="pixKey" type="text" maxlength="77" value="${escAttr(settings.pixKey)}" placeholder="E-mail, CNPJ, telefone ou chave aleatória" />
@@ -4477,7 +5961,7 @@ function renderAdmin() {
               </div>
             </div>
             <div class="settings-note">
-              ${ic('info', 14)} A taxa é aplicada no fechamento de cada mesa. Use 0 para desativar temporariamente.
+              ${ic('info', 14)} A taxa é aplicada no fechamento de cada mesa e o cashback é registrado em cada recebimento. Use 0 para desativar qualquer um dos dois.
             </div>
             <button type="submit" class="btn btn-primary btn-block mt-16">${ic('check', 15)} Salvar configurações</button>
           </form>
@@ -4486,11 +5970,11 @@ function renderAdmin() {
         <section class="card card-pad danger-zone rise">
           <div class="card-head">
             <div>
-              <div class="card-title">${ic('alert', 15)} Dados da demonstração</div>
-              <div class="card-sub">Este app salva tudo apenas neste navegador.</div>
+              <div class="card-title">${ic('alert', 15)} Dados &amp; base local</div>
+              <div class="card-sub">${cloud.available ? 'Sincronizado pelo Worker; uma cópia fica neste aparelho.' : 'Este aparelho ainda está em modo local.'}</div>
             </div>
           </div>
-          <p class="small muted" style="line-height:1.6">Exporte um arquivo JSON antes de limpar. A restauração da base de demonstração recria usuários, quartos, vouchers e pedidos de exemplo.</p>
+          <p class="small muted" style="line-height:1.6">Exporte um arquivo JSON antes de limpar. A restauração da base de demonstração recria usuários, quartos, vouchers, cobranças e pedidos de exemplo${cloud.available ? ' — e envia a base restaurada para a nuvem' : ''}.</p>
           <div class="tool-row">
             <button type="button" class="btn btn-ghost" data-act="export-data">${ic('download', 14)} Exportar JSON</button>
             <button type="button" class="btn btn-danger" data-act="reset-data">${ic('refresh', 14)} Restaurar demonstração</button>
@@ -4816,15 +6300,371 @@ function saveUserEdit(form) {
   toast('Acesso atualizado.', 'success');
 }
 
+function openCloudModal() {
+  openModal(`
+    ${modalHead('Nuvem & aparelhos', 'Conecte este aparelho ao Worker que já está no Cloudflare.', 'Sincronização')}
+    <div class="modal-body">
+      ${renderCloudCard('modal')}
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-primary" data-act="close-modal">Fechar</button>
+    </div>
+  `, { label: 'Nuvem e sincronização' });
+  updateCloudIndicators();
+}
+
+async function saveCloudForm(form) {
+  const url = form.url.value.trim();
+  const typed = form.token.value.trim();
+  const previousUrl = normalizeCloudUrl(storedCloudUrl());
+  const urlChanged = normalizeCloudUrl(url) !== previousUrl;
+  const token = typed || (urlChanged ? '' : CLOUD_TOKEN);
+  const ok = await cloudSetBase(url, token);
+  closeModal();
+  refreshStaffUI();
+  updateCloudIndicators();
+  const info = cloudStatusInfo();
+  toast(ok ? `${info.label}: ${API_BASE || location.origin}` : `${info.label}. ${info.detail}`, ok ? 'success' : 'error');
+}
+
+function openBillingAccountModal(accountId = '') {
+  const account = accountId ? billingAccountById(accountId) : null;
+  if (accountId && !account) return;
+  const isOwner = account ? isOwnerDoc(account.doc) : false;
+  openModal(`
+    ${modalHead(account ? 'Editar conta' : 'Nova conta', account ? account.name : 'Empresa ou pessoa que usa o sistema', 'Assinatura mensal')}
+    <div class="modal-body">
+      <form data-form="billing-account" data-id="${escAttr(account ? account.id : '')}" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="bedit-type">Tipo</label>
+            <select class="select" id="bedit-type" name="type">
+              <option value="empresa" ${account?.type !== 'pessoa' ? 'selected' : ''}>Empresa (CNPJ)</option>
+              <option value="pessoa" ${account?.type === 'pessoa' ? 'selected' : ''}>Pessoa (CPF)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="bedit-seats">Acessos contratados</label>
+            <input class="input" id="bedit-seats" name="seats" type="number" min="1" max="5000" step="1" value="${escAttr(account ? account.seats : 10)}" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="bedit-name">Nome ou razão social</label>
+          <input class="input" id="bedit-name" name="name" type="text" maxlength="80" value="${escAttr(account ? account.name : '')}" required />
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="bedit-doc">CPF ou CNPJ</label>
+            <input class="input mono" id="bedit-doc" name="doc" type="text" inputmode="numeric" maxlength="18" value="${escAttr(account ? formatDoc(account.doc) : '')}" required />
+          </div>
+          <div class="field">
+            <label for="bedit-email">E-mail financeiro</label>
+            <input class="input" id="bedit-email" name="email" type="email" maxlength="120" value="${escAttr(account ? account.email : '')}" required />
+          </div>
+        </div>
+        <div class="settings-note" style="margin-top:12px">
+          ${ic('info', 14)} Plano pelo número de acessos: até 30 → ${money(BILLING_PLANS[0].price)}; 31 a 120 → ${money(BILLING_PLANS[1].price)}; acima de 120 → ${money(BILLING_PLANS[2].price)} por mês.
+        </div>
+        ${isOwner ? `<div class="notice info mt-12">${ic('shield-check', 14)}<span class="grow">Este CPF é do proprietário: a conta fica isenta e nunca é cobrada.</span></div>` : ''}
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-act="close-modal">Cancelar</button>
+      <button type="button" class="btn btn-primary" data-act="submit-billing-account">Salvar conta</button>
+    </div>
+  `, { label: account ? 'Editar conta' : 'Nova conta' });
+}
+
+function saveBillingAccount(form) {
+  const type = form.type.value === 'empresa' ? 'empresa' : 'pessoa';
+  const name = form.name.value.trim();
+  const digits = onlyDigits(form.doc.value);
+  const email = form.email.value.trim();
+  const seats = Number(form.seats.value);
+  const account = billingAccountById(form.dataset.id);
+  if (name.length < 3) { toast('Informe o nome ou a razão social.', 'error'); form.name.focus(); return; }
+  if (account && isOwnerDoc(account.doc) && !isOwnerDoc(digits)) {
+    toast('O CPF do proprietário não pode ser alterado nesta conta.', 'error');
+    form.doc.focus();
+    return;
+  }
+  if (type === 'empresa' && digits.length !== 14) { toast('O tipo Empresa exige um CNPJ de 14 números.', 'error'); form.doc.focus(); return; }
+  if (type === 'pessoa' && digits.length !== 11) { toast('O tipo Pessoa exige um CPF de 11 números.', 'error'); form.doc.focus(); return; }
+  if (!isValidDoc(digits)) { toast(type === 'empresa' ? 'CNPJ inválido. Confira os números.' : 'CPF inválido. Confira os números.', 'error'); form.doc.focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('Informe um e-mail financeiro válido.', 'error'); form.email.focus(); return; }
+  if (!Number.isFinite(seats) || seats < 1 || seats > 5000) { toast('Os acessos devem ficar entre 1 e 5.000.', 'error'); form.seats.focus(); return; }
+  const duplicate = (db.billing?.accounts || []).find((a) => (!account || a.id !== account.id) && onlyDigits(a.doc) === digits);
+  if (duplicate) { toast('Já existe uma conta com este CPF/CNPJ.', 'error'); form.doc.focus(); return; }
+  const exempt = isOwnerDoc(digits);
+  const plan = planForSeats(seats);
+  if (account) {
+    Object.assign(account, { type, name, doc: formatDoc(digits), email, seats, exempt, updatedAt: new Date().toISOString() });
+    persistDB();
+    closeModal();
+    refreshStaffUI();
+    toast(`${name}: ${plan.label} · ${exempt ? 'isento (proprietário)' : `${money(plan.price)}/mês`}.`, 'success');
+    return;
+  }
+  db.billing.accounts.push({
+    id: `ACC-${Date.now().toString(36).toUpperCase()}`,
+    type, name, doc: formatDoc(digits), email, seats, exempt, active: true,
+    createdAt: new Date().toISOString()
+  });
+  persistDB();
+  closeModal();
+  refreshStaffUI();
+  toast(`${name} cadastrado no plano ${plan.label} · ${exempt ? 'isento (proprietário)' : `${money(plan.price)}/mês`}.`, 'success');
+}
+
+function billingPayAreaHTML(account, charge = null, options = {}) {
+  const canReachServer = cloud.available === true && !cloud.needsToken && !cloud.authFailed;
+  if (!charge) {
+    const blocks = [];
+    if (options.notConfigured) {
+      blocks.push(`<div class="cloud-error">${ic('alert', 14)}<span>A cobrança real ainda não está ligada no Worker. Configure os segredos <span class="mono">ASAAS_API_KEY</span> e <span class="mono">ASAAS_WEBHOOK_TOKEN</span> com <span class="mono">wrangler secret put</span>.</span></div>`);
+    } else if (options.local) {
+      blocks.push(`<div class="cloud-error">${ic('alert', 14)}<span>Este aparelho não está conectado ao Worker. Conecte em Administração → Nuvem para cobrar pelo banco.</span></div>`);
+    }
+    if (options.error) blocks.push(`<div class="cloud-error">${ic('alert', 14)}<span>${esc(options.error)}</span></div>`);
+    blocks.push(`<button type="button" class="btn btn-soft btn-block mt-12" data-act="billing-demo" data-id="${escAttr(account.id)}">${ic('qr', 14)} Gerar Pix de demonstração</button>`);
+    return blocks.join('');
+  }
+  const emv = charge.emv || (charge.provider === 'demo' ? buildPixPayload({ amount: charge.amount, txid: charge.txid }) : '');
+  const paid = charge.status === 'pago';
+  return `
+    <div class="pay-panel">
+      ${charge.provider === 'demo'
+        ? `<div class="notice info" style="font-size:11px">${ic('info', 14)}<span class="grow">Cobrança de demonstração: o pagamento é confirmado manualmente. Cobranças reais são confirmadas somente pelo servidor.</span></div>`
+        : `<div class="notice info" style="font-size:11px">${ic('shield-check', 14)}<span class="grow">Cobrança registrada no Asaas. O Worker confere o valor e confirma o Pix no banco — o navegador não decide o pagamento.</span></div>`}
+      ${paid ? `
+        <div class="billing-paid">
+          ${ic('check-circle', 28)}
+          <strong>Pagamento confirmado</strong>
+          <span>${money(charge.amount)} · ${esc(charge.period)} · ${esc(charge.provider === 'demo' ? 'demonstração' : 'Asaas Pix')}</span>
+        </div>
+      ` : `
+        <div class="qr-frame">${emv ? qrBlock(emv, 170, `QR Pix da assinatura de ${account.name}`) : `<div class="qr-empty">${ic('qr', 24)}<br />QR indisponível.</div>`}</div>
+        <div class="pay-panel-copy">
+          <strong>${money(charge.amount)} · ${esc(charge.period)}</strong>
+          ${esc(account.name)} · ${esc(account.seats)} acessos · ${esc(planForSeats(account.seats).label)}
+        </div>
+        ${emv ? `
+          <textarea class="pix-code" id="pix-copia-cola" readonly rows="3" aria-label="Código Pix copia e cola">${esc(emv)}</textarea>
+          <button type="button" class="btn btn-soft btn-sm btn-block mt-8" data-act="copy-pix">${ic('copy', 13)} Copiar código Pix</button>
+        ` : ''}
+        <div class="between mt-12">${billingStatusBadge(charge.status)}<span class="tiny muted mono">${esc(charge.txid || '')}</span></div>
+        ${charge.status === 'pendente' && charge.provider === 'demo'
+          ? `<button type="button" class="btn btn-soft btn-sm btn-block mt-12" data-act="billing-simulate" data-id="${escAttr(charge.id)}">${ic('check', 13)} Confirmar pagamento (demonstração)</button>
+             ${canReachServer ? `<button type="button" class="btn btn-primary btn-sm btn-block mt-8" data-act="billing-start" data-id="${escAttr(account.id)}">${ic('cloud', 13)} Gerar cobrança real no servidor</button>` : ''}`
+          : charge.status === 'pendente'
+            ? `<button type="button" class="btn btn-soft btn-sm btn-block mt-12" data-act="billing-check" data-txid="${escAttr(charge.txid)}">${ic('refresh', 13)} Verificar pagamento agora</button>`
+            : ''}
+      `}
+    </div>
+  `;
+}
+
+function renderBillingPayArea(html) {
+  const area = $('#billing-pay-area');
+  if (area) area.innerHTML = html;
+}
+
+function showBillingCharge(charge) {
+  const account = billingAccountById(charge.accountId);
+  if (!account) return;
+  renderBillingPayArea(billingPayAreaHTML(account, charge));
+}
+
+function openBillingChargeModal(accountId) {
+  const account = billingAccountById(accountId);
+  if (!account) return;
+  const view = billingAccountView(account);
+  if (view.exempt) { toast(`${account.name} é o proprietário e nunca é cobrado.`, 'info'); return; }
+  const existing = billingChargeForPeriod(account.id, billingPeriod());
+  const paid = existing && existing.status === 'pago';
+  const pending = existing && existing.status === 'pendente' ? existing : null;
+  openModal(`
+    ${modalHead(pending ? 'Cobrança em aberto' : 'Cobrar assinatura', account.name, 'Mensalidade via Pix')}
+    <div class="modal-body">
+      <div class="bill-summary">
+        <div class="bill-summary-tile"><span>Plano</span><strong>${esc(view.plan.label)}</strong><small>${esc(view.plan.hint)}</small></div>
+        <div class="bill-summary-tile"><span>Acessos</span><strong>${account.seats}</strong><small>${esc(account.type === 'empresa' ? 'CNPJ' : 'CPF')} ${esc(formatDoc(account.doc))}</small></div>
+        <div class="bill-summary-tile highlight"><span>Mensalidade</span><strong>${money(view.amount)}</strong><small>${esc(billingPeriod())}</small></div>
+      </div>
+      <div id="billing-pay-area">
+        ${paid ? billingPayAreaHTML(account, existing) : pending ? billingPayAreaHTML(account, pending) : `<div class="settings-note">${ic('shield', 14)} O valor é calculado pelo plano e conferido no servidor. O Pix só entra como pago após a confirmação do banco.</div>`}
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-act="close-modal">Fechar</button>
+      ${!pending && !paid ? `<button type="button" class="btn btn-primary" data-act="billing-start" data-id="${escAttr(account.id)}">${ic('qr', 14)} Gerar Pix da mensalidade</button>` : ''}
+    </div>
+  `, { label: 'Cobrança da assinatura' });
+  if (pending && pending.provider !== 'demo') pollBillingCharge(pending.txid);
+}
+
+async function startBillingCharge(accountId, { demo = false } = {}) {
+  const account = billingAccountById(accountId);
+  if (!account) return;
+  const view = billingAccountView(account);
+  if (view.exempt) { toast('Proprietário isento de cobrança.', 'info'); return; }
+  const existing = billingChargeForPeriod(account.id, billingPeriod());
+  if (existing && existing.status === 'pago') { toast('Esta mensalidade já está paga.', 'info'); showBillingCharge(existing); return; }
+  if (existing && existing.status === 'pendente' && existing.provider !== 'demo') { showBillingCharge(existing); return; }
+  if (demo && existing && existing.status === 'pendente' && existing.provider === 'demo') { showBillingCharge(existing); return; }
+
+  if (!demo && cloud.available === true && !cloud.needsToken && !cloud.authFailed) {
+    renderBillingPayArea(`<div class="empty" style="padding:22px 10px"><strong>Gerando cobrança no servidor…</strong><p>Aguarde a resposta do Worker.</p></div>`);
+    try {
+      const res = await cloudFetch('/api/billing/charge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          accountId: account.id, name: account.name, doc: account.doc,
+          email: account.email, type: account.type, seats: account.seats
+        })
+      });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data && data.txid) {
+        const charge = {
+          id: nextBillingNumber(), accountId: account.id, txid: data.txid,
+          amount: Number(data.amount) || view.amount, plan: data.plan || view.plan.id,
+          period: data.period || billingPeriod(), status: data.status || 'pendente',
+          provider: data.provider || 'asaas', emv: data.emv || '',
+          expiresAt: data.expiresAt || '', at: new Date().toISOString(), paidAt: null
+        };
+        db.billing.charges = db.billing.charges.filter((c) => !(
+          c.accountId === account.id && c.period === charge.period && c.provider === 'demo' && c.status === 'pendente'
+        ));
+        const local = db.billing.charges.find((c) => c.txid === charge.txid);
+        if (local) Object.assign(local, charge);
+        else db.billing.charges.push(charge);
+        persistDB();
+        showBillingCharge(charge);
+        refreshStaffUI();
+        if (modalIsOpen()) openBillingChargeModal(account.id);
+        else pollBillingCharge(charge.txid);
+        return;
+      }
+      const code = data?.code || '';
+      if (code === 'NOT_CONFIGURED') { renderBillingPayArea(billingPayAreaHTML(account, null, { notConfigured: true })); return; }
+      if (code === 'ALREADY_PAID') {
+        toast('O servidor já registra este mês como pago.', 'info');
+        await syncBillingFromCloud(true);
+        refreshStaffUI();
+        return;
+      }
+      if (code === 'OWNER_EXEMPT') { toast('Proprietário isento de cobrança.', 'info'); return; }
+      renderBillingPayArea(billingPayAreaHTML(account, null, { error: data?.error || 'O servidor não gerou a cobrança.' }));
+    } catch (err) {
+      renderBillingPayArea(billingPayAreaHTML(account, null, { error: 'Sem conexão com o Worker. Tente novamente.' }));
+    }
+    return;
+  }
+  if (!demo) {
+    renderBillingPayArea(billingPayAreaHTML(account, null, { local: true }));
+    return;
+  }
+  const txid = `BILD${account.id.replace(/\W/g, '')}${Date.now().toString(36).toUpperCase()}`.slice(0, 35);
+  const emv = buildPixPayload({ amount: view.amount, txid });
+  const charge = {
+    id: nextBillingNumber(), accountId: account.id, txid,
+    amount: view.amount, plan: view.plan.id, period: billingPeriod(),
+    status: 'pendente', provider: 'demo', emv: emv || '',
+    at: new Date().toISOString(), paidAt: null
+  };
+  db.billing.charges.push(charge);
+  persistDB();
+  showBillingCharge(charge);
+  refreshStaffUI();
+  if (modalIsOpen()) openBillingChargeModal(account.id);
+}
+
+async function checkBillingCharge(txid, { quiet = false } = {}) {
+  const charge = (db.billing?.charges || []).find((c) => c.txid === txid);
+  if (!charge) return false;
+  if (charge.provider === 'demo') {
+    if (!quiet) toast('Cobrança de demonstração: use o botão de confirmar.', 'info');
+    return false;
+  }
+  try {
+    const res = await cloudFetch(`/api/billing/charge/${encodeURIComponent(txid)}`);
+    const data = await res.json().catch(() => null);
+    if (!res.ok || !data) {
+      if (!quiet) toast('Não foi possível consultar a cobrança.', 'error');
+      return false;
+    }
+    if (data.status === 'pago') {
+      charge.status = 'pago';
+      charge.paidAt = data.paidAt || new Date().toISOString();
+      persistDB();
+      showBillingCharge(charge);
+      refreshStaffUI();
+      toast('Pagamento confirmado pelo servidor. Assinatura em dia.', 'success');
+      return true;
+    }
+    if (data.status && data.status !== charge.status) {
+      charge.status = data.status;
+      persistDB();
+    }
+    showBillingCharge(charge);
+    if (!quiet) toast(data.status === 'pendente' ? 'Ainda aguardando o pagamento no banco.' : `Cobrança ${data.status}.`, 'info');
+    return false;
+  } catch (err) {
+    if (!quiet) toast('Sem conexão com o Worker.', 'error');
+    return false;
+  }
+}
+
+function pollBillingCharge(txid) {
+  if (!txid) return;
+  let tries = 0;
+  const timer = window.setInterval(async () => {
+    tries += 1;
+    if (tries > 75 || !document.getElementById('billing-pay-area')) { window.clearInterval(timer); return; }
+    const charge = (db.billing?.charges || []).find((c) => c.txid === txid);
+    if (!charge || charge.status !== 'pendente') { window.clearInterval(timer); return; }
+    if (await checkBillingCharge(txid, { quiet: true })) window.clearInterval(timer);
+  }, 4000);
+}
+
+function simulateBillingCharge(chargeId) {
+  const charge = (db.billing?.charges || []).find((c) => c.id === chargeId);
+  if (!charge || charge.provider !== 'demo') {
+    toast('Somente cobranças de demonstração podem ser simuladas.', 'error');
+    return;
+  }
+  if (charge.status !== 'pendente') return;
+  askConfirm({
+    title: 'Simular pagamento?',
+    message: 'A confirmação real vem do banco pelo Worker. Esta ação apenas demonstra o fluxo, sem dinheiro real.',
+    confirm: 'Simular pagamento',
+    icon: 'shield',
+    onConfirm: () => {
+      charge.status = 'pago';
+      charge.paidAt = new Date().toISOString();
+      persistDB();
+      showBillingCharge(charge);
+      refreshStaffUI();
+      toast('Pagamento de demonstração confirmado.', 'success');
+    }
+  });
+}
+
 function saveSettings(form) {
   const fee = Number(String(form.fee.value).replace(',', '.'));
+  const cashback = Number(String(form.cashback.value).replace(',', '.'));
+  const payProvider = form.payProvider.value === 'psp' ? 'psp' : 'demo';
   const pixKey = form.pixKey.value.trim();
   const merchant = form.merchant.value.trim();
   const city = form.city.value.trim();
   if (!Number.isFinite(fee) || fee < 0 || fee > 30) { toast('A taxa de serviço deve ficar entre 0% e 30%.', 'error'); form.fee.focus(); return; }
+  if (!Number.isFinite(cashback) || cashback < 0 || cashback > 20) { toast('O cashback deve ficar entre 0% e 20%.', 'error'); form.cashback.focus(); return; }
   if (!merchant) { toast('Informe o nome do recebedor.', 'error'); form.merchant.focus(); return; }
   if (!city) { toast('Informe a cidade do recebedor.', 'error'); form.city.focus(); return; }
   db.settings.serviceFee = round2(fee);
+  db.settings.cashbackPct = round2(cashback);
+  db.settings.payProvider = payProvider;
   db.settings.pixKey = pixKey;
   db.settings.merchantName = merchant.toUpperCase().slice(0, 25);
   db.settings.merchantCity = city.toUpperCase().slice(0, 15);
@@ -5854,35 +7694,81 @@ function currentBillTotals() {
   return billTotalsFrom(billOrdersForCurrent(), currentBill.feeIncluded);
 }
 
+function demoPixPanel(totals) {
+  const txid = `AMBARI${String(currentBill.mesa).replace(/\W/g, '')}${Date.now().toString(36).toUpperCase()}`.slice(0, 25);
+  const payload = buildPixPayload({ amount: totals.total, txid });
+  if (!payload) {
+    return `
+      <div class="pay-panel">
+        <div class="pay-panel-copy">
+          <strong>Chave Pix não configurada</strong>
+          Um administrador precisa informar a chave em Administração → Configurações da casa.
+        </div>
+        <div class="notice info mt-12" style="font-size:11px">${ic('info', 14)}<span class="grow">Você ainda pode registrar o recebimento de demonstração abaixo.</span></div>
+      </div>
+    `;
+  }
+  currentBill.pixPayload = payload;
+  return `
+    <div class="pay-panel">
+      <div class="qr-frame">${qrBlock(payload, 170, 'QR Code Pix da conta da mesa ' + currentBill.mesa)}</div>
+      <div class="pay-panel-copy">
+        <strong>Pix · ${money(totals.total)}</strong>
+        Leia o QR no aplicativo do banco ou use o código copia e cola.
+      </div>
+      <textarea class="pix-code" id="pix-copia-cola" readonly rows="3" aria-label="Código Pix copia e cola">${esc(payload)}</textarea>
+      <button type="button" class="btn btn-soft btn-sm btn-block mt-8" data-act="copy-pix">${ic('copy', 13)} Copiar código Pix</button>
+    </div>
+  `;
+}
+
+function pspPixActive() {
+  return db.settings.payProvider === 'psp' && cloud.available && /^https?:\/\//.test(API_BASE);
+}
+
 function paymentPanelHTML() {
   if (!currentBill) return '';
   const totals = currentBillTotals();
   if (currentBill.method === 'pix') {
-    const txid = `AMBARI${String(currentBill.mesa).replace(/\W/g, '')}${Date.now().toString(36).toUpperCase()}`.slice(0, 25);
-    const payload = buildPixPayload({ amount: totals.total, txid });
-    if (!payload) {
+    if (pspPixActive()) {
+      if (currentBill.psp && currentBill.psp.emv) {
+        const expires = new Date(currentBill.psp.expiresAt);
+        return `
+          <div class="pay-panel">
+            <div class="qr-frame">${qrBlock(currentBill.psp.emv, 170, 'QR Code Pix da conta da mesa ' + currentBill.mesa)}</div>
+            <div class="pay-panel-copy">
+              <strong>Pix · ${money(totals.total)}</strong>
+              Cobrança registrada no PSP (txid <span class="mono">${esc(currentBill.psp.txid)}</span>). O recebimento é confirmado automaticamente pelo banco.
+            </div>
+            <textarea class="pix-code" id="pix-copia-cola" readonly rows="3" aria-label="Código Pix copia e cola">${esc(currentBill.psp.emv)}</textarea>
+            <button type="button" class="btn btn-soft btn-sm btn-block mt-8" data-act="copy-pix">${ic('copy', 13)} Copiar código Pix</button>
+            <div class="notice info mt-12" style="font-size:11px">${ic('clock', 14)}<span class="grow">Aguardando pagamento até ${esc(fmtTime(expires.toISOString()))}. Não feche esta janela.</span></div>
+          </div>
+        `;
+      }
+      if (currentBill.pspMode === 'unavailable') {
+        return `
+          <div class="pay-panel">
+            <div class="pay-panel-copy">
+              <strong>Provedor Pix não configurado no servidor</strong>
+              O Worker não tem PSP_API_KEY/PSP_BASE_URL. Exibindo o BR Code local de demonstração abaixo.
+            </div>
+            <div class="notice info mt-12" style="font-size:11px">${ic('info', 14)}<span class="grow">Para Pix real, configure as variáveis do Worker (wrangler secret put PSP_API_KEY).</span></div>
+            ${demoPixPanel(totals)}
+          </div>
+        `;
+      }
+      if (!currentBill.pspStarting) {
+        currentBill.pspStarting = true;
+        startPspPixCharge();
+      }
       return `
         <div class="pay-panel">
-          <div class="pay-panel-copy">
-            <strong>Chave Pix não configurada</strong>
-            Um administrador precisa informar a chave em Administração → Configurações da casa.
-          </div>
-          <div class="notice info mt-12" style="font-size:11px">${ic('info', 14)}<span class="grow">Você ainda pode registrar o recebimento de demonstração abaixo.</span></div>
+          <div class="pay-panel-copy"><strong>Gerando cobrança Pix…</strong> Conectando ao provedor configurado no Worker.</div>
         </div>
       `;
     }
-    currentBill.pixPayload = payload;
-    return `
-      <div class="pay-panel">
-        <div class="qr-frame">${qrBlock(payload, 170, 'QR Code Pix da conta da mesa ' + currentBill.mesa)}</div>
-        <div class="pay-panel-copy">
-          <strong>Pix · ${money(totals.total)}</strong>
-          Leia o QR no aplicativo do banco ou use o código copia e cola.
-        </div>
-        <textarea class="pix-code" id="pix-copia-cola" readonly rows="3" aria-label="Código Pix copia e cola">${esc(payload)}</textarea>
-        <button type="button" class="btn btn-soft btn-sm btn-block mt-8" data-act="copy-pix">${ic('copy', 13)} Copiar código Pix</button>
-      </div>
-    `;
+    return demoPixPanel(totals);
   }
   if (currentBill.method === 'cash') {
     const given = Number(String(currentBill.cashGiven).replace(',', '.')) || 0;
@@ -5912,6 +7798,37 @@ function paymentPanelHTML() {
           Encoste o celular ou cartão no terminal. Esta demonstração não se conecta a uma maquininha real — o recebimento é registrado localmente.
         </div>
         <div class="row" style="justify-content:center;margin-top:12px;color:var(--brand)">${ic('nfc', 30)}</div>
+      </div>
+    `;
+  }
+  if (currentBill.method === 'walletgoogle' || currentBill.method === 'walletapple') {
+    const isGoogle = currentBill.method === 'walletgoogle';
+    const brand = isGoogle ? 'Google Pay' : 'Apple Pay';
+    const approved = !!currentBill.walletApproved;
+    return `
+      <div class="pay-panel wallet-panel">
+        <div class="wallet-sheet">
+          <div class="wallet-brand ${isGoogle ? 'gpay' : 'apay'}">
+            ${ic('smartphone', 22)}
+            <div>
+              <strong>${brand}</strong>
+              <span>Carteira digital do cliente</span>
+            </div>
+            <span class="wallet-amount">${money(totals.total)}</span>
+          </div>
+          <div class="wallet-rows">
+            <div class="wallet-row"><span>Estabelecimento</span><strong>${esc(db.settings.merchantName || 'AMBARI & GASTRONOMIA')}</strong></div>
+            <div class="wallet-row"><span>Valor da cobrança</span><strong>${money(totals.total)}</strong></div>
+            <div class="wallet-row"><span>Autenticação</span><strong>${approved ? 'Aprovada pelo cliente' : 'Aguardando cliente'}</strong></div>
+          </div>
+          ${approved
+            ? `<div class="notice success mt-12" style="font-size:11px">${ic('check-circle', 14)}<span class="grow">Pagamento aprovado na carteira. Confirme o recebimento para registrar.</span></div>`
+            : `<button type="button" class="btn btn-primary btn-block mt-12" data-act="wallet-approve">${ic('nfc', 15)} Simular aprovação do cliente</button>`}
+        </div>
+        <div class="pay-panel-copy" style="text-align:left">
+          <strong>${brand} · ${money(totals.total)}</strong>
+          Em produção, o valor é enviado à carteira do cliente com tokenização do cartão (exige credenciador homologado — Google/Apple Pay). Aqui a aprovação é simulada com validação de valor e trava de duplicidade.
+        </div>
       </div>
     `;
   }
@@ -5977,7 +7894,7 @@ function renderBillModal() {
         `).join('')}
       </div>
       ${paymentPanelHTML()}
-      <p class="field-hint mt-12">${ic('shield', 12)} Pagamentos desta demonstração são registrados localmente. O Pix gera um BR Code válido, mas nenhuma cobrança é processada.</p>
+      <p class="field-hint mt-12">${ic('shield', 12)} Validação anti-fraude: cobranças têm txid único (idempotência), valor conferido no servidor e confirmação só pelo PSP/banco — nunca pelo cliente. Carteiras digitais exigem aprovação antes de registrar.</p>
     </div>
     <div class="modal-foot">
       <button type="button" class="btn btn-ghost left" data-act="print-preconta">${ic('printer', 14)} Imprimir pré-conta</button>
@@ -5989,8 +7906,68 @@ function renderBillModal() {
 
 function setBillMethod(method) {
   if (!currentBill || !PAY_METHODS[method]) return;
+  if (currentBill.method !== method) {
+    delete currentBill.walletApproved;
+    delete currentBill.psp;
+    delete currentBill.pspPaid;
+    delete currentBill.pspMode;
+    delete currentBill.pspStarting;
+  }
   currentBill.method = method;
   renderBillModal();
+}
+
+function approveWalletCharge() {
+  if (!currentBill) return;
+  const totals = currentBillTotals();
+  if (totals.total <= 0) { toast('O total da conta precisa ser maior que zero.', 'error'); return; }
+  currentBill.walletApproved = true;
+  renderBillModal();
+  toast('Aprovação da carteira confirmada. Registre o recebimento.', 'success');
+}
+
+async function startPspPixCharge() {
+  if (!currentBill) return;
+  const totals = currentBillTotals();
+  try {
+    const res = await fetch(`${API_BASE}/api/payments/pix`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: totals.total, mesa: String(currentBill.mesa) })
+    });
+    if (res.status === 409) {
+      currentBill.pspMode = 'unavailable';
+      if (currentBill) renderBillModal();
+      return;
+    }
+    if (!res.ok) throw new Error(`psp ${res.status}`);
+    const data = await res.json();
+    if (!currentBill) return;
+    currentBill.psp = { txid: data.txid, emv: data.emv, expiresAt: data.expiresAt };
+    renderBillModal();
+    pollPspPix(data.txid);
+  } catch (err) {
+    if (!currentBill) return;
+    currentBill.pspMode = 'unavailable';
+    renderBillModal();
+  }
+}
+
+function pollPspPix(txid) {
+  const timer = window.setInterval(async () => {
+    if (!currentBill || !currentBill.psp || currentBill.psp.txid !== txid) { window.clearInterval(timer); return; }
+    try {
+      const res = await fetch(`${API_BASE}/api/payments/pix/${encodeURIComponent(txid)}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.status === 'pago' || data.status === 'paid' || data.status === 'concluida') {
+        window.clearInterval(timer);
+        currentBill.pspPaid = true;
+        if (currentBill && currentBill.method === 'pix') confirmPayment();
+        else if (currentBill) renderBillModal();
+      }
+    } catch (err) { /* mantém consultando até expirar */ }
+  }, 4000);
 }
 
 function toggleBillFee(checked) {
@@ -6005,6 +7982,7 @@ function clearBillState() {
 
 function confirmPayment() {
   if (!currentBill) return;
+  if (currentBill.settling) return;
   const orders = billOrdersForCurrent();
   if (!orders.length) {
     closeModal();
@@ -6013,6 +7991,14 @@ function confirmPayment() {
   }
   const totals = currentBillTotals();
   if (totals.total <= 0) { toast('O total da conta precisa ser maior que zero.', 'error'); return; }
+  if ((currentBill.method === 'walletgoogle' || currentBill.method === 'walletapple') && !currentBill.walletApproved) {
+    toast('Aguarde a aprovação do cliente na carteira digital.', 'error');
+    return;
+  }
+  if (currentBill.method === 'pix' && currentBill.psp && !currentBill.pspPaid) {
+    toast('Aguarde a confirmação automática do banco (webhook do PSP).', 'info');
+    return;
+  }
 
   let cashGiven = null;
   let change = null;
@@ -6029,10 +8015,13 @@ function confirmPayment() {
     }
   }
 
+  currentBill.settling = true;
   const number = Number(db.counters.payment || 1001) + 1;
   db.counters.payment = number;
   db.counters.paymentReceipt = number;
   const now = new Date().toISOString();
+  const cashbackPct = Number(db.settings.cashbackPct) || 0;
+  const cashback = cashbackPct > 0 ? round2(totals.total * cashbackPct / 100) : 0;
   const payment = {
     id: `PAY-${number}`,
     code: `REC-${number}`,
@@ -6047,8 +8036,12 @@ function confirmPayment() {
     items: aggregateBillItems(orders),
     at: now,
     by: currentUser?.id || null,
-    byName: currentUser?.nome || 'Equipe'
+    byName: currentUser?.nome || 'Equipe',
+    cashback,
+    cashbackPct,
+    points: Math.max(1, Math.floor(totals.total / 10)) + 5
   };
+  if (currentBill.psp?.txid) payment.pspTxid = currentBill.psp.txid;
   if (cashGiven !== null) { payment.cashGiven = cashGiven; payment.change = change; }
 
   orders.forEach((order) => {
@@ -6108,6 +8101,7 @@ function receiptHTML(payment) {
         <div class="bill-row"><span>Taxa de serviço ${payment.feeIncluded ? 'incluída' : 'não incluída'}</span><span>${money(payment.serviceFee || 0)}</span></div>
         ${payment.cashGiven ? `<div class="bill-row"><span>Recebido em dinheiro</span><span>${money(payment.cashGiven)}</span></div>` : ''}
         ${payment.change ? `<div class="bill-row"><span>Troco</span><span>${money(payment.change)}</span></div>` : ''}
+        ${Number(payment.cashback) ? `<div class="bill-row"><span>Cashback gerado (${esc(String(payment.cashbackPct ?? db.settings.cashbackPct ?? ''))}%)</span><span>${money(payment.cashback)}</span></div>` : ''}
         <div class="bill-row total"><span>Total</span><strong>${money(payment.total)}</strong></div>
       </div>
       <div class="receipt-foot">
@@ -7126,6 +9120,24 @@ function handleDocumentClick(event) {
       break;
     }
     case 'confirm-payment': confirmPayment(); break;
+    case 'wallet-approve': approveWalletCharge(); break;
+
+    case 'dre-period':
+      state.dre.period = DRE_PERIODS[target.dataset.period] ? target.dataset.period : '7d';
+      renderStaffMain();
+      break;
+    case 'person-stats': openPersonStats(target.dataset.id); break;
+    case 'open-gift': openGiftVoucherModal(target.dataset.id); break;
+    case 'gift-preset': {
+      const input = $('#gift-amount');
+      if (input) { input.value = target.dataset.value; input.focus(); }
+      break;
+    }
+    case 'issue-gift': {
+      const form = $('#modal-root form[data-form="gift-voucher"]');
+      if (form) issueGiftVoucher(form);
+      break;
+    }
 
     case 'open-voucher': openVoucherModal(target.dataset.id); break;
     case 'voucher-filter': {
@@ -7188,6 +9200,56 @@ function handleDocumentClick(event) {
     }
     case 'export-data': exportData(); break;
     case 'reset-data': resetDemoData(); break;
+
+    case 'cloud-settings': openCloudModal(); break;
+    case 'cloud-sync': {
+      (async () => {
+        const ok = await cloudSyncNow();
+        const info = cloudStatusInfo();
+        refreshStaffUI();
+        if (modalIsOpen()) openCloudModal();
+        updateCloudIndicators();
+        toast(ok ? 'Sincronizado com a nuvem.' : `${info.label}. ${info.detail}`, ok ? 'success' : 'error');
+      })();
+      break;
+    }
+    case 'cloud-clear': {
+      (async () => {
+        const sameOrigin = /^https?:$/.test(location.protocol) ? location.origin : '';
+        const ok = await cloudSetBase(sameOrigin, CLOUD_TOKEN);
+        if (modalIsOpen()) openCloudModal();
+        updateCloudIndicators();
+        toast(ok ? `Usando ${API_BASE || location.origin}.` : 'Este endereço não tem um Worker ativo.', ok ? 'success' : 'error');
+      })();
+      break;
+    }
+    case 'cloud-token-clear': {
+      askConfirm({
+        title: 'Remover token?',
+        message: 'Este aparelho deixa de sincronizar com a nuvem até o token ser informado novamente.',
+        confirm: 'Remover token',
+        icon: 'key',
+        onConfirm: async () => {
+          await cloudSetBase(API_BASE, '');
+          if (modalIsOpen()) openCloudModal();
+          updateCloudIndicators();
+          toast('Token removido deste aparelho.', 'info');
+        }
+      });
+      break;
+    }
+
+    case 'billing-account-edit': openBillingAccountModal(target.dataset.id); break;
+    case 'submit-billing-account': {
+      const form = $('#modal-root form[data-form="billing-account"]');
+      if (form) saveBillingAccount(form);
+      break;
+    }
+    case 'billing-charge': openBillingChargeModal(target.dataset.id); break;
+    case 'billing-start': startBillingCharge(target.dataset.id); break;
+    case 'billing-demo': startBillingCharge(target.dataset.id, { demo: true }); break;
+    case 'billing-simulate': simulateBillingCharge(target.dataset.id); break;
+    case 'billing-check': checkBillingCharge(target.dataset.txid); break;
 
     case 'copy-qr-link':
       if (target.dataset.kind === 'voucher') {
@@ -7264,6 +9326,12 @@ function handleDocumentSubmit(event) {
     case 'settings':
       saveSettings(form);
       break;
+    case 'cloud-url':
+      saveCloudForm(form);
+      break;
+    case 'billing-account':
+      saveBillingAccount(form);
+      break;
     case 'client-gate': {
       const mesa = sanitizeMesa(form.mesa.value);
       const error = $('#client-gate-error');
@@ -7297,6 +9365,10 @@ function handleDocumentInput(event) {
   if (target.id === 'login-cpf') { hideLoginError(); target.value = formatCpf(target.value); return; }
   if (target.id === 'reg-cpf') { target.value = formatCpf(target.value); return; }
   if (target.id === 'user-cpf') { target.value = formatCpf(target.value); return; }
+  if (target.id === 'bill-doc' || target.id === 'bedit-doc') {
+    target.value = formatDocInput(target.value);
+    return;
+  }
   if (target.id === 'login-senha') { hideLoginError(); return; }
   const name = target.dataset.input;
   if (!name) return;
