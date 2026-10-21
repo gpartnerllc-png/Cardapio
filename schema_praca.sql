@@ -1,6 +1,13 @@
--- Adicionar coluna praca nas tabelas (rode no D1 Studio)
-ALTER TABLE pending_users ADD COLUMN praca INTEGER;
-ALTER TABLE users ADD COLUMN praca INTEGER;
-ALTER TABLE orders ADD COLUMN praca INTEGER;
+-- Âmbari & Gastronomia — Cloudflare D1
+-- Rode uma vez: npx wrangler d1 execute ambari-db --remote --file=schema.sql
+-- (ou cole no D1 Studio do painel da Cloudflare)
 
--- Se der erro de coluna já existe, ignore e continue
+CREATE TABLE IF NOT EXISTS app_state (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  revision INTEGER NOT NULL,
+  data TEXT NOT NULL,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- As tabelas antigas (pending_users, users, orders) podem continuar no banco;
+-- o app novo guarda tudo na tabela app_state acima e não depende delas.
