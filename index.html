@@ -1660,7 +1660,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
               <label for="login-senha">Senha</label>
               <div class="input-wrap">
                 <span data-icon="key"></span>
-                <input class="input" id="login-senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua Senha" required />
+                <input class="input" id="login-senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha de acesso" required />
               </div>
             </div>
 
@@ -2365,7 +2365,7 @@ function newSeedDB() {
     return { passSalt: salt, passHash: hashPassword(senha, salt) };
   };
   const users = [
-    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', cpf: '342.599.988-54', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('3236@G19') },
+    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', cpf: '323.619.280-19', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('admin2026') },
     { id: 'u-recepcao', nome: 'Marina Duarte', matricula: '2024001', cpf: '202.400.100-94', email: 'marina@ambari.local', cargo: 'recepcao', active: true, createdAt: ago(60 * 24 * 48), ...credentials('recep2026') },
     { id: 'u-garcom', nome: 'Lucas Prado', matricula: '2024002', cpf: '202.400.200-57', email: 'lucas@ambari.local', cargo: 'garcom', active: true, createdAt: ago(60 * 24 * 35), ...credentials('garcom2026') },
     { id: 'u-atendente', nome: 'Ana Beatriz', matricula: '2024003', cpf: '202.400.300-10', email: 'ana@ambari.local', cargo: 'atendente', active: true, createdAt: ago(60 * 24 * 21), ...credentials('atende2026') }
@@ -4468,8 +4468,10 @@ function renderUserRow(user) {
         ${Object.entries(ROLE_LABELS).map(([role, label]) => `<option value="${role}" ${user.cargo === role ? 'selected' : ''}>${esc(label)}</option>`).join('')}
       </select>
       <div class="user-actions">
+        ${isSelf ? '<span class="badge source-staff">Sessão atual</span>' : ''}
+        <button type="button" class="btn btn-ghost btn-sm" data-act="edit-user" data-id="${escAttr(user.id)}" title="Editar acesso">${ic('edit', 13)}</button>
         ${isSelf
-          ? `<span class="badge source-staff">Sessão atual</span>`
+          ? ''
           : `<button type="button" class="btn btn-ghost btn-sm" data-act="reset-pass" data-id="${escAttr(user.id)}" title="Redefinir senha">${ic('key', 13)}</button>
              <button type="button" class="btn btn-ghost btn-sm" data-act="remove-user" data-id="${escAttr(user.id)}" title="Remover acesso">${ic('trash', 13)}</button>`}
       </div>
@@ -4663,6 +4665,78 @@ function resetUserPassword(form) {
   toast(`Senha de ${user.nome.split(' ')[0]} redefinida.`, 'success');
 }
 
+function openEditUserModal(userId) {
+  const user = db.users.find((u) => u.id === userId);
+  if (!user) return;
+  const isSelf = currentUser && user.id === currentUser.id;
+  openModal(`
+    ${modalHead('Editar acesso', user.nome, 'Identificação e senha')}
+    <div class="modal-body">
+      <form data-form="edit-user" data-id="${escAttr(user.id)}" novalidate autocomplete="off">
+        <div class="field">
+          <label for="user-nome">Nome completo</label>
+          <input class="input" id="user-nome" name="nome" type="text" value="${escAttr(user.nome)}" required />
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="user-cpf">CPF de acesso</label>
+            <input class="input" id="user-cpf" name="cpf" type="text" inputmode="numeric" maxlength="14" autocomplete="off" value="${escAttr(user.cpf || '')}" required />
+          </div>
+          <div class="field">
+            <label for="user-email">E-mail</label>
+            <input class="input" id="user-email" name="email" type="email" value="${escAttr(user.email || '')}" />
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="user-nova">Nova senha <span class="tiny muted">(opcional)</span></label>
+            <input class="input" id="user-nova" name="nova" type="password" autocomplete="new-password" placeholder="Em branco mantém a atual" minlength="6" />
+          </div>
+          <div class="field">
+            <label for="user-conf">Confirmar nova senha</label>
+            <input class="input" id="user-conf" name="conf" type="password" autocomplete="new-password" />
+          </div>
+        </div>
+        <p class="small muted" style="margin-top:10px">${isSelf
+          ? 'Depois de salvar, você passa a entrar com o CPF informado aqui e com a nova senha, se tiver definido uma.'
+          : `Depois de salvar, ${esc(user.nome.split(' ')[0])} entra com o novo CPF e com a nova senha, se tiver definido uma.`}</p>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-act="close-modal">Cancelar</button>
+      <button type="button" class="btn btn-primary" data-act="submit-user-edit">Salvar acesso</button>
+    </div>
+  `, { size: 'compact', label: 'Editar acesso' });
+}
+
+function saveUserEdit(form) {
+  const user = db.users.find((u) => u.id === form.dataset.id);
+  if (!user) return;
+  const nome = form.nome.value.trim();
+  const digits = onlyDigits(form.cpf.value);
+  const email = form.email.value.trim();
+  const nova = form.nova.value;
+  const conf = form.conf.value;
+  if (nome.length < 3) { toast('Informe o nome completo.', 'error'); form.nome.focus(); return; }
+  if (digits.length !== 11) { toast('O CPF precisa ter os 11 números.', 'error'); form.cpf.focus(); return; }
+  if (!isValidCpf(digits)) { toast('CPF inválido. Confira os números digitados.', 'error'); form.cpf.focus(); return; }
+  if (db.users.some((u) => u.id !== user.id && onlyDigits(u.cpf) === digits)) { toast('Já existe um acesso com este CPF.', 'error'); form.cpf.focus(); return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('E-mail inválido.', 'error'); form.email.focus(); return; }
+  if (nova || conf) {
+    if (nova.length < 6) { toast('A nova senha deve ter pelo menos 6 caracteres.', 'error'); form.nova.focus(); return; }
+    if (nova !== conf) { toast('As senhas não conferem. Revise a confirmação.', 'error'); form.conf.focus(); return; }
+    setPassword(user, nova);
+  }
+  user.nome = nome;
+  user.cpf = formatCpf(digits);
+  if (email) user.email = email;
+  user.updatedAt = new Date().toISOString();
+  persistDB();
+  closeModal();
+  refreshStaffUI();
+  toast('Acesso atualizado.', 'success');
+}
+
 function saveSettings(form) {
   const fee = Number(String(form.fee.value).replace(',', '.'));
   const pixKey = form.pixKey.value.trim();
@@ -4726,7 +4800,7 @@ function resetDemoData() {
 function openHelp() {
   const role = currentUser?.cargo;
   const staffSteps = [
-    { title: 'Acesso por CPF e senha', text: 'Cada pessoa entra com o próprio CPF e senha — nada fica exposto na tela inicial. Novos acessos passam por aprovação e o administrador pode redefinir senhas (ícone de chave) em Administração.' },
+    { title: 'Acesso por CPF e senha', text: 'Cada pessoa entra com o próprio CPF e senha — nada fica exposto na tela inicial. Novos acessos passam por aprovação e, em Administração, o administrador redefine senhas (ícone de chave) ou edita nome, CPF e senha de qualquer acesso (ícone de lápis).' },
     { title: 'Recepção & PNR', text: 'Emita um voucher com companhia, PNR, hóspede e quarto. O QR abre a consulta; o check-in e o check-out movimentam o mapa de quartos.' },
     { title: 'Cardápio & pedidos', text: role === 'garcom' || role === 'atendente' ? 'Aprove pedidos de clientes, avance a cozinha e feche a conta na mesa.' : 'Monte comandas, aprove pedidos de clientes, avance a cozinha e feche contas com Pix, cartão, aproximação ou dinheiro.' },
     { title: 'QR & clientes', text: 'Gere o QR do cardápio por mesa e imprima um display. O cliente envia pedidos sem login e pode chamar a equipe.' },
@@ -7016,6 +7090,12 @@ function handleDocumentClick(event) {
     case 'reject-request': rejectRequest(target.dataset.id); break;
     case 'remove-user': removeUser(target.dataset.id); break;
     case 'reset-pass': openResetPasswordModal(target.dataset.id); break;
+    case 'edit-user': openEditUserModal(target.dataset.id); break;
+    case 'submit-user-edit': {
+      const form = $('#modal-root form[data-form="edit-user"]');
+      if (form) saveUserEdit(form);
+      break;
+    }
     case 'submit-reset-pass': {
       const form = $('#modal-root form[data-form="reset-pass"]');
       if (form) resetUserPassword(form);
@@ -7081,6 +7161,9 @@ function handleDocumentSubmit(event) {
     case 'reset-pass':
       resetUserPassword(form);
       break;
+    case 'edit-user':
+      saveUserEdit(form);
+      break;
     case 'voucher':
       generateVoucher(form);
       break;
@@ -7134,6 +7217,7 @@ function handleDocumentInput(event) {
   if (!(target instanceof HTMLElement)) return;
   if (target.id === 'login-cpf') { hideLoginError(); target.value = formatCpf(target.value); return; }
   if (target.id === 'reg-cpf') { target.value = formatCpf(target.value); return; }
+  if (target.id === 'user-cpf') { target.value = formatCpf(target.value); return; }
   if (target.id === 'login-senha') { hideLoginError(); return; }
   const name = target.dataset.input;
   if (!name) return;
