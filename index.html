@@ -2365,7 +2365,7 @@ function newSeedDB() {
     return { passSalt: salt, passHash: hashPassword(senha, salt) };
   };
   const users = [
-    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', cpf: '342.599.988-54', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('admin2026') },
+    { id: 'u-admin', nome: 'Cristian Florencio', matricula: '323619', cpf: '342.599.988-54', email: 'cristian@ambari.local', cargo: 'admin', active: true, createdAt: ago(60 * 24 * 60), ...credentials('3236@G19') },
     { id: 'u-recepcao', nome: 'Marina Duarte', matricula: '2024001', cpf: '202.400.100-94', email: 'marina@ambari.local', cargo: 'recepcao', active: true, createdAt: ago(60 * 24 * 48), ...credentials('recep2026') },
     { id: 'u-garcom', nome: 'Lucas Prado', matricula: '2024002', cpf: '202.400.200-57', email: 'lucas@ambari.local', cargo: 'garcom', active: true, createdAt: ago(60 * 24 * 35), ...credentials('garcom2026') },
     { id: 'u-atendente', nome: 'Ana Beatriz', matricula: '2024003', cpf: '202.400.300-10', email: 'ana@ambari.local', cargo: 'atendente', active: true, createdAt: ago(60 * 24 * 21), ...credentials('atende2026') }
